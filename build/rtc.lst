@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccKDiVFe.s 			page 1
+ARM GAS  /tmp/cceSyyPm.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
   30:Src/rtc.c     ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
   31:Src/rtc.c     ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   32:Src/rtc.c     ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-ARM GAS  /tmp/ccKDiVFe.s 			page 2
+ARM GAS  /tmp/cceSyyPm.s 			page 2
 
 
   33:Src/rtc.c     ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
   50              		.loc 1 63 0
   51 001a 0448     		ldr	r0, .L4+8
   52 001c 3F21     		movs	r1, #63
-ARM GAS  /tmp/ccKDiVFe.s 			page 3
+ARM GAS  /tmp/cceSyyPm.s 			page 3
 
 
   53 001e FFF7FEFF 		bl	_Error_Handler
@@ -145,8 +145,8 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
   66:Src/rtc.c     **** 
   67:Src/rtc.c     ****     // Initialize RTC and set the Time and Date 
   68:Src/rtc.c     **** 	/*
-  69:Src/rtc.c     ****   	sTime.Hours = 0x12;
-  70:Src/rtc.c     ****   	sTime.Minutes = 0x25;
+  69:Src/rtc.c     ****   	sTime.Hours = 0x18;
+  70:Src/rtc.c     ****   	sTime.Minutes = 0x40;
   71:Src/rtc.c     ****   	sTime.Seconds = 0x0;
   72:Src/rtc.c     ****   	//sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   73:Src/rtc.c     ****   	//sTime.StoreOperation = RTC_STOREOPERATION_RESET;
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
   78              	.LVL2:
   95:Src/rtc.c     **** 
   96:Src/rtc.c     ****   if(rtcHandle->Instance==RTC)
-ARM GAS  /tmp/ccKDiVFe.s 			page 4
+ARM GAS  /tmp/cceSyyPm.s 			page 4
 
 
   79              		.loc 1 96 0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
  118              	.LCFI4:
  119              		.cfi_def_cfa_offset 0
  120              		.cfi_restore 14
-ARM GAS  /tmp/ccKDiVFe.s 			page 5
+ARM GAS  /tmp/cceSyyPm.s 			page 5
 
 
  121 0030 7047     		bx	lr
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
  167              	.LC0:
  168 0000 5372632F 		.ascii	"Src/rtc.c\000"
  168      7274632E 
-ARM GAS  /tmp/ccKDiVFe.s 			page 6
+ARM GAS  /tmp/cceSyyPm.s 			page 6
 
 
  168      6300
@@ -313,22 +313,22 @@ ARM GAS  /tmp/ccKDiVFe.s 			page 1
  177              		.file 8 "Drivers/CMSIS/Include/core_cm3.h"
  178              		.file 9 "Inc/rtc.h"
  179              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h"
-ARM GAS  /tmp/ccKDiVFe.s 			page 7
+ARM GAS  /tmp/cceSyyPm.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 rtc.c
-     /tmp/ccKDiVFe.s:19     .text.MX_RTC_Init:0000000000000000 $t
-     /tmp/ccKDiVFe.s:24     .text.MX_RTC_Init:0000000000000000 MX_RTC_Init
-     /tmp/ccKDiVFe.s:60     .text.MX_RTC_Init:0000000000000024 $d
+     /tmp/cceSyyPm.s:19     .text.MX_RTC_Init:0000000000000000 $t
+     /tmp/cceSyyPm.s:24     .text.MX_RTC_Init:0000000000000000 MX_RTC_Init
+     /tmp/cceSyyPm.s:60     .text.MX_RTC_Init:0000000000000024 $d
                             *COM*:0000000000000014 hrtc
-     /tmp/ccKDiVFe.s:67     .text.HAL_RTC_MspInit:0000000000000000 $t
-     /tmp/ccKDiVFe.s:72     .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
-     /tmp/ccKDiVFe.s:125    .text.HAL_RTC_MspInit:0000000000000034 $d
-     /tmp/ccKDiVFe.s:132    .text.HAL_RTC_MspDeInit:0000000000000000 $t
-     /tmp/ccKDiVFe.s:137    .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
-     /tmp/ccKDiVFe.s:159    .text.HAL_RTC_MspDeInit:0000000000000010 $d
-     /tmp/ccKDiVFe.s:166    .rodata.str1.4:0000000000000000 $d
+     /tmp/cceSyyPm.s:67     .text.HAL_RTC_MspInit:0000000000000000 $t
+     /tmp/cceSyyPm.s:72     .text.HAL_RTC_MspInit:0000000000000000 HAL_RTC_MspInit
+     /tmp/cceSyyPm.s:125    .text.HAL_RTC_MspInit:0000000000000034 $d
+     /tmp/cceSyyPm.s:132    .text.HAL_RTC_MspDeInit:0000000000000000 $t
+     /tmp/cceSyyPm.s:137    .text.HAL_RTC_MspDeInit:0000000000000000 HAL_RTC_MspDeInit
+     /tmp/cceSyyPm.s:159    .text.HAL_RTC_MspDeInit:0000000000000010 $d
+     /tmp/cceSyyPm.s:166    .rodata.str1.4:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
