@@ -56,7 +56,7 @@ void MX_RTC_Init(void)
     /**Initialize RTC Only 
     */
  	hrtc.Instance = RTC;                          
-    hrtc.Init.AsynchPrediv = 41000;
+    hrtc.Init.AsynchPrediv = 41100;
     hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
     if (HAL_RTC_Init(&hrtc) != HAL_OK)
     {

@@ -141,6 +141,8 @@ void MX_TIM2_Init(void)
     {
       _Error_Handler(__FILE__, __LINE__);
     }
+	
+	HAL_TIM_Base_Start_IT(&htim2);
 
 }
 /* TIM3 init function */
@@ -227,14 +229,13 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
 
   if(tim_baseHandle->Instance==TIM2)
   {
-  /* USER CODE BEGIN TIM2_MspInit 0 */
 
-  /* USER CODE END TIM2_MspInit 0 */
     /* TIM2 clock enable */
     __HAL_RCC_TIM2_CLK_ENABLE();
-  /* USER CODE BEGIN TIM2_MspInit 1 */
 
-  /* USER CODE END TIM2_MspInit 1 */
+    /* TIM2 interrupt Init */
+    HAL_NVIC_SetPriority(TIM2_IRQn, 7, 0);
+    HAL_NVIC_EnableIRQ(TIM2_IRQn);
   }
   else if(tim_baseHandle->Instance==TIM3)
   {

@@ -1,4 +1,4 @@
-cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001886474
+cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001886753
 	@Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 
 55 #iâdeà
@@ -247264,7 +247264,7 @@ tm´eg
 4285 
 __w—k
  
-	$HAL_TIM_P”iodEÏp£dC®lback
+	$__HAL_TIM_P”iodEÏp£dC®lback
 (
 TIM_HªdËTy³Def
  *
@@ -261821,7 +261821,7 @@ GPIOC
 GPIO_In™SŒuù
 );
 
-86 
+100 
 	}
 }
 
@@ -263237,17 +263237,9 @@ Wh™e
 	`ssd1306_Upd©eSü“n
 ();
 
-365 
-	`HAL_GPIO_ToggËPš
-(
-GPIOC
-, 
-Ëd0_Pš
-);
-
 367 
 	`HAL_D–ay
-(100);
+(1000);
 
 371 
 	}
@@ -263439,7 +263431,7 @@ RCC_PERIPHCLK_RTC
 RCC_PERIPHCLK_ADC
 ;
 
-423 
+426 
 P”hClkIn™
 .
 RTCClockS–eùiÚ
@@ -263447,7 +263439,7 @@ RTCClockS–eùiÚ
 RCC_RTCCLKSOURCE_LSI
 ;
 
-424 
+427 
 P”hClkIn™
 .
 AdcClockS–eùiÚ
@@ -263455,7 +263447,7 @@ AdcClockS–eùiÚ
 RCC_ADCPCLK2_DIV2
 ;
 
-425 ià(
+428 ià(
 	`HAL_RCCEx_P”hCLKCÚfig
 (&
 P”hClkIn™
@@ -263463,7 +263455,7 @@ P”hClkIn™
 HAL_OK
 )
 
-427 
+430 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -263471,29 +263463,29 @@ __FILE__
 __LINE__
 );
 
-432 
+435 
 	`HAL_SYSTICK_CÚfig
 (
 	`HAL_RCC_G‘HCLKF»q
 ()/1000);
 
-436 
+439 
 	`HAL_SYSTICK_CLKSourûCÚfig
 (
 SYSTICK_CLKSOURCE_HCLK
 );
 
-439 
+442 
 	`HAL_NVIC_S‘PriÜ™y
 (
 SysTick_IRQn
 , 0, 0);
 
-440 
+443 
 	}
 }
 
-452 
+455 
 	$_E¼Ü_HªdËr
 (*
 fže
@@ -263501,15 +263493,15 @@ fže
 lše
 )
 
-460 
+463 
 	}
 }
 
-462 #ifdeà 
+465 #ifdeà 
 USE_FULL_ASSERT
 
 
-470 
+473 
 	$as£¹_çžed
 (
 ušt8_t
@@ -263521,7 +263513,7 @@ ušt32_t
 lše
 )
 
-476 
+479 
 	}
 }
 
@@ -263567,9 +263559,7 @@ h¹c
 In™
 .
 AsynchP»div
- = 
-RTC_AUTO_1_SECOND
-;
+ = 41100;
 
 60 
 h¹c
@@ -263578,7 +263568,7 @@ In™
 .
 OutPut
  = 
-RTC_OUTPUTSOURCE_ALARM
+RTC_OUTPUTSOURCE_NONE
 ;
 
 61 ià(
@@ -265003,83 +264993,129 @@ SysTick_IRQn
 	~"¡m32f1xx_™.h
 "
 
-51 
+37 
+	~"tim.h
+"
+
+52 
 	$NMI_HªdËr
 ()
 
-59 
+60 
 	}
 }
 
-64 
+65 
 	$H¬dFauÉ_HªdËr
 ()
 
-77 
+78 
 	}
 }
 
-82 
+83 
 	$MemMªage_HªdËr
 ()
 
-95 
+96 
 	}
 }
 
-100 
+101 
 	$BusFauÉ_HªdËr
 ()
 
-113 
+114 
 	}
 }
 
-118 
+119 
 	$U§geFauÉ_HªdËr
 ()
 
-131 
+132 
 	}
 }
 
-136 
+137 
 	$SVC_HªdËr
 ()
 
-144 
+145 
 	}
 }
 
-149 
+150 
 	$DebugMÚ_HªdËr
 ()
 
-157 
+158 
 	}
 }
 
-162 
+163 
 	$P’dSV_HªdËr
 ()
 
-170 
+171 
 	}
 }
 
-175 
+176 
 	$SysTick_HªdËr
 ()
 
-180 
+181 
 	`HAL_IncTick
 ();
 
-181 
+182 
 	`HAL_SYSTICK_IRQHªdËr
 ();
 
-185 
+186 
+	}
+}
+
+198 
+	$TIM2_IRQHªdËr
+()
+
+200 
+	`HAL_TIM_IRQHªdËr
+(&
+htim2
+);
+
+203 
+	}
+}
+
+205 
+	$HAL_TIM_P”iodEÏp£dC®lback
+(
+TIM_HªdËTy³Def
+ *
+htim
+)
+
+208 if(
+htim
+->
+In¡ªû
+==
+TIM2
+)
+
+210 
+	`HAL_GPIO_ToggËPš
+(
+GPIOC
+, 
+Ëd0_Pš
+);
+
+212 
 	}
 }
 
@@ -266159,7 +266195,7 @@ htim2
 In™
 .
 P»sÿËr
- = 0;
+ = 2000;
 
 123 
 htim2
@@ -266177,7 +266213,7 @@ htim2
 In™
 .
 P”iod
- = 0;
+ = 1000;
 
 125 
 htim2
@@ -266196,7 +266232,7 @@ In™
 .
 AutoR–ßdP»lßd
  = 
-TIM_AUTORELOAD_PRELOAD_DISABLE
+TIM_AUTORELOAD_PRELOAD_ENABLE
 ;
 
 127 ià(
@@ -266619,11 +266655,23 @@ In¡ªû
 TIM2
 )
 
-234 
+232 
 	`__HAL_RCC_TIM2_CLK_ENABLE
 ();
 
-239 if(
+235 
+	`HAL_NVIC_S‘PriÜ™y
+(
+TIM2_IRQn
+, 7, 0);
+
+236 
+	`HAL_NVIC_EÇbËIRQ
+(
+TIM2_IRQn
+);
+
+238 if(
 tim_ba£HªdË
 ->
 In¡ªû
@@ -266631,11 +266679,11 @@ In¡ªû
 TIM3
 )
 
-245 
+244 
 	`__HAL_RCC_TIM3_CLK_ENABLE
 ();
 
-250 if(
+249 if(
 tim_ba£HªdË
 ->
 In¡ªû
@@ -266643,15 +266691,15 @@ In¡ªû
 TIM4
 )
 
-256 
+255 
 	`__HAL_RCC_TIM4_CLK_ENABLE
 ();
 
-261 
+260 
 	}
 }
 
-262 
+261 
 	$HAL_TIM_M¥Po¡In™
 (
 TIM_HªdËTy³Def
@@ -266659,13 +266707,13 @@ TIM_HªdËTy³Def
 timHªdË
 )
 
-265 
+264 
 GPIO_In™Ty³Def
  
 GPIO_In™SŒuù
 ;
 
-266 if(
+265 if(
 timHªdË
 ->
 In¡ªû
@@ -266673,7 +266721,7 @@ In¡ªû
 TIM1
 )
 
-277 
+276 
 GPIO_In™SŒuù
 .
 Pš
@@ -266685,7 +266733,7 @@ GPIO_PIN_9
 GPIO_PIN_10
 ;
 
-278 
+277 
 GPIO_In™SŒuù
 .
 Mode
@@ -266693,7 +266741,7 @@ Mode
 GPIO_MODE_AF_PP
 ;
 
-279 
+278 
 GPIO_In™SŒuù
 .
 S³ed
@@ -266701,7 +266749,7 @@ S³ed
 GPIO_SPEED_FREQ_LOW
 ;
 
-280 
+279 
 	`HAL_GPIO_In™
 (
 GPIOA
@@ -266709,11 +266757,11 @@ GPIOA
 GPIO_In™SŒuù
 );
 
-287 
+286 
 	}
 }
 
-289 
+288 
 	$HAL_TIM_PWM_M¥DeIn™
 (
 TIM_HªdËTy³Def
@@ -266721,7 +266769,7 @@ TIM_HªdËTy³Def
 tim_pwmHªdË
 )
 
-292 if(
+291 if(
 tim_pwmHªdË
 ->
 In¡ªû
@@ -266729,15 +266777,15 @@ In¡ªû
 TIM1
 )
 
-298 
+297 
 	`__HAL_RCC_TIM1_CLK_DISABLE
 ();
 
-303 
+302 
 	}
 }
 
-305 
+304 
 	$HAL_TIM_Ba£_M¥DeIn™
 (
 TIM_HªdËTy³Def
@@ -266745,7 +266793,7 @@ TIM_HªdËTy³Def
 tim_ba£HªdË
 )
 
-308 if(
+307 if(
 tim_ba£HªdË
 ->
 In¡ªû
@@ -266753,11 +266801,11 @@ In¡ªû
 TIM2
 )
 
-314 
+313 
 	`__HAL_RCC_TIM2_CLK_DISABLE
 ();
 
-319 if(
+318 if(
 tim_ba£HªdË
 ->
 In¡ªû
@@ -266765,11 +266813,11 @@ In¡ªû
 TIM3
 )
 
-325 
+324 
 	`__HAL_RCC_TIM3_CLK_DISABLE
 ();
 
-330 if(
+329 if(
 tim_ba£HªdË
 ->
 In¡ªû
@@ -266777,11 +266825,11 @@ In¡ªû
 TIM4
 )
 
-336 
+335 
 	`__HAL_RCC_TIM4_CLK_DISABLE
 ();
 
-341 
+340 
 	}
 }
 

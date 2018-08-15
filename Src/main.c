@@ -362,9 +362,9 @@ int main(void)
   		ssd1306_WriteString(message, Font_11x18, White);
   		ssd1306_UpdateScreen();
 
-		HAL_GPIO_TogglePin(GPIOC, led0_Pin);
+		//HAL_GPIO_TogglePin(GPIOC, led0_Pin);
 		//*/
-		HAL_Delay(100);
+		HAL_Delay(1000);
 
   	}// end while(1)
 
