@@ -64,10 +64,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE END PV */
-
+double voltage_coefficient = 3.3/4096.0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
@@ -345,6 +342,13 @@ int main(void)
 		//sprintf(message, "press = %u;   temp = %u;\r\n", pressure, temperature);
 		HAL_UART_Transmit(&huart1, message, strlen((const char *)message), 500);
 
+		// measure accu voltage
+		HAL_ADC_Start(&hadc1);
+		HAL_ADC_PollForConversion(&hadc1, 500);
+		uint32_t adc_voltage =  HAL_ADC_GetValue(&hadc1);
+		adc_voltage *= 3;
+		double accu_voltage = (double)adc_voltage * voltage_coefficient * 100.0 * 1.041;
+		
 
 		//LCD_Clear();
 		//*
@@ -352,7 +356,7 @@ int main(void)
 		//sprintf(timestamp, "%02x.%02x.%02x", sDate.Date, sDate.Month, sDate.Year);
   		//ssd1306_WriteString(timestamp, Font_11x18, White);
   		ssd1306_SetCursor(0,0);
-		sprintf(timestamp, "%02x:%02x:%02x", sTime.Hours, sTime.Minutes, sTime.Seconds);
+		sprintf(timestamp, "%02x:%02x:%02x %02x", sTime.Hours, sTime.Minutes, sTime.Seconds, sDate.Date);
   		ssd1306_WriteString(timestamp, Font_11x18, White);
   		ssd1306_SetCursor(0,22);
 		sprintf(message, "P %06d", (int32_t)P);
@@ -360,8 +364,15 @@ int main(void)
   		ssd1306_SetCursor(0,44);
 		sprintf(message, "T %04d", (int32_t)actual_temperature);
   		ssd1306_WriteString(message, Font_11x18, White);
+  		ssd1306_SetCursor(81,44);
+		sprintf(message, "V%03d", (int32_t)accu_voltage);
+  		ssd1306_WriteString(message, Font_11x18, White);
   		ssd1306_UpdateScreen();
 
+		
+		
+		
+		
 		//HAL_GPIO_TogglePin(GPIOC, led0_Pin);
 		//*/
 		HAL_Delay(1000);

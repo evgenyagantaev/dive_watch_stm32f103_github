@@ -56,7 +56,7 @@ void MX_RTC_Init(void)
     /**Initialize RTC Only 
     */
  	hrtc.Instance = RTC;                          
-    hrtc.Init.AsynchPrediv = 40000;
+    hrtc.Init.AsynchPrediv = 39650;
     hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
     if (HAL_RTC_Init(&hrtc) != HAL_OK)
     {
@@ -67,7 +67,7 @@ void MX_RTC_Init(void)
     // Initialize RTC and set the Time and Date 
 	/*
   	sTime.Hours = 0x17;
-  	sTime.Minutes = 0x14;
+  	sTime.Minutes = 0x17;
   	sTime.Seconds = 0x0;
   	//sTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
   	//sTime.StoreOperation = RTC_STOREOPERATION_RESET;
@@ -78,7 +78,7 @@ void MX_RTC_Init(void)
 
   	sDate.WeekDay = RTC_WEEKDAY_WEDNESDAY;
   	sDate.Month = RTC_MONTH_AUGUST;
-  	sDate.Date = 0x16;
+  	sDate.Date = 0x17;
   	sDate.Year = 0x18;
 
   	if (HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD) != HAL_OK)
@@ -95,17 +95,13 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* rtcHandle)
 
   if(rtcHandle->Instance==RTC)
   {
-  /* USER CODE BEGIN RTC_MspInit 0 */
 
-  /* USER CODE END RTC_MspInit 0 */
     HAL_PWR_EnableBkUpAccess();
     /* Enable BKP CLK enable for backup registers */
     __HAL_RCC_BKP_CLK_ENABLE();
     /* RTC clock enable */
     __HAL_RCC_RTC_ENABLE();
-  /* USER CODE BEGIN RTC_MspInit 1 */
 
-  /* USER CODE END RTC_MspInit 1 */
   }
 }
 

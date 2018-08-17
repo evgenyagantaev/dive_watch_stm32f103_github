@@ -334,9 +334,9 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
     }
     
     /* Initialize date to 1st of January 2000 */
-    hrtc->DateToUpdate.Year = 0x00U;
-    hrtc->DateToUpdate.Month = RTC_MONTH_JANUARY;
-    hrtc->DateToUpdate.Date = 0x01U;
+    //hrtc->DateToUpdate.Year = 0x00U;
+    //hrtc->DateToUpdate.Month = RTC_MONTH_JANUARY;
+    //hrtc->DateToUpdate.Date = 0x01U;
 
     /* Set RTC state */
     hrtc->State = HAL_RTC_STATE_READY;
