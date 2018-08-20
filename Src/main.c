@@ -142,6 +142,8 @@ int main(void)
 
   	HAL_GPIO_WritePin(GPIOC, led0_Pin, GPIO_PIN_RESET);// turn led on
 
+
+    ssd1306_set_i2c_port(&hi2c1);
   	ssd1306_Init();
   	HAL_Delay(1000);
   	ssd1306_Fill(White);
@@ -157,6 +159,24 @@ int main(void)
   	ssd1306_SetCursor(0,30);
   	ssd1306_WriteString("Start..", Font_16x26, White);
   	ssd1306_UpdateScreen();
+
+    ssd1306_set_i2c_port(&hi2c2);
+  	ssd1306_Init();
+  	HAL_Delay(1000);
+  	ssd1306_Fill(White);
+  	ssd1306_UpdateScreen();
+  	HAL_Delay(1000);
+  	ssd1306_Fill(Black);
+  	ssd1306_UpdateScreen();
+
+  	HAL_Delay(1000);
+
+  	ssd1306_SetCursor(0,0);
+  	ssd1306_WriteString("DiveCmp", Font_16x26, White);
+  	ssd1306_SetCursor(0,30);
+  	ssd1306_WriteString("Start..", Font_16x26, White);
+  	ssd1306_UpdateScreen();
+
 
 	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -350,11 +370,7 @@ int main(void)
 		double accu_voltage = (double)adc_voltage * voltage_coefficient * 100.0 * 1.041;
 		
 
-		//LCD_Clear();
-		//*
-  		//ssd1306_SetCursor(0,0);
-		//sprintf(timestamp, "%02x.%02x.%02x", sDate.Date, sDate.Month, sDate.Year);
-  		//ssd1306_WriteString(timestamp, Font_11x18, White);
+    	ssd1306_set_i2c_port(&hi2c1);
   		ssd1306_SetCursor(0,0);
 		sprintf(timestamp, "%02x:%02x:%02x %02x", sTime.Hours, sTime.Minutes, sTime.Seconds, sDate.Date);
   		ssd1306_WriteString(timestamp, Font_11x18, White);
@@ -369,6 +385,20 @@ int main(void)
   		ssd1306_WriteString(message, Font_11x18, White);
   		ssd1306_UpdateScreen();
 
+    	ssd1306_set_i2c_port(&hi2c2);
+  		ssd1306_SetCursor(0,0);
+		sprintf(timestamp, "%02x:%02x:%02x %02x", sTime.Hours, sTime.Minutes, sTime.Seconds, sDate.Date);
+  		ssd1306_WriteString(timestamp, Font_11x18, White);
+  		ssd1306_SetCursor(0,22);
+		sprintf(message, "P %06d", (int32_t)P);
+  		ssd1306_WriteString(message, Font_11x18, White);
+  		ssd1306_SetCursor(0,44);
+		sprintf(message, "T %04d", (int32_t)actual_temperature);
+  		ssd1306_WriteString(message, Font_11x18, White);
+  		ssd1306_SetCursor(81,44);
+		sprintf(message, "V%03d", (int32_t)accu_voltage);
+  		ssd1306_WriteString(message, Font_11x18, White);
+  		ssd1306_UpdateScreen();
 		
 		
 		
