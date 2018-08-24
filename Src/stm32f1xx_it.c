@@ -36,6 +36,8 @@
 #include "stm32f1xx_it.h"
 #include "tim.h"
 
+#include "one_second_timer_object.h"
+
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -208,6 +210,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance==TIM2)
 	{
 		HAL_GPIO_TogglePin(GPIOC, led0_Pin);
+		one_second_timer_set_flag();
 	}
 }
 

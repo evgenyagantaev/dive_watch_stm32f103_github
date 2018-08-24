@@ -44,6 +44,8 @@ Src/rtc.c \
 Src/spi.c \
 Src/tim.c \
 Src/usart.c \
+Src/one_second_timer_object.c \
+Src/pressure_sensor_object.c \
 Src/stm32f1xx_it.c \
 Src/stm32f1xx_hal_msp.c \
 Src/fonts.c \

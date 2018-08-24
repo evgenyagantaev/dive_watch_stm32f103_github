@@ -50,17 +50,9 @@
 
 #include "ssd1306.h"
 
-#define DEG_2_8 256.0
-#define DEG_2_23 8388608.0
-#define DEG_2_18 262144.0
-#define DEG_2_5 32.0
-#define DEG_2_17 131072.0
-#define DEG_2_7 128.0
-#define DEG_2_21 2097152.0
-#define DEG_2_15 32768.0
-#define DEG_2_33 8589934592.0
+#include "one_second_timer_object.h"
+#include "pressure_sensor_object.h"
 
-#define PRESSURE_OVERSAMPLING 100
 
 /* Private variables ---------------------------------------------------------*/
 
@@ -70,24 +62,6 @@ void SystemClock_Config(void);
 
 /* Private function prototypes -----------------------------------------------*/
 
-uint8_t write_byte(uint8_t data)
-{
-
-	uint8_t data_out;
-    uint8_t read_data;
-
-	// wait for spi transmitter readiness
-	while ((SPI1->SR & SPI_SR_TXE) == RESET );
-	data_out = data;
-    SPI1->DR = data_out;
-    // wait while a transmission complete
-	while ((SPI1->SR & SPI_SR_RXNE) == RESET );
-    read_data = SPI1->DR;
-	
-	return read_data;
-
-	
-}
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,7 +109,9 @@ int main(void)
     MX_ADC1_Init();
     MX_ADC2_Init();
     MX_TIM1_Init();
-    MX_TIM2_Init();
+    //MX_TIM2_Init();
+	one_second_timer_init();
+	one_second_timer_start();
     MX_TIM3_Init();
     MX_TIM4_Init();
     MX_USART2_UART_Init();
@@ -162,57 +138,7 @@ int main(void)
 
 
 
-	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-	uint8_t spi1_out_data_buffer[128];
-	uint8_t spi1_in_data_buffer[128];
-
-	uint8_t data_out;
-    uint8_t read_data;
-
-
-	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	//                 RESET
-	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	// reset spi1 cs pin
-    spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)(spi1_cs_pressure_Pin << 16); 	// reset
-	// transmit 0x1e                             	
-	write_byte( 0x1e);                         	
-	// set spi1 cs pin                           	
-    spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)spi1_cs_pressure_Pin ;	// set
-	HAL_Delay(3);
-	//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-	uint16_t sensor_prom[7];
-
-	for(i=1; i<7; i++)
-	{
-		//send read prom command
-		// reset spi1 cs pin
-    	spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)(spi1_cs_pressure_Pin << 16); 	// reset
-		// transmit command with address 
-		write_byte( 0xa0 + (((uint8_t)i)<<1));
-
-		// read ms byte
-		sensor_prom[i] = write_byte(0x55);
-		sensor_prom[i] <<= 8;
-		// read ls byte
-		sensor_prom[i] += write_byte(0x55);
-
-		// set spi1 cs pin
-    	spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)spi1_cs_pressure_Pin ;	// set
-	}
-
-
-	uint32_t pressure;
-	uint32_t temperature;
-	double dT;
-	double actual_temperature;
-	double OFF;
-	double SENS;
-	double P;
-
+	pressure_sensor_object_init();
 	HAL_Delay(1000);
   	
 	ssd1306_Fill(Black);
