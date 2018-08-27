@@ -30,6 +30,10 @@ static uint16_t sensor_prom[7];
 
 void pressure_sensor_object_init();
 uint8_t write_byte(uint8_t data);
+void pressure_sensor_measure_pressure_temperature();
+double pressure_sensor_get_pressure();
+double pressure_sensor_get_temperature();
+
 
 
 #endif

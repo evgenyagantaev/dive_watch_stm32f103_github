@@ -1,0 +1,50 @@
+#include "voltmeter_object.h"
+#include "adc.h"
+
+
+
+
+
+
+
+void voltmeter_measure_voltage()
+{
+
+	// measure accu voltage
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, 500);
+	uint32_t adc_voltage =  HAL_ADC_GetValue(&hadc1);
+	adc_voltage *= 3;
+	accu_voltage = (double)adc_voltage * voltage_coefficient * 100.0 * 1.015;
+	
+	double current_voltage;
+	if (accu_voltage > UP_BOUND)
+		current_voltage = UP_BOUND;
+	else if (accu_voltage < LOW_BOUND)
+		current_voltage = LOW_BOUND;
+	else
+		current_voltage = accu_voltage;
+
+	accu_percentage = (current_voltage - LOW_BOUND)/(UP_BOUND - LOW_BOUND)*100.0;
+}
+
+
+
+double voltmeter_get_voltage()
+{
+	return accu_voltage;
+}
+
+
+
+double voltmeter_get_percentage()
+{
+	return accu_percentage;
+}
+
+
+
+
+
+
+

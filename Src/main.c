@@ -52,11 +52,12 @@
 
 #include "one_second_timer_object.h"
 #include "pressure_sensor_object.h"
+#include "voltmeter_object.h"
+#include "depth_switch_interface.h"
 
 
 /* Private variables ---------------------------------------------------------*/
 
-double voltage_coefficient = 3.3/4096.0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
@@ -77,10 +78,10 @@ void SystemClock_Config(void);
 int main(void)
 {
 	
-	int i,j,k;
-
 	char message[256];
 	char timestamp[64];
+
+
 
   	RTC_TimeTypeDef sTime;
   	RTC_DateTypeDef sDate;
@@ -145,6 +146,9 @@ int main(void)
   	ssd1306_UpdateScreen();
 
 
+	depth_switch_turn_signal_led(1);
+
+	uint32_t surface_pressure = 101325;
 
 
   	/* Infinite loop */
@@ -152,153 +156,133 @@ int main(void)
   	while (1)
   	{
 
-		uint32_t aux_p = 0;
-
-		for(i=0; i<PRESSURE_OVERSAMPLING; i++)
+		if(one_second_timer_get_flag())
 		{
-
-			//send start conversion D1 OSR 1024 command
-		    // reset spi1 cs pin
-    		spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)(spi1_cs_pressure_Pin << 16); 	// reset
-		    // transmit command  
-		    write_byte(0x44);
-		    // set spi1 cs pin
-    		spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)spi1_cs_pressure_Pin ;	// set
-		    // pause 3 mS
-		    HAL_Delay(3);
-                                                         
-		    //send read adc command
-		    // reset spi1 cs pin
-    		spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)(spi1_cs_pressure_Pin << 16); 	// reset
-		    // transmit command 
-		    write_byte(0x00);
-                                                         
-		    // read ms byte
-		    pressure = write_byte(0x55);
-		    pressure <<= 8;
-		    // read ls byte
-		    pressure += write_byte(0x55);
-		    pressure <<= 8;
-		    // read ls byte
-		    pressure += write_byte(0x55);
-		    // set spi1 cs pin
-    		spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)spi1_cs_pressure_Pin ;	// set
-
-			aux_p += pressure;
-
-		}
-
-		pressure = aux_p/PRESSURE_OVERSAMPLING;
-
-		//----------------------------------------------------
-		
-		//send start conversion D2 OSR 1024 command
-		// reset spi1 cs pin
-    	spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)(spi1_cs_pressure_Pin << 16); 	// reset
-		// transmit command  
-		write_byte(0x54);
-		// set spi1 cs pin
-    	spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)spi1_cs_pressure_Pin ;	// set
-		// pause 3 mS
-		HAL_Delay(3);
-
-		//send read adc command
-		// reset spi1 cs pin
-    	spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)(spi1_cs_pressure_Pin << 16); 	// reset
-		// transmit command 
-		write_byte(0x00);
-
-		// read ms byte
-		temperature = write_byte(0x55);
-		temperature <<= 8;
-		// read ls byte
-		temperature += write_byte(0x55);
-		temperature <<= 8;
-		// read ls byte
-		temperature += write_byte(0x55);
-		// set spi1 cs pin
-    	spi1_cs_pressure_GPIO_Port->BSRR = (uint32_t)spi1_cs_pressure_Pin ;	// set
-
-		//---------------------------------------------------
-
-		dT = (double)temperature - (double)sensor_prom[5]*DEG_2_8;
-		actual_temperature = 2000 + (dT*((double)sensor_prom[6]))/DEG_2_23;
-
-		OFF = ((double)sensor_prom[2])*DEG_2_18 + (((double)sensor_prom[4])*dT)/DEG_2_5;
-		SENS = ((double)sensor_prom[1])*DEG_2_17 + (((double)sensor_prom[3])*dT)/DEG_2_7;
-
-
-		double T2;
-		double SENS2;
-		double OFF2;
-
-
-		if(actual_temperature >= 2000)
-		{
-			T2 = 0;
-			SENS2 = 0;
-			OFF2 = 0;
-		}
-		else 
-		{
-			T2 = 3.0 * dT * dT / DEG_2_33;
-			double aux_dt = (actual_temperature - 2000);
-			OFF2 = 3.0 * aux_dt * aux_dt / 8.0;
-			SENS2 = 7.0 * aux_dt * aux_dt / 8.0;
-
-			if(actual_temperature < -1500)
-			{
-				double aux_dt = actual_temperature + 1500;
-				SENS2 = SENS2 + 3.0 * aux_dt * aux_dt;
-			}
-		}
-
-		actual_temperature = actual_temperature - T2;
-		
-		OFF = OFF - OFF2;
-		SENS = SENS - SENS2;
-
-		P = (((double)pressure*SENS)/DEG_2_21 - OFF)/DEG_2_15;
+			one_second_timer_reset_flag();
   	
-	
-  		HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
-		HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
+			pressure_sensor_measure_pressure_temperature();                                                                                                   	
+		    double P = pressure_sensor_get_pressure();
+		    double actual_temperature = pressure_sensor_get_temperature();
+                                                                                                                                                              
+		    voltmeter_measure_voltage();
+		    double accu_voltage = voltmeter_get_voltage();
+		    double accu_percentage = voltmeter_get_percentage();
+	                                                                                                                                                          
+  		    HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
+		    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
+                                                                                                                                                              
+		    //sprintf(timestamp, "%02x.%02x.%02x %02x:%02x:%02x   ", sDate.Date, sDate.Month, sDate.Year, sTime.Hours, sTime.Minutes, sTime.Seconds);
+		    //HAL_UART_Transmit(&huart1, timestamp, strlen((const char *)timestamp), 500);
+		    
+                                                                                                                                                              
+		    //sprintf(message, "press %06d   temp %04d\r\n", (int32_t)P, (int32_t)actual_temperature);
+		    //sprintf(message, "press = %u;   temp = %u;\r\n", pressure, temperature);
+		    //HAL_UART_Transmit(&huart1, message, strlen((const char *)message), 500);
+            
+			if(P <= surface_pressure)
+				surface_pressure = P;
 
-		sprintf(timestamp, "%02x.%02x.%02x %02x:%02x:%02x   ", sDate.Date, sDate.Month, sDate.Year, sTime.Hours, sTime.Minutes, sTime.Seconds);
-		HAL_UART_Transmit(&huart1, timestamp, strlen((const char *)timestamp), 500);
+			int we_are_under_water = 0;
+
+			if(P > (surface_pressure + 9800)) // underwater
+				we_are_under_water = 1;
+
+			if(!we_are_under_water)  // we are not under water
+			{
+				depth_switch_action();		    
+
+    	   		ssd1306_set_i2c_port(&hi2c1);                                                                          
+  		        ssd1306_SetCursor(0,0);
+		        sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+  		        ssd1306_WriteString(timestamp, Font_11x18, White);
+  		        ssd1306_SetCursor(0,22);
+		        sprintf(message, "depth %02d", (int)depth_switch_get_current_depth());
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(0,44);
+		        sprintf(message, "batt %02d%%", (int)accu_percentage);
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_UpdateScreen();                                                                               
+			}
+			else // we are under water
+			{
+				// calculate depth
+				double depth = ((double)(P - surface_pressure))/9800.0;
+
+
+    	   		ssd1306_set_i2c_port(&hi2c1);                                                                          
+  		        ssd1306_SetCursor(0,0);
+		        sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+  		        ssd1306_WriteString(timestamp, Font_11x18, White);
+  		        ssd1306_SetCursor(0,22);
+		        sprintf(message, "depth %02d", (int)depth);
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(0,44);
+		        sprintf(message, "batt %02d%%", (int)accu_percentage);
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_UpdateScreen();                                                                               
+
+
+
+
+				if(depth > depth_switch_get_current_depth())
+				{
+					// switch on actuators
+  					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_SET);// turn actuators on
+
+					// save info about activation conditions (time, depth, etc)
+    	   			ssd1306_set_i2c_port(&hi2c1);                                                                          
+  		        	ssd1306_SetCursor(0,0);
+		        	sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+  		        	ssd1306_WriteString(timestamp, Font_11x18, White);
+  		        	ssd1306_SetCursor(0,22);
+		        	sprintf(message, ">>>>> %02d", (int)depth);
+  		        	ssd1306_WriteString(message, Font_11x18, White);
+  		        	ssd1306_SetCursor(0,44);
+		        	sprintf(message, "activated!!!");
+  		        	ssd1306_WriteString(message, Font_11x18, White);
+  		        	ssd1306_UpdateScreen();                                                                               
+
+
+					// pause 21 sec
+					HAL_Delay(21000);
+
+
+					// switch off actuators
+  					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);// turn actuators off
+
+					// stop
+					while(1);
+				}
+
+			}
+            
+
+
+
+			/*
+    	    ssd1306_set_i2c_port(&hi2c1);
+  		    ssd1306_SetCursor(0,0);
+		    sprintf(timestamp, "%02x:%02x:%02x %02x", sTime.Hours, sTime.Minutes, sTime.Seconds, sDate.Date);
+  		    ssd1306_WriteString(timestamp, Font_11x18, White);
+  		    ssd1306_SetCursor(0,22);
+		    sprintf(message, "%06d", (int)P);
+  		    ssd1306_WriteString(message, Font_11x18, White);
+  		    ssd1306_SetCursor(81,22);
+		    sprintf(message, "V%03d", (int)accu_voltage);
+  		    ssd1306_WriteString(message, Font_11x18, White);
+  		    ssd1306_SetCursor(0,44);
+		    sprintf(message, "T%04d", (int)actual_temperature);
+  		    ssd1306_WriteString(message, Font_11x18, White);
+  		    ssd1306_SetCursor(81,44);
+		    sprintf(message, "%03d%%", (int)accu_percentage);
+  		    ssd1306_WriteString(message, Font_11x18, White);
+  		    ssd1306_UpdateScreen();              
+			*/
+
 		
+			//HAL_Delay(1000);
 
-		sprintf(message, "press %06d   temp %04d\r\n", (int32_t)P, (int32_t)actual_temperature);
-		//sprintf(message, "press = %u;   temp = %u;\r\n", pressure, temperature);
-		HAL_UART_Transmit(&huart1, message, strlen((const char *)message), 500);
-
-		// measure accu voltage
-		HAL_ADC_Start(&hadc1);
-		HAL_ADC_PollForConversion(&hadc1, 500);
-		uint32_t adc_voltage =  HAL_ADC_GetValue(&hadc1);
-		adc_voltage *= 3;
-		double accu_voltage = (double)adc_voltage * voltage_coefficient * 100.0 * 1.041;
-		
-
-    	ssd1306_set_i2c_port(&hi2c1);
-  		ssd1306_SetCursor(0,0);
-		sprintf(timestamp, "%02x:%02x:%02x %02x", sTime.Hours, sTime.Minutes, sTime.Seconds, sDate.Date);
-  		ssd1306_WriteString(timestamp, Font_11x18, White);
-  		ssd1306_SetCursor(0,22);
-		sprintf(message, "P %06d", (int32_t)P);
-  		ssd1306_WriteString(message, Font_11x18, White);
-  		ssd1306_SetCursor(0,44);
-		sprintf(message, "T %04d", (int32_t)actual_temperature);
-  		ssd1306_WriteString(message, Font_11x18, White);
-  		ssd1306_SetCursor(81,44);
-		sprintf(message, "V%03d", (int32_t)accu_voltage);
-  		ssd1306_WriteString(message, Font_11x18, White);
-  		ssd1306_UpdateScreen();
-
-		
-		//HAL_GPIO_TogglePin(GPIOC, led0_Pin);
-		//*/
-		HAL_Delay(1000);
+		}
 
   	}// end while(1)
 

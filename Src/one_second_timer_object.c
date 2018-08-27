@@ -27,7 +27,7 @@ void one_second_timer_set_flag()
 }
 void one_second_timer_reset_flag()
 {
-	one_second_timer_flag = 1;
+	one_second_timer_flag = 0;
 }
 int one_second_timer_get_flag()
 {
