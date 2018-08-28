@@ -196,10 +196,10 @@ int main(void)
 		        sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(0,22);
-		        sprintf(message, "depth %02d", (int)depth_switch_get_current_depth());
+		        sprintf(message, "AVAR GL %02dm", (int)depth_switch_get_current_depth());
   		        ssd1306_WriteString(message, Font_11x18, White);
   		        ssd1306_SetCursor(0,44);
-		        sprintf(message, "batt %02d%%", (int)accu_percentage);
+		        sprintf(message, "akkum %02d%%", (int)accu_percentage);
   		        ssd1306_WriteString(message, Font_11x18, White);
   		        ssd1306_UpdateScreen();                                                                               
 			}
@@ -214,10 +214,10 @@ int main(void)
 		        sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(0,22);
-		        sprintf(message, "depth %02d", (int)depth);
+		        sprintf(message, "glubina %02dm", (int)depth);
   		        ssd1306_WriteString(message, Font_11x18, White);
   		        ssd1306_SetCursor(0,44);
-		        sprintf(message, "batt %02d%%", (int)accu_percentage);
+		        sprintf(message, "akkum %02d%%", (int)accu_percentage);
   		        ssd1306_WriteString(message, Font_11x18, White);
   		        ssd1306_UpdateScreen();                                                                               
 
@@ -229,13 +229,19 @@ int main(void)
 					// switch on actuators
   					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_SET);// turn actuators on
 
+					// switch on signal leds
+  					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_SET);// turn leds off
+  					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);// turn leds off
+
+
 					// save info about activation conditions (time, depth, etc)
+					ssd1306_Fill(Black);
     	   			ssd1306_set_i2c_port(&hi2c1);                                                                          
   		        	ssd1306_SetCursor(0,0);
 		        	sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
   		        	ssd1306_WriteString(timestamp, Font_11x18, White);
   		        	ssd1306_SetCursor(0,22);
-		        	sprintf(message, ">>>>> %02d", (int)depth);
+		        	sprintf(message, ">>>>> %02dm", (int)depth);
   		        	ssd1306_WriteString(message, Font_11x18, White);
   		        	ssd1306_SetCursor(0,44);
 		        	sprintf(message, "activated!!!");

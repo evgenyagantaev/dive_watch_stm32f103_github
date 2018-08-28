@@ -9,22 +9,31 @@
 
 void voltmeter_measure_voltage()
 {
+	int i;
 
-	// measure accu voltage
-	HAL_ADC_Start(&hadc1);
-	HAL_ADC_PollForConversion(&hadc1, 500);
-	uint32_t adc_voltage =  HAL_ADC_GetValue(&hadc1);
-	adc_voltage *= 3;
-	accu_voltage = (double)adc_voltage * voltage_coefficient * 100.0 * 1.015;
-	
+	accu_voltage = 0;
+
+	for(i=0; i<11; i++)
+	{
+		// measure accu voltage
+	    HAL_ADC_Start(&hadc1);
+	    HAL_ADC_PollForConversion(&hadc1, 500);
+	    uint32_t adc_voltage =  HAL_ADC_GetValue(&hadc1);
+	    adc_voltage *= 3;
+	    accu_voltage += (double)adc_voltage * voltage_coefficient * 100.0 * 1.015;
+	    
+	}
+
+	accu_voltage /= 11;
+	    
 	double current_voltage;
 	if (accu_voltage > UP_BOUND)
-		current_voltage = UP_BOUND;
+	    current_voltage = UP_BOUND;
 	else if (accu_voltage < LOW_BOUND)
-		current_voltage = LOW_BOUND;
+	    current_voltage = LOW_BOUND;
 	else
-		current_voltage = accu_voltage;
-
+	    current_voltage = accu_voltage;
+	    
 	accu_percentage = (current_voltage - LOW_BOUND)/(UP_BOUND - LOW_BOUND)*100.0;
 }
 
