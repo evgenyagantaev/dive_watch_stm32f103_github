@@ -40,9 +40,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "rtc.h"
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
+HAL_StatusTypeDef RTC_WriteTimeCounter(RTC_HandleTypeDef* hrtc, uint32_t TimeCounter);
 
 RTC_HandleTypeDef hrtc;
 
@@ -62,6 +60,20 @@ void MX_RTC_Init(void)
     {
       _Error_Handler(__FILE__, __LINE__);
     }
+
+
+	/*
+	uint32_t seconds_in_minute = 60;
+	uint32_t seconds_in_hour = seconds_in_minute * 60;
+	uint32_t seconds_in_day = seconds_in_hour * 24;
+	
+	int days = 0;
+	int hours = 13;
+	int minutes = 1;
+
+	uint32_t rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
+	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
+	//*/
 
 
     // Initialize RTC and set the Time and Date 

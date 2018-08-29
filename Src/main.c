@@ -61,7 +61,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
-/* Private function prototypes -----------------------------------------------*/
+uint32_t RTC_ReadTimeCounter(RTC_HandleTypeDef* hrtc);
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,6 +81,10 @@ int main(void)
 	char message[256];
 	char timestamp[64];
 
+
+	uint32_t seconds_in_minute = 60;
+	uint32_t seconds_in_hour = seconds_in_minute * 60;
+	uint32_t seconds_in_day = seconds_in_hour * 24;
 
 
   	RTC_TimeTypeDef sTime;
@@ -170,6 +174,29 @@ int main(void)
 	                                                                                                                                                          
   		    HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
 		    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
+			
+			// time-date calculation ----------------------------------------
+			uint32_t rtc_time_counter = RTC_ReadTimeCounter(&hrtc);
+			// rtc_time_counter - kolichestvo sekund c 00:00 29.08.2018
+			int days = rtc_time_counter /seconds_in_day;
+			int month;
+			if(days >= 3) 
+				month = 9;
+			else
+				month = 8;
+
+			int date = 29 + days;
+			if(date > 31)
+				date -= 31;
+
+			rtc_time_counter -= days * seconds_in_day;
+			int hours = rtc_time_counter / seconds_in_hour;
+			rtc_time_counter -= hours * seconds_in_hour;
+			int minutes = rtc_time_counter / seconds_in_minute;
+			rtc_time_counter -= minutes * seconds_in_minute;
+			int seconds = rtc_time_counter;
+			//--------------------------------------------------------------
+
                                                                                                                                                               
 		    //sprintf(timestamp, "%02x.%02x.%02x %02x:%02x:%02x   ", sDate.Date, sDate.Month, sDate.Year, sTime.Hours, sTime.Minutes, sTime.Seconds);
 		    //HAL_UART_Transmit(&huart1, timestamp, strlen((const char *)timestamp), 500);
@@ -193,7 +220,8 @@ int main(void)
 
     	   		ssd1306_set_i2c_port(&hi2c1);                                                                          
   		        ssd1306_SetCursor(0,0);
-		        sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+		        //sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(0,22);
 		        sprintf(message, "AVAR GL %02dm", (int)depth_switch_get_current_depth());
