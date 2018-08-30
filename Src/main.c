@@ -85,7 +85,7 @@ int main(void)
 	uint32_t seconds_in_minute = 60;
 	uint32_t seconds_in_hour = seconds_in_minute * 60;
 	uint32_t seconds_in_day = seconds_in_hour * 24;
-
+	uint32_t rtc_time_counter;
 
   	RTC_TimeTypeDef sTime;
   	RTC_DateTypeDef sDate;
@@ -141,6 +141,16 @@ int main(void)
   	ssd1306_WriteString("Start..", Font_16x26, White);
   	ssd1306_UpdateScreen();
 
+	//-------------set time-date--------------------------
+	//*
+	int days = 1;
+	int hours = 18;
+	int minutes = 0;
+
+	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
+	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
+	//*/
+	//-----------------------------------------------------
 
 
 	pressure_sensor_object_init();
@@ -153,7 +163,6 @@ int main(void)
 	depth_switch_turn_signal_led(1);
 
 	uint32_t surface_pressure = 101325;
-
 
   	/* Infinite loop */
   	/* USER CODE BEGIN WHILE */
@@ -172,11 +181,8 @@ int main(void)
 		    double accu_voltage = voltmeter_get_voltage();
 		    double accu_percentage = voltmeter_get_percentage();
 	                                                                                                                                                          
-  		    HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
-		    HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
-			
 			// time-date calculation ----------------------------------------
-			uint32_t rtc_time_counter = RTC_ReadTimeCounter(&hrtc);
+			rtc_time_counter = RTC_ReadTimeCounter(&hrtc);
 			// rtc_time_counter - kolichestvo sekund c 00:00 29.08.2018
 			int days = rtc_time_counter /seconds_in_day;
 			int month;
@@ -239,7 +245,8 @@ int main(void)
 
     	   		ssd1306_set_i2c_port(&hi2c1);                                                                          
   		        ssd1306_SetCursor(0,0);
-		        sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+		        //sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(0,22);
 		        sprintf(message, "glubina %02dm", (int)depth);
@@ -266,7 +273,8 @@ int main(void)
 					ssd1306_Fill(Black);
     	   			ssd1306_set_i2c_port(&hi2c1);                                                                          
   		        	ssd1306_SetCursor(0,0);
-		        	sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+		        	//sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+		        	sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
   		        	ssd1306_WriteString(timestamp, Font_11x18, White);
   		        	ssd1306_SetCursor(0,22);
 		        	sprintf(message, ">>>>> %02dm", (int)depth);
