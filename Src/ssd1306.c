@@ -1,19 +1,26 @@
 #include"ssd1306.h"
 
 
-
-void ssd1306_set_i2c_port(I2C_HandleTypeDef *port)
-{
-	SSD1306_I2C_PORT = port;
-}
-
+#define SIZEOF_BUFFER (SSD1306_WIDTH * SSD1306_HEIGHT / 8)
 
 
 // Screenbuffer
-static uint8_t SSD1306_Buffer[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
+static uint8_t *SSD1306_Buffer;
+static uint8_t SSD1306_Buffer1[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
+static uint8_t SSD1306_Buffer2[SSD1306_WIDTH * SSD1306_HEIGHT / 8];
 
 // Screen object
 static SSD1306_t SSD1306;
+
+void ssd1306_set_i2c_port(I2C_HandleTypeDef *port, int display_number)
+{
+	SSD1306_I2C_PORT = port;
+
+	if(display_number == 1)
+		SSD1306_Buffer = SSD1306_Buffer1;
+	else
+		SSD1306_Buffer = SSD1306_Buffer2;
+}
 
 
 //
@@ -86,7 +93,8 @@ void ssd1306_Fill(SSD1306_COLOR color)
 	/* Set memory */
 	uint32_t i;
 
-	for(i = 0; i < sizeof(SSD1306_Buffer); i++)
+	//for(i = 0; i < sizeof(SSD1306_Buffer); i++)
+	for(i = 0; i < SIZEOF_BUFFER; i++)
 	{
 		SSD1306_Buffer[i] = (color == Black) ? 0x00 : 0xFF;
 	}

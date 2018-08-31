@@ -3,8 +3,8 @@
 
 #include "main.h"
 
-#define LOW_BOUND 660
-#define UP_BOUND 840
+#define LOW_BOUND 330
+#define UP_BOUND 420
 
 static double voltage_coefficient = 3.3/4096.0;
 static double accu_voltage;

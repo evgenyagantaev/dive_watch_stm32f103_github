@@ -63,6 +63,8 @@ void SystemClock_Config(void);
 
 uint32_t RTC_ReadTimeCounter(RTC_HandleTypeDef* hrtc);
 
+uint8_t gps_message_control_summ_calculation(char *gps_message);
+
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,15 +83,13 @@ int main(void)
 	char message[256];
 	char timestamp[64];
 
+	char gps_message[256];
 
 	uint32_t seconds_in_minute = 60;
 	uint32_t seconds_in_hour = seconds_in_minute * 60;
 	uint32_t seconds_in_day = seconds_in_hour * 24;
 	uint32_t rtc_time_counter;
 
-  	RTC_TimeTypeDef sTime;
-  	RTC_DateTypeDef sDate;
-  
  	/* MCU Configuration----------------------------------------------------------*/ 
                                                                                     
     /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -123,8 +123,25 @@ int main(void)
 
   	HAL_GPIO_WritePin(GPIOC, led0_Pin, GPIO_PIN_RESET);// turn led on
 
+	//--------init display1------------------------------
+    ssd1306_set_i2c_port(&hi2c1, 1);
+  	ssd1306_Init();
+  	HAL_Delay(1000);
+  	ssd1306_Fill(White);
+  	ssd1306_UpdateScreen();
+  	HAL_Delay(1000);
+  	ssd1306_Fill(Black);
+  	ssd1306_UpdateScreen();
 
-    ssd1306_set_i2c_port(&hi2c1);
+  	HAL_Delay(1000);
+
+  	ssd1306_SetCursor(0,0);
+  	ssd1306_WriteString("DiveCmp", Font_16x26, White);
+  	ssd1306_SetCursor(0,30);
+  	ssd1306_WriteString("Start..", Font_16x26, White);
+  	ssd1306_UpdateScreen();
+	//--------init display2------------------------------
+    ssd1306_set_i2c_port(&hi2c2, 2);
   	ssd1306_Init();
   	HAL_Delay(1000);
   	ssd1306_Fill(White);
@@ -142,10 +159,14 @@ int main(void)
   	ssd1306_UpdateScreen();
 
 	//-------------set time-date--------------------------
-	//*
-	int days = 1;
-	int hours = 18;
-	int minutes = 0;
+	/*
+	uint32_t seconds_in_minute = 60;
+	uint32_t seconds_in_hour = seconds_in_minute * 60;
+	uint32_t seconds_in_day = seconds_in_hour * 24;
+	
+	int days = 2;
+	int hours = 11;
+	int minutes = 24;
 
 	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
 	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
@@ -153,9 +174,20 @@ int main(void)
 	//-----------------------------------------------------
 
 
+	// send gps module in standby mode
+	sprintf(gps_message, "$PMTK161,0*28\r\n");
+	//uint8_t control_summ = gps_message_control_summ_calculation(gps_message);
+	//sprintf(message, "*%02X\r\n", control_summ);
+	//strncat(gps_message, message, strlen(message));
+	HAL_UART_Transmit(&huart2, gps_message, strlen((const char *)gps_message), 500);
+
 	pressure_sensor_object_init();
 	HAL_Delay(1000);
   	
+    ssd1306_set_i2c_port(&hi2c1, 1);
+	ssd1306_Fill(Black);
+  	ssd1306_UpdateScreen();
+    ssd1306_set_i2c_port(&hi2c2, 2);
 	ssd1306_Fill(Black);
   	ssd1306_UpdateScreen();
 
@@ -224,7 +256,9 @@ int main(void)
 			{
 				depth_switch_action();		    
 
-    	   		ssd1306_set_i2c_port(&hi2c1);                                                                          
+    	   		ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
+				ssd1306_Fill(Black);
+  		    	//ssd1306_UpdateScreen();              
   		        ssd1306_SetCursor(0,0);
 		        //sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
 		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
@@ -243,7 +277,9 @@ int main(void)
 				double depth = ((double)(P - surface_pressure))/9800.0;
 
 
-    	   		ssd1306_set_i2c_port(&hi2c1);                                                                          
+    	   		ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
+				ssd1306_Fill(Black);
+  		    	//ssd1306_UpdateScreen();              
   		        ssd1306_SetCursor(0,0);
 		        //sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
 		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
@@ -270,8 +306,8 @@ int main(void)
 
 
 					// save info about activation conditions (time, depth, etc)
+    	   			ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
 					ssd1306_Fill(Black);
-    	   			ssd1306_set_i2c_port(&hi2c1);                                                                          
   		        	ssd1306_SetCursor(0,0);
 		        	//sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
 		        	sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
@@ -301,10 +337,12 @@ int main(void)
 
 
 
-			/*
-    	    ssd1306_set_i2c_port(&hi2c1);
+			//*
+    	    ssd1306_set_i2c_port(&hi2c2, 2);
+			ssd1306_Fill(Black);
+  		    //ssd1306_UpdateScreen();              
   		    ssd1306_SetCursor(0,0);
-		    sprintf(timestamp, "%02x:%02x:%02x %02x", sTime.Hours, sTime.Minutes, sTime.Seconds, sDate.Date);
+		    sprintf(timestamp, "%02d:%02d:%02d %02d", hours, minutes, seconds, date);
   		    ssd1306_WriteString(timestamp, Font_11x18, White);
   		    ssd1306_SetCursor(0,22);
 		    sprintf(message, "%06d", (int)P);
@@ -319,7 +357,7 @@ int main(void)
 		    sprintf(message, "%03d%%", (int)accu_percentage);
   		    ssd1306_WriteString(message, Font_11x18, White);
   		    ssd1306_UpdateScreen();              
-			*/
+			//*/
 
 		
 			//HAL_Delay(1000);
@@ -438,6 +476,32 @@ void assert_failed(uint8_t* file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
+
+uint8_t gps_message_control_summ_calculation(char *gps_message)
+{
+	int length = strlen(gps_message);
+
+	uint8_t return_value = gps_message[1];
+	int i;
+	for(i=2; i<length; i++)
+		return_value ^= gps_message[i];
+
+	return return_value;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
   * @}

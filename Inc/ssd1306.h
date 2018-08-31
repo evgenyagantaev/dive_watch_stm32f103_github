@@ -30,6 +30,7 @@
 // SSD1306 LCD height in pixels
 #define SSD1306_HEIGHT          64
 
+I2C_HandleTypeDef *SSD1306_I2C_PORT;
 
 //
 //  Enumeration for screen colors
@@ -61,6 +62,6 @@ char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color);
 char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color);
 void ssd1306_SetCursor(uint8_t x, uint8_t y);
 
-void ssd1306_set_i2c_port(I2C_HandleTypeDef *port);
+void ssd1306_set_i2c_port(I2C_HandleTypeDef *port, int display_number);
 
 #endif
