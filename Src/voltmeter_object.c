@@ -20,7 +20,7 @@ void voltmeter_measure_voltage()
 	    HAL_ADC_PollForConversion(&hadc1, 500);
 	    uint32_t adc_voltage =  HAL_ADC_GetValue(&hadc1);
 	    adc_voltage *= 3;
-	    accu_voltage += (double)adc_voltage * voltage_coefficient * 100.0 * 1.015;
+	    accu_voltage += (double)adc_voltage * voltage_coefficient * 100.0 * 1.04;
 	    
 	}
 

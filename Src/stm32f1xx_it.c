@@ -37,12 +37,14 @@
 #include "tim.h"
 
 #include "one_second_timer_object.h"
+#include "gps_interface.h"
 
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern UART_HandleTypeDef huart2;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
@@ -212,5 +214,29 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		HAL_GPIO_TogglePin(GPIOC, led0_Pin);
 		one_second_timer_set_flag();
 	}
+}
+
+
+
+/**
+* @brief This function handles USART2 global interrupt.
+*/
+void USART2_IRQHandler(void)
+{
+  HAL_UART_IRQHandler(&huart2);
+}
+
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	uint8_t receive_byte;
+
+	HAL_UART_Receive(&huart2, &receive_byte, 1, 500);
+	add_input_char_into_buffer(receive_byte);
+
+	if(receive_byte == '\n')
+		set_end_of_string_received_flag();
+
 }
 

@@ -54,6 +54,7 @@
 #include "pressure_sensor_object.h"
 #include "voltmeter_object.h"
 #include "depth_switch_interface.h"
+#include "gps_interface.h"
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -200,6 +201,8 @@ int main(void)
   	/* USER CODE BEGIN WHILE */
   	while (1)
   	{
+
+		gps_action();
 
 		if(one_second_timer_get_flag())
 		{
