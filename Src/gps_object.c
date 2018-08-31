@@ -5,10 +5,10 @@
 
 
 
-void add_input_char_into_buffer(uint8_t char)
+void add_input_char_into_buffer(uint8_t byte)
 {
 	int current_input_index = strlen(gps_input_buffer);
-	gps_input_buffer[current_input_index] = char;
+	gps_input_buffer[current_input_index] = byte;
 	gps_input_buffer[current_input_index + 1] = 0;
 }
 

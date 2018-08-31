@@ -143,7 +143,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 
-	__HAL_UART_ENABLE_IT(USART2, UART_IT_RXNE);
+	//__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
     /* USART2 interrupt Init */
     HAL_NVIC_SetPriority(USART2_IRQn, 15, 0);
     HAL_NVIC_EnableIRQ(USART2_IRQn);

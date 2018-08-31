@@ -69,8 +69,8 @@ void MX_RTC_Init(void)
 	uint32_t seconds_in_day = seconds_in_hour * 24;
 	
 	int days = 2;
-	int hours = 11;
-	int minutes = 24;
+	int hours = 18;
+	int minutes = 15;
 
 	uint32_t rtc_time_counter;
 	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
