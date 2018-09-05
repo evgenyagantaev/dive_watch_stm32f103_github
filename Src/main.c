@@ -104,6 +104,8 @@ int main(void)
     MX_RTC_Init();
 	//-------------------------------------------------------
 	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
+	//RCC->BDCR |= RCC_BDCR_BDRST;  // reset backup domain
+  	HAL_Delay(100);
 	RCC->BDCR |= RCC_BDCR_LSEON;
 	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
 	while((RCC->BDCR & RCC_BDCR_LSERDY) == 0)
@@ -195,7 +197,7 @@ int main(void)
   	ssd1306_UpdateScreen();
 
 	//-------------set time-date--------------------------
-	//*
+	/*
 	int days = 5;
 	int hours = 20;
 	int minutes = 2;
@@ -212,6 +214,15 @@ int main(void)
 	ssd1306_Fill(Black);
   	ssd1306_UpdateScreen();
 
+
+	uint32_t rcc_bdcr = RCC->BDCR;
+	uint16_t rtc_prlh = RTC->PRLH;
+	uint16_t rtc_prll = RTC->PRLL;
+	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
+	RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
+	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
+
+	rcc_bdcr = RCC->BDCR;
 
 	depth_switch_turn_signal_led(1);
 

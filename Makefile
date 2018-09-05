@@ -22,7 +22,7 @@ TARGET = dive_watch_stm32f103
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -Og
+OPT = -O0
 
 
 #######################################
