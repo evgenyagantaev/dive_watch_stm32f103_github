@@ -102,6 +102,59 @@ int main(void)
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
     MX_RTC_Init();
+	//-------------------------------------------------------
+	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
+	RCC->BDCR |= RCC_BDCR_LSEON;
+	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
+	while((RCC->BDCR & RCC_BDCR_LSERDY) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
+	RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
+	RCC->BDCR |= RCC_BDCR_RTCEN;
+	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
+	//-------------------------------------------------------
+	RTC->CRL |= RTC_CRL_CNF;
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	RTC->PRLH = 0;
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	RTC->PRLL = 0x7fff;
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	RTC->CRL &= ~RTC_CRL_RSF;
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	RTC->CRL &= ~RTC_CRL_CNF;
+	while((RTC->CRL & RTC_CRL_RSF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	//-------------------------------------------------------
+
+	//-------------------------------------------------------
     MX_I2C1_Init();
     MX_I2C2_Init();
     MX_SPI1_Init();
@@ -143,9 +196,9 @@ int main(void)
 
 	//-------------set time-date--------------------------
 	//*
-	int days = 1;
-	int hours = 18;
-	int minutes = 0;
+	int days = 5;
+	int hours = 20;
+	int minutes = 2;
 
 	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
 	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);

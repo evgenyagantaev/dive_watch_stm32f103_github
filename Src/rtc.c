@@ -48,13 +48,18 @@ RTC_HandleTypeDef hrtc;
 void MX_RTC_Init(void)
 {
 
+	uint32_t seconds_in_minute = 60;
+	uint32_t seconds_in_hour = seconds_in_minute * 60;
+	uint32_t seconds_in_day = seconds_in_hour * 24;
+	uint32_t rtc_time_counter;
+
   	RTC_TimeTypeDef sTime;
   	RTC_DateTypeDef sDate;
 
     /**Initialize RTC Only 
     */
  	hrtc.Instance = RTC;                          
-    hrtc.Init.AsynchPrediv = RTC_AUTO_1_SECOND;
+    hrtc.Init.AsynchPrediv = 39750;
     hrtc.Init.OutPut = RTC_OUTPUTSOURCE_NONE;
     if (HAL_RTC_Init(&hrtc) != HAL_OK)
     {
@@ -62,6 +67,16 @@ void MX_RTC_Init(void)
     }
 
 
+	//-------------set time-date--------------------------
+	/*
+	int days = 7;
+	int hours = 11;
+	int minutes = 3;
+
+	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
+	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
+	//*/
+	//-----------------------------------------------------
 
 
     // Initialize RTC and set the Time and Date 
