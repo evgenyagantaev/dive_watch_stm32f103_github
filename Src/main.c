@@ -101,10 +101,18 @@ int main(void)
                                                                                     
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
-    MX_RTC_Init();
+	uint32_t rcc_bdcr = RCC->BDCR;
+	uint16_t rtc_prlh = RTC->PRLH;
+	uint16_t rtc_prll = RTC->PRLL;
+    //MX_RTC_Init();
+
+
+	//*
 	//-------------------------------------------------------
 	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
-	//RCC->BDCR |= RCC_BDCR_BDRST;  // reset backup domain
+	RCC->BDCR |= RCC_BDCR_BDRST;  // reset backup domain
+  	HAL_Delay(10);
+	RCC->BDCR &= ~RCC_BDCR_BDRST;  // stop reset backup domain
   	HAL_Delay(100);
 	RCC->BDCR |= RCC_BDCR_LSEON;
 	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
@@ -155,8 +163,8 @@ int main(void)
   		HAL_Delay(100);
 	}
 	//-------------------------------------------------------
+	//*/
 
-	//-------------------------------------------------------
     MX_I2C1_Init();
     MX_I2C2_Init();
     MX_SPI1_Init();
@@ -198,9 +206,9 @@ int main(void)
 
 	//-------------set time-date--------------------------
 	/*
-	int days = 5;
-	int hours = 20;
-	int minutes = 2;
+	int days = 12;
+	int hours = 16;
+	int minutes = 40;
 
 	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
 	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
@@ -213,14 +221,6 @@ int main(void)
   	
 	ssd1306_Fill(Black);
   	ssd1306_UpdateScreen();
-
-
-	uint32_t rcc_bdcr = RCC->BDCR;
-	uint16_t rtc_prlh = RTC->PRLH;
-	uint16_t rtc_prll = RTC->PRLL;
-	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
-	RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
-	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
 
 	rcc_bdcr = RCC->BDCR;
 
@@ -446,8 +446,8 @@ void SystemClock_Config(void)
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC|RCC_PERIPHCLK_ADC;
   // try to configure rtc lse
   //PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_HSE_DIV128;
-  //PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
-  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
+  PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSE;
+  //PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
   PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {

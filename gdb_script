@@ -1,0 +1,4 @@
+
+load
+b main.c:227
+printf "%x\n", rcc_bdcr

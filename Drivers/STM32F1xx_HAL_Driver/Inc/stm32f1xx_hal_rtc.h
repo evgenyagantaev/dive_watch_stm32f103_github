@@ -81,7 +81,7 @@
 /** @defgroup RTC_Timeout_Value Default Timeout Value
   * @{
   */ 
-#define RTC_TIMEOUT_VALUE           1000U
+#define RTC_TIMEOUT_VALUE           11000U
 /**
   * @}
   */  

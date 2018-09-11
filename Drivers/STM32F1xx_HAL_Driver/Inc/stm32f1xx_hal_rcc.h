@@ -1214,7 +1214,7 @@ void              HAL_RCC_CSSCallback(void);
   */ 
   
 /* Disable Backup domain write protection state change timeout */
-#define RCC_DBP_TIMEOUT_VALUE          100U    /* 100 ms */
+#define RCC_DBP_TIMEOUT_VALUE          500U    /* 100 ms */
 /* LSE state change timeout */
 #define RCC_LSE_TIMEOUT_VALUE          LSE_STARTUP_TIMEOUT
 #define CLOCKSWITCH_TIMEOUT_VALUE      5000    /* 5 s    */

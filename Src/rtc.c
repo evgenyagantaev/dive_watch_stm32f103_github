@@ -68,10 +68,10 @@ void MX_RTC_Init(void)
 
 
 	//-------------set time-date--------------------------
-	/*
+	//*
 	int days = 7;
-	int hours = 13;
-	int minutes = 1;
+	int hours = 16;
+	int minutes = 42;
 
 	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
 	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
