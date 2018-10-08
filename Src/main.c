@@ -55,6 +55,7 @@
 #include "voltmeter_object.h"
 #include "depth_switch_interface.h"
 #include "gps_interface.h"
+#include "rtc_ds3231_interface.h"
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -102,8 +103,56 @@ int main(void)
                                                                                     
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
-    MX_RTC_Init();
-    MX_I2C1_Init();
+
+
+
+	uint32_t *rcc_bdcr = &(RCC->BDCR);
+	uint16_t *rtc_prlh = &(RTC->PRLH);
+	uint16_t *rtc_prll = &(RTC->PRLL);
+	uint16_t *rtc_cnth = &(RTC->CNTH);
+	uint16_t *rtc_cntl = &(RTC->CNTL);
+
+    //MX_RTC_Init();
+
+	/*
+	//-------------------------------------------------------
+	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
+	RCC->BDCR |= RCC_BDCR_BDRST;  // reset backup domain
+  	HAL_Delay(10);
+	RCC->BDCR &= ~RCC_BDCR_BDRST;  // stop reset backup domain
+  	HAL_Delay(100);
+	RCC->BDCR |= RCC_BDCR_LSEON;
+	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
+	while((RCC->BDCR & RCC_BDCR_LSERDY) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
+	RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
+	RCC->BDCR |= RCC_BDCR_RTCEN;
+	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
+	//-------------------------------------------------------
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+  		HAL_Delay(100);
+	}
+	RTC->CRL |= RTC_CRL_CNF;   // enter configuration mode
+	RTC->PRLH = 0;
+	RTC->PRLL = 0x7fff;
+	RTC->CRL &= ~RTC_CRL_RSF;
+	RTC->CRL &= ~RTC_CRL_CNF;   // exit configuration mode
+	//while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	//{
+  		//HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+  		//HAL_Delay(100);
+	//}
+	//-------------------------------------------------------
+	//*/
+
+	MX_I2C1_Init();
     MX_I2C2_Init();
     MX_SPI1_Init();
     // enable spi1
@@ -120,6 +169,7 @@ int main(void)
 	one_second_timer_start();
     MX_TIM3_Init();
     MX_TIM4_Init();
+	gps_object_init();
     MX_USART2_UART_Init();
 
   	HAL_GPIO_WritePin(GPIOC, led0_Pin, GPIO_PIN_RESET);// turn led on
@@ -159,18 +209,44 @@ int main(void)
   	ssd1306_WriteString("Start..", Font_16x26, White);
   	ssd1306_UpdateScreen();
 
+	rtc_ds3231_set_i2c_handle(&hi2c1);
+	rtc_ds3231_set_time(0, 0, 0);
+
 	//-------------set time-date--------------------------
 	/*
-	uint32_t seconds_in_minute = 60;
-	uint32_t seconds_in_hour = seconds_in_minute * 60;
-	uint32_t seconds_in_day = seconds_in_hour * 24;
-	
-	int days = 2;
-	int hours = 11;
-	int minutes = 24;
+	int days = 15;
+	int hours = 16;
+	int minutes = 53;
 
 	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
-	RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
+	//RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
+	//-------------------------------------------------------
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+  		HAL_Delay(100);
+	}
+	RTC->CRL |= RTC_CRL_CNF;   // enter configuration mode
+	RTC->CNTH = (uint16_t)(rtc_time_counter >> 16);
+	RTC->CNTL = (uint16_t)rtc_time_counter;
+	RTC->CRL &= ~RTC_CRL_CNF;   // exit configuration mode
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+  		HAL_Delay(100);
+	}
+	//-------------------------------------------------------
+
+	//-------------------------------------------------------
+	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
+	{
+  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
+
+  		HAL_Delay(100);
+	}
+	RTC->CRL |= RTC_CRL_CNF;
+	
+
 	//*/
 	//-----------------------------------------------------
 
@@ -181,6 +257,8 @@ int main(void)
 	//sprintf(message, "*%02X\r\n", control_summ);
 	//strncat(gps_message, message, strlen(message));
 	HAL_UART_Transmit(&huart2, gps_message, strlen((const char *)gps_message), 500);
+	HAL_Delay(500);
+	__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
 
 	pressure_sensor_object_init();
 	HAL_Delay(1000);
@@ -197,17 +275,18 @@ int main(void)
 
 	uint32_t surface_pressure = 101325;
 
-  	/* Infinite loop */
-  	/* USER CODE BEGIN WHILE */
+	//************************   MAIN LOOP   *********************************
   	while (1)
   	{
 
-		gps_action();
 
 		if(one_second_timer_get_flag())
 		{
 			one_second_timer_reset_flag();
   	
+			rtc_ds3231_action();
+			gps_action();
+			
 			pressure_sensor_measure_pressure_temperature();                                                                                                   	
 		    double P = pressure_sensor_get_pressure();
 		    double actual_temperature = pressure_sensor_get_temperature();
@@ -217,25 +296,10 @@ int main(void)
 		    double accu_percentage = voltmeter_get_percentage();
 	                                                                                                                                                          
 			// time-date calculation ----------------------------------------
-			rtc_time_counter = RTC_ReadTimeCounter(&hrtc);
-			// rtc_time_counter - kolichestvo sekund c 00:00 29.08.2018
-			int days = rtc_time_counter /seconds_in_day;
-			int month;
-			if(days >= 3) 
-				month = 9;
-			else
-				month = 8;
-
-			int date = 29 + days;
-			if(date > 31)
-				date -= 31;
-
-			rtc_time_counter -= days * seconds_in_day;
-			int hours = rtc_time_counter / seconds_in_hour;
-			rtc_time_counter -= hours * seconds_in_hour;
-			int minutes = rtc_time_counter / seconds_in_minute;
-			rtc_time_counter -= minutes * seconds_in_minute;
-			int seconds = rtc_time_counter;
+			uint8_t seconds, minutes, hours;
+			rtc_ds3231_get_time(&hours, &minutes, &seconds);
+			uint8_t date = 0;
+			uint8_t month = 0;
 			//--------------------------------------------------------------
 
                                                                                                                                                               
@@ -284,7 +348,6 @@ int main(void)
 				ssd1306_Fill(Black);
   		    	//ssd1306_UpdateScreen();              
   		        ssd1306_SetCursor(0,0);
-		        //sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
 		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(0,22);

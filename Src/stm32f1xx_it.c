@@ -212,6 +212,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance==TIM2)
 	{
 		HAL_GPIO_TogglePin(GPIOC, led0_Pin);
+		one_second_timer_increment_counter();
 		one_second_timer_set_flag();
 	}
 }
@@ -223,7 +224,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 */
 void USART2_IRQHandler(void)
 {
-  HAL_UART_IRQHandler(&huart2);
+	//HAL_UART_IRQHandler(&huart2);
+	uint8_t receive_byte;
+
+	HAL_UART_Receive(&huart2, &receive_byte, 1, 500);
+	add_input_char_into_buffer(receive_byte);
+
+	if(receive_byte == '\n')
+		set_end_of_string_received_flag();
 }
 
 

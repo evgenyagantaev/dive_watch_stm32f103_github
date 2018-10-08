@@ -1,4 +1,5 @@
 #include "one_second_timer_object.h"
+#include "one_second_timer_interface.h"
 #include "main.h"
 
 
@@ -33,6 +34,18 @@ int one_second_timer_get_flag()
 {
 	return one_second_timer_flag;
 }
+
+
+void one_second_timer_increment_counter()
+{
+	seconds_counter++;
+}
+
+uint32_t one_second_timer_get_counter()
+{
+	return seconds_counter;
+}
+
 
 
 

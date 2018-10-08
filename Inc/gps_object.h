@@ -2,7 +2,10 @@
 #define GPS_OBJECT_H
 #include "main.h"
 
-static uint8_t gps_input_buffer[256];
+
+#define GPS_INPUT_BUFFER_LENGTH 256
+
+static uint8_t gps_input_buffer[GPS_INPUT_BUFFER_LENGTH];
 static int end_of_string_received_flag = 0;
 
 

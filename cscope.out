@@ -1,4 +1,4 @@
-cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001898340
+cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001902345
 	@Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 
 55 #iâdeà
@@ -260099,6 +260099,76 @@ MX_GPIO_In™
 __ılu¥lus
 
 
+	@Inc/gps_interface.h
+
+1 #iâdeà
+GPS_INTERFACE_H
+
+
+2 
+	#GPS_INTERFACE_H
+
+
+	)
+
+3 
+	~"maš.h
+"
+
+7 
+gps_objeù_š™
+();
+
+8 
+add_šput_ch¬_što_bufãr
+(
+ušt8_t
+ 
+by‹
+);
+
+9 
+£t_’d_of_¡ršg_»ûived_æag
+();
+
+11 
+gps_aùiÚ
+();
+
+	@Inc/gps_object.h
+
+1 #iâdeà
+GPS_OBJECT_H
+
+
+2 
+	#GPS_OBJECT_H
+
+
+	)
+
+3 
+	~"maš.h
+"
+
+6 
+	#GPS_INPUT_BUFFER_LENGTH
+ 256
+
+	)
+
+8 
+ušt8_t
+ 
+	ggps_šput_bufãr
+[
+GPS_INPUT_BUFFER_LENGTH
+];
+
+9 
+	g’d_of_¡ršg_»ûived_æag
+ = 0;
+
 	@Inc/i2c.h
 
 40 #iâdeà
@@ -260223,6 +260293,56 @@ __LINE__
 __ılu¥lus
 
 
+	@Inc/one_second_timer_interface.h
+
+1 #iâdeà
+ONE_SECOND_TIMER_INTERFACE_H
+
+
+2 
+	#ONE_SECOND_TIMER_INTERFACE_H
+
+
+	)
+
+4 
+	~"tim.h
+"
+
+7 
+Úe_£cÚd_tim”_£t_æag
+();
+
+8 
+Úe_£cÚd_tim”_»£t_æag
+();
+
+9 
+Úe_£cÚd_tim”_g‘_æag
+();
+
+11 
+Úe_£cÚd_tim”_š™
+();
+
+12 
+Úe_£cÚd_tim”_¡¬t
+();
+
+13 
+Úe_£cÚd_tim”_¡İ
+();
+
+15 
+Úe_£cÚd_tim”_šüem’t_couÁ”
+();
+
+16 
+ušt32_t
+ 
+Úe_£cÚd_tim”_g‘_couÁ”
+();
+
 	@Inc/one_second_timer_object.h
 
 1 #iâdeà
@@ -260243,29 +260363,11 @@ ONE_SECOND_TIMER_OBJ_H
 	gÚe_£cÚd_tim”_æag
 ;
 
-10 
-Úe_£cÚd_tim”_£t_æag
-();
-
-11 
-Úe_£cÚd_tim”_»£t_æag
-();
-
-12 
-Úe_£cÚd_tim”_g‘_æag
-();
-
-14 
-Úe_£cÚd_tim”_š™
-();
-
-15 
-Úe_£cÚd_tim”_¡¬t
-();
-
-16 
-Úe_£cÚd_tim”_¡İ
-();
+7 
+ušt32_t
+ 
+	g£cÚds_couÁ”
+ = 0;
 
 	@Inc/pressure_sensor_object.h
 
@@ -260446,6 +260548,156 @@ MX_RTC_In™
 68 #ifdeà
 __ılu¥lus
 
+
+	@Inc/rtc_ds3231_interface.h
+
+1 #iâdeà
+RTC_DS3231_INTERFACE_H
+
+
+2 
+	#RTC_DS3231_INTERFACE_H
+
+
+	)
+
+4 
+	~"maš.h
+"
+
+6 
+¹c_ds3231_g‘_d©e
+(
+ušt32_t
+ *
+y—r
+, 
+ušt8_t
+ *
+mÚth
+, ušt8_ˆ*
+d©e
+);
+
+7 
+¹c_ds3231_g‘_time
+(
+ušt8_t
+ *
+hours
+, ušt8_ˆ*
+mšu‹s
+, ušt8_ˆ*
+£cÚds
+);
+
+9 
+¹c_ds3231_£t_d©e
+(
+ušt32_t
+ 
+y—r
+, 
+ušt8_t
+ 
+mÚth
+, ušt8_ˆ
+d©e
+);
+
+10 
+¹c_ds3231_£t_time
+(
+ušt8_t
+ 
+hours
+, ušt8_ˆ
+mšu‹s
+, ušt8_ˆ
+£cÚds
+);
+
+12 
+¹c_ds3231_£t_i2c_hªdË
+(
+I2C_HªdËTy³Def
+ *
+hªdË
+);
+
+14 
+¹c_ds3231_aùiÚ
+();
+
+	@Inc/rtc_ds3231_object.h
+
+1 #iâdeà
+RTC_DS3231_OBJECT_H
+
+
+2 
+	#RTC_DS3231_OBJECT_H
+
+
+	)
+
+4 
+	~"maš.h
+"
+
+6 
+	#DS3231_BUFFER_LENGTH
+ 7
+
+	)
+
+7 
+	#DS3231_ADDRESS
+ 0x68
+
+	)
+
+9 
+ušt8_t
+ 
+	gds3231_bufãr
+[
+DS3231_BUFFER_LENGTH
+];
+
+11 
+I2C_HªdËTy³Def
+ *
+	gds3231_i2c_hªdË
+;
+
+13 
+ušt16_t
+ 
+	gds3231_shiáed_add»ss
+ = 
+DS3231_ADDRESS
+ << 1;
+
+15 
+ušt32_t
+ 
+	gy—r
+;
+
+16 
+ušt8_t
+ 
+	gmÚth
+, 
+	gd©e
+, 
+	ghours
+, 
+	gmšu‹s
+, 
+	g£cÚds
+;
 
 	@Inc/spi.h
 
@@ -262813,6 +263065,96 @@ GPIO_PIN_SET
 	}
 }
 
+	@Src/gps_object.c
+
+1 
+	~"gps_objeù.h
+"
+
+2 
+	~"gps_š‹rçû.h
+"
+
+3 
+	~"¡ršg.h
+"
+
+7 
+	$gps_objeù_š™
+()
+
+9 
+gps_šput_bufãr
+[0] = 0;
+
+10 
+	}
+}
+
+12 
+	$add_šput_ch¬_što_bufãr
+(
+ušt8_t
+ 
+by‹
+)
+
+14 
+cu¼’t_šput_šdex
+ = 
+	`¡¾’
+(
+gps_šput_bufãr
+);
+
+15 
+gps_šput_bufãr
+[
+cu¼’t_šput_šdex
+] = 
+by‹
+;
+
+16 
+gps_šput_bufãr
+[
+cu¼’t_šput_šdex
+ + 1] = 0;
+
+19 if((
+cu¼’t_šput_šdex
++1è>ğ
+GPS_INPUT_BUFFER_LENGTH
+)
+
+20 
+gps_šput_bufãr
+[0] = 0;
+
+22 
+	}
+}
+
+26 
+	$£t_’d_of_¡ršg_»ûived_æag
+()
+
+28 
+’d_of_¡ršg_»ûived_æag
+ = 1;
+
+29 
+	}
+}
+
+34 
+	$gps_aùiÚ
+()
+
+37 
+	}
+}
+
 	@Src/i2c.c
 
 41 
@@ -263279,11 +263621,19 @@ GPIO_PIN_11
 	~"d•th_sw™ch_š‹rçû.h
 "
 
-62 
+57 
+	~"gps_š‹rçû.h
+"
+
+58 
+	~"¹c_ds3231_š‹rçû.h
+"
+
+64 
 Sy¡emClock_CÚfig
 ();
 
-64 
+66 
 ušt32_t
  
 RTC_R—dTimeCouÁ”
@@ -263293,7 +263643,7 @@ RTC_HªdËTy³Def
 h¹c
 );
 
-66 
+68 
 ušt8_t
  
 gps_mes§ge_cÚŒŞ_summ_ÿlcuÏtiÚ
@@ -263301,29 +263651,29 @@ gps_mes§ge_cÚŒŞ_summ_ÿlcuÏtiÚ
 gps_mes§ge
 );
 
-80 
+82 
 	$maš
 ()
 
-83 
+85 
 mes§ge
 [256];
 
-84 
+86 
 time¡amp
 [64];
 
-86 
+88 
 gps_mes§ge
 [256];
 
-88 
+90 
 ušt32_t
  
 £cÚds_š_mšu‹
  = 60;
 
-89 
+91 
 ušt32_t
  
 £cÚds_š_hour
@@ -263331,7 +263681,7 @@ ušt32_t
 £cÚds_š_mšu‹
  * 60;
 
-90 
+92 
 ušt32_t
  
 £cÚds_š_day
@@ -263339,41 +263689,87 @@ ušt32_t
 £cÚds_š_hour
  * 24;
 
-91 
+93 
 ušt32_t
  
 ¹c_time_couÁ”
 ;
 
-96 
+98 
 	`HAL_In™
 ();
 
-100 
+102 
 	`Sy¡emClock_CÚfig
 ();
 
-103 
+105 
 	`MX_GPIO_In™
 ();
 
-104 
-	`MX_RTC_In™
-();
+109 
+ušt32_t
+ *
+rcc_bdü
+ = &(
+RCC
+->
+BDCR
+);
 
-105 
+110 
+ušt16_t
+ *
+¹c_´lh
+ = &(
+RTC
+->
+PRLH
+);
+
+111 
+ušt16_t
+ *
+¹c_´Î
+ = &(
+RTC
+->
+PRLL
+);
+
+112 
+ušt16_t
+ *
+¹c_úth
+ = &(
+RTC
+->
+CNTH
+);
+
+113 
+ušt16_t
+ *
+¹c_ú
+ = &(
+RTC
+->
+CNTL
+);
+
+155 
 	`MX_I2C1_In™
 ();
 
-106 
+156 
 	`MX_I2C2_In™
 ();
 
-107 
+157 
 	`MX_SPI1_In™
 ();
 
-109 
+159 
 SPI1
 ->
 CR1
@@ -263381,11 +263777,11 @@ CR1
 SPI_CR1_SPE
 ;
 
-110 
+160 
 	`MX_SPI2_In™
 ();
 
-112 
+162 
 SPI2
 ->
 CR1
@@ -263393,43 +263789,47 @@ CR1
 SPI_CR1_SPE
 ;
 
-113 
+163 
 	`MX_USART1_UART_In™
 ();
 
-114 
+164 
 	`MX_ADC1_In™
 ();
 
-115 
+165 
 	`MX_ADC2_In™
 ();
 
-116 
+166 
 	`MX_TIM1_In™
 ();
 
-118 
+168 
 	`Úe_£cÚd_tim”_š™
 ();
 
-119 
+169 
 	`Úe_£cÚd_tim”_¡¬t
 ();
 
-120 
+170 
 	`MX_TIM3_In™
 ();
 
-121 
+171 
 	`MX_TIM4_In™
 ();
 
-122 
+172 
+	`gps_objeù_š™
+();
+
+173 
 	`MX_USART2_UART_In™
 ();
 
-124 
+175 
 	`HAL_GPIO_Wr™ePš
 (
 GPIOC
@@ -263439,53 +263839,53 @@ GPIOC
 GPIO_PIN_RESET
 );
 
-127 
+178 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c1
 , 1);
 
-128 
+179 
 	`ssd1306_In™
 ();
 
-129 
+180 
 	`HAL_D–ay
 (1000);
 
-130 
+181 
 	`ssd1306_Fl
 (
 Wh™e
 );
 
-131 
+182 
 	`ssd1306_Upd©eSü“n
 ();
 
-132 
+183 
 	`HAL_D–ay
 (1000);
 
-133 
+184 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-134 
+185 
 	`ssd1306_Upd©eSü“n
 ();
 
-136 
+187 
 	`HAL_D–ay
 (1000);
 
-138 
+189 
 	`ssd1306_S‘CursÜ
 (0,0);
 
-139 
+190 
 	`ssd1306_Wr™eSŒšg
 ("DiveCmp", 
 FÚt_16x26
@@ -263493,11 +263893,11 @@ FÚt_16x26
 Wh™e
 );
 
-140 
+191 
 	`ssd1306_S‘CursÜ
 (0,30);
 
-141 
+192 
 	`ssd1306_Wr™eSŒšg
 ("S¹..", 
 FÚt_16x26
@@ -263505,57 +263905,57 @@ FÚt_16x26
 Wh™e
 );
 
-142 
+193 
 	`ssd1306_Upd©eSü“n
 ();
 
-144 
+195 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c2
 , 2);
 
-145 
+196 
 	`ssd1306_In™
 ();
 
-146 
+197 
 	`HAL_D–ay
 (1000);
 
-147 
+198 
 	`ssd1306_Fl
 (
 Wh™e
 );
 
-148 
+199 
 	`ssd1306_Upd©eSü“n
 ();
 
-149 
+200 
 	`HAL_D–ay
 (1000);
 
-150 
+201 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-151 
+202 
 	`ssd1306_Upd©eSü“n
 ();
 
-153 
+204 
 	`HAL_D–ay
 (1000);
 
-155 
+206 
 	`ssd1306_S‘CursÜ
 (0,0);
 
-156 
+207 
 	`ssd1306_Wr™eSŒšg
 ("DiveCmp", 
 FÚt_16x26
@@ -263563,11 +263963,11 @@ FÚt_16x26
 Wh™e
 );
 
-157 
+208 
 	`ssd1306_S‘CursÜ
 (0,30);
 
-158 
+209 
 	`ssd1306_Wr™eSŒšg
 ("S¹..", 
 FÚt_16x26
@@ -263575,17 +263975,27 @@ FÚt_16x26
 Wh™e
 );
 
-159 
+210 
 	`ssd1306_Upd©eSü“n
 ();
 
-178 
+212 
+	`¹c_ds3231_£t_i2c_hªdË
+(&
+hi2c1
+);
+
+213 
+	`¹c_ds3231_£t_time
+(0, 0, 0);
+
+255 
 	`¥rštf
 (
 gps_mes§ge
 , "$PMTK161,0*28\r\n");
 
-182 
+259 
 	`HAL_UART_T¿nsm™
 (&
 hu¬t2
@@ -263595,239 +264005,199 @@ gps_mes§ge
 	`¡¾’
 ((const *)gps_message), 500);
 
-184 
+260 
+	`HAL_D–ay
+(500);
+
+261 
+	`__HAL_UART_ENABLE_IT
+(&
+hu¬t2
+, 
+UART_IT_RXNE
+);
+
+263 
 	`´essu»_£nsÜ_objeù_š™
 ();
 
-185 
+264 
 	`HAL_D–ay
 (1000);
 
-187 
+266 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c1
 , 1);
 
-188 
+267 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-189 
+268 
 	`ssd1306_Upd©eSü“n
 ();
 
-190 
+269 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c2
 , 2);
 
-191 
+270 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-192 
+271 
 	`ssd1306_Upd©eSü“n
 ();
 
-195 
+274 
 	`d•th_sw™ch_tuº_sigÇl_Ëd
 (1);
 
-197 
+276 
 ušt32_t
  
 surçû_´essu»
  = 101325;
 
-204 if(
+283 if(
 	`Úe_£cÚd_tim”_g‘_æag
 ())
 
-206 
+285 
 	`Úe_£cÚd_tim”_»£t_æag
 ();
 
-208 
+287 
+	`¹c_ds3231_aùiÚ
+();
+
+288 
+	`gps_aùiÚ
+();
+
+290 
 	`´essu»_£nsÜ_m—su»_´essu»_‹m³¿tu»
 ();
 
-209 
+291 
 P
  = 
 	`´essu»_£nsÜ_g‘_´essu»
 ();
 
-210 
+292 
 aùu®_‹m³¿tu»
  = 
 	`´essu»_£nsÜ_g‘_‹m³¿tu»
 ();
 
-212 
+294 
 	`vŞtm‘”_m—su»_vŞge
 ();
 
-213 
+295 
 accu_vŞge
  = 
 	`vŞtm‘”_g‘_vŞge
 ();
 
-214 
+296 
 accu_³rûÁage
  = 
 	`vŞtm‘”_g‘_³rûÁage
 ();
 
-217 
-¹c_time_couÁ”
- = 
-	`RTC_R—dTimeCouÁ”
+299 
+ušt8_t
+ 
+£cÚds
+, 
+mšu‹s
+, 
+hours
+;
+
+300 
+	`¹c_ds3231_g‘_time
 (&
-h¹c
+hours
+, &
+mšu‹s
+, &
+£cÚds
 );
 
-219 
-days
- = 
-¹c_time_couÁ”
- /
-£cÚds_š_day
-;
-
-220 
-mÚth
-;
-
-221 if(
-days
- >= 3)
-
-222 
-mÚth
- = 9;
-
-224 
-mÚth
- = 8;
-
-226 
+301 
+ušt8_t
+ 
 d©e
- = 29 + 
-days
-;
+ = 0;
 
-227 if(
-d©e
- > 31)
+302 
+ušt8_t
+ 
+mÚth
+ = 0;
 
-228 
-d©e
- -= 31;
-
-230 
-¹c_time_couÁ”
- -ğ
-days
- * 
-£cÚds_š_day
-;
-
-231 
-hours
- = 
-¹c_time_couÁ”
- / 
-£cÚds_š_hour
-;
-
-232 
-¹c_time_couÁ”
- -ğ
-hours
- * 
-£cÚds_š_hour
-;
-
-233 
-mšu‹s
- = 
-¹c_time_couÁ”
- / 
-£cÚds_š_mšu‹
-;
-
-234 
-¹c_time_couÁ”
- -ğ
-mšu‹s
- * 
-£cÚds_š_mšu‹
-;
-
-235 
-£cÚds
- = 
-¹c_time_couÁ”
-;
-
-247 if(
+314 if(
 P
  <ğ
 surçû_´essu»
 )
 
-248 
+315 
 surçû_´essu»
  = 
 P
 ;
 
-250 
+317 
 we_¬e_und”_w©”
  = 0;
 
-252 if(
+319 if(
 P
  > (
 surçû_´essu»
  + 9800))
 
-253 
+320 
 we_¬e_und”_w©”
  = 1;
 
-255 if(!
+322 if(!
 we_¬e_und”_w©”
 )
 
-257 
+324 
 	`d•th_sw™ch_aùiÚ
 ();
 
-259 
+326 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c1
 , 1);
 
-260 
+327 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-262 
+329 
 	`ssd1306_S‘CursÜ
 (0,0);
 
-264 
+331 
 	`¥rštf
 (
 time¡amp
@@ -263841,7 +264211,7 @@ d©e
 mÚth
 );
 
-265 
+332 
 	`ssd1306_Wr™eSŒšg
 (
 time¡amp
@@ -263851,11 +264221,11 @@ FÚt_11x18
 Wh™e
 );
 
-266 
+333 
 	`ssd1306_S‘CursÜ
 (0,22);
 
-267 
+334 
 	`¥rštf
 (
 mes§ge
@@ -263863,7 +264233,7 @@ mes§ge
 	`d•th_sw™ch_g‘_cu¼’t_d•th
 ());
 
-268 
+335 
 	`ssd1306_Wr™eSŒšg
 (
 mes§ge
@@ -263873,11 +264243,11 @@ FÚt_11x18
 Wh™e
 );
 
-269 
+336 
 	`ssd1306_S‘CursÜ
 (0,44);
 
-270 
+337 
 	`¥rštf
 (
 mes§ge
@@ -263885,7 +264255,7 @@ mes§ge
 accu_³rûÁage
 );
 
-271 
+338 
 	`ssd1306_Wr™eSŒšg
 (
 mes§ge
@@ -263895,11 +264265,11 @@ FÚt_11x18
 Wh™e
 );
 
-272 
+339 
 	`ssd1306_Upd©eSü“n
 ();
 
-277 
+344 
 d•th
  = (()(
 P
@@ -263907,316 +264277,40 @@ P
 surçû_´essu»
 ))/9800.0;
 
-280 
-	`ssd1306_£t_i2c_pÜt
-(&
-hi2c1
-, 1);
-
-281 
-	`ssd1306_Fl
-(
-BÏck
-);
-
-283 
-	`ssd1306_S‘CursÜ
-(0,0);
-
-285 
-	`¥rštf
-(
-time¡amp
-, "%02d:%02d %02d.%02d", 
-hours
-, 
-mšu‹s
-, 
-d©e
-, 
-mÚth
-);
-
-286 
-	`ssd1306_Wr™eSŒšg
-(
-time¡amp
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-287 
-	`ssd1306_S‘CursÜ
-(0,22);
-
-288 
-	`¥rštf
-(
-mes§ge
-, "glubš¨%02dm", ()
-d•th
-);
-
-289 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-290 
-	`ssd1306_S‘CursÜ
-(0,44);
-
-291 
-	`¥rštf
-(
-mes§ge
-, "akkum %02d%%", ()
-accu_³rûÁage
-);
-
-292 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-293 
-	`ssd1306_Upd©eSü“n
-();
-
-298 if(
-d•th
- > 
-	`d•th_sw™ch_g‘_cu¼’t_d•th
-())
-
-301 
-	`HAL_GPIO_Wr™ePš
-(
-GPIOB
-, 
-GPIO_PIN_0
- | 
-GPIO_PIN_1
-, 
-GPIO_PIN_SET
-);
-
-304 
-	`HAL_GPIO_Wr™ePš
-(
-GPIOB
-, 
-GPIO_PIN_3
- | 
-GPIO_PIN_4
- | 
-GPIO_PIN_5
-, 
-GPIO_PIN_SET
-);
-
-305 
-	`HAL_GPIO_Wr™ePš
-(
-GPIOA
-, 
-GPIO_PIN_15
-, 
-GPIO_PIN_SET
-);
-
-309 
-	`ssd1306_£t_i2c_pÜt
-(&
-hi2c1
-, 1);
-
-310 
-	`ssd1306_Fl
-(
-BÏck
-);
-
-311 
-	`ssd1306_S‘CursÜ
-(0,0);
-
-313 
-	`¥rštf
-(
-time¡amp
-, "%02d:%02d %02d.%02d", 
-hours
-, 
-mšu‹s
-, 
-d©e
-, 
-mÚth
-);
-
-314 
-	`ssd1306_Wr™eSŒšg
-(
-time¡amp
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-315 
-	`ssd1306_S‘CursÜ
-(0,22);
-
-316 
-	`¥rštf
-(
-mes§ge
-, ">>>>> %02dm", ()
-d•th
-);
-
-317 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-318 
-	`ssd1306_S‘CursÜ
-(0,44);
-
-319 
-	`¥rštf
-(
-mes§ge
-, "activated!!!");
-
-320 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-321 
-	`ssd1306_Upd©eSü“n
-();
-
-325 
-	`HAL_D–ay
-(21000);
-
-329 
-	`HAL_GPIO_Wr™ePš
-(
-GPIOB
-, 
-GPIO_PIN_0
- | 
-GPIO_PIN_1
-, 
-GPIO_PIN_RESET
-);
-
-341 
-	`ssd1306_£t_i2c_pÜt
-(&
-hi2c2
-, 2);
-
-342 
-	`ssd1306_Fl
-(
-BÏck
-);
-
-344 
-	`ssd1306_S‘CursÜ
-(0,0);
-
-345 
-	`¥rštf
-(
-time¡amp
-, "%02d:%02d:%02d %02d", 
-hours
-, 
-mšu‹s
-, 
-£cÚds
-, 
-d©e
-);
-
-346 
-	`ssd1306_Wr™eSŒšg
-(
-time¡amp
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
 347 
-	`ssd1306_S‘CursÜ
-(0,22);
+	`ssd1306_£t_i2c_pÜt
+(&
+hi2c1
+, 1);
 
 348 
-	`¥rštf
+	`ssd1306_Fl
 (
-mes§ge
-, "%06d", ()
-P
-);
-
-349 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
+BÏck
 );
 
 350 
 	`ssd1306_S‘CursÜ
-(81,22);
+(0,0);
 
 351 
 	`¥rštf
 (
-mes§ge
-, "V%03d", ()
-accu_vŞge
+time¡amp
+, "%02d:%02d %02d.%02d", 
+hours
+, 
+mšu‹s
+, 
+d©e
+, 
+mÚth
 );
 
 352 
 	`ssd1306_Wr™eSŒšg
 (
-mes§ge
+time¡amp
 , 
 FÚt_11x18
 , 
@@ -264225,14 +264319,14 @@ Wh™e
 
 353 
 	`ssd1306_S‘CursÜ
-(0,44);
+(0,22);
 
 354 
 	`¥rštf
 (
 mes§ge
-, "T%04d", ()
-aùu®_‹m³¿tu»
+, "glubš¨%02dm", ()
+d•th
 );
 
 355 
@@ -264247,13 +264341,13 @@ Wh™e
 
 356 
 	`ssd1306_S‘CursÜ
-(81,44);
+(0,44);
 
 357 
 	`¥rštf
 (
 mes§ge
-, "%03d%%", ()
+, "akkum %02d%%", ()
 accu_³rûÁage
 );
 
@@ -264271,33 +264365,309 @@ Wh™e
 	`ssd1306_Upd©eSü“n
 ();
 
-369 
+364 if(
+d•th
+ > 
+	`d•th_sw™ch_g‘_cu¼’t_d•th
+())
+
+367 
+	`HAL_GPIO_Wr™ePš
+(
+GPIOB
+, 
+GPIO_PIN_0
+ | 
+GPIO_PIN_1
+, 
+GPIO_PIN_SET
+);
+
+370 
+	`HAL_GPIO_Wr™ePš
+(
+GPIOB
+, 
+GPIO_PIN_3
+ | 
+GPIO_PIN_4
+ | 
+GPIO_PIN_5
+, 
+GPIO_PIN_SET
+);
+
+371 
+	`HAL_GPIO_Wr™ePš
+(
+GPIOA
+, 
+GPIO_PIN_15
+, 
+GPIO_PIN_SET
+);
+
+375 
+	`ssd1306_£t_i2c_pÜt
+(&
+hi2c1
+, 1);
+
+376 
+	`ssd1306_Fl
+(
+BÏck
+);
+
+377 
+	`ssd1306_S‘CursÜ
+(0,0);
+
+379 
+	`¥rštf
+(
+time¡amp
+, "%02d:%02d %02d.%02d", 
+hours
+, 
+mšu‹s
+, 
+d©e
+, 
+mÚth
+);
+
+380 
+	`ssd1306_Wr™eSŒšg
+(
+time¡amp
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+381 
+	`ssd1306_S‘CursÜ
+(0,22);
+
+382 
+	`¥rštf
+(
+mes§ge
+, ">>>>> %02dm", ()
+d•th
+);
+
+383 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+384 
+	`ssd1306_S‘CursÜ
+(0,44);
+
+385 
+	`¥rštf
+(
+mes§ge
+, "activated!!!");
+
+386 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+387 
+	`ssd1306_Upd©eSü“n
+();
+
+391 
+	`HAL_D–ay
+(21000);
+
+395 
+	`HAL_GPIO_Wr™ePš
+(
+GPIOB
+, 
+GPIO_PIN_0
+ | 
+GPIO_PIN_1
+, 
+GPIO_PIN_RESET
+);
+
+407 
+	`ssd1306_£t_i2c_pÜt
+(&
+hi2c2
+, 2);
+
+408 
+	`ssd1306_Fl
+(
+BÏck
+);
+
+410 
+	`ssd1306_S‘CursÜ
+(0,0);
+
+411 
+	`¥rštf
+(
+time¡amp
+, "%02d:%02d:%02d %02d", 
+hours
+, 
+mšu‹s
+, 
+£cÚds
+, 
+d©e
+);
+
+412 
+	`ssd1306_Wr™eSŒšg
+(
+time¡amp
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+413 
+	`ssd1306_S‘CursÜ
+(0,22);
+
+414 
+	`¥rštf
+(
+mes§ge
+, "%06d", ()
+P
+);
+
+415 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+416 
+	`ssd1306_S‘CursÜ
+(81,22);
+
+417 
+	`¥rštf
+(
+mes§ge
+, "V%03d", ()
+accu_vŞge
+);
+
+418 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+419 
+	`ssd1306_S‘CursÜ
+(0,44);
+
+420 
+	`¥rštf
+(
+mes§ge
+, "T%04d", ()
+aùu®_‹m³¿tu»
+);
+
+421 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+422 
+	`ssd1306_S‘CursÜ
+(81,44);
+
+423 
+	`¥rštf
+(
+mes§ge
+, "%03d%%", ()
+accu_³rûÁage
+);
+
+424 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+425 
+	`ssd1306_Upd©eSü“n
+();
+
+435 
 	}
 }
 
-384 
+450 
 	$Sy¡emClock_CÚfig
 ()
 
-387 
+453 
 RCC_OscIn™Ty³Def
  
 RCC_OscIn™SŒuù
 ;
 
-388 
+454 
 RCC_ClkIn™Ty³Def
  
 RCC_ClkIn™SŒuù
 ;
 
-389 
+455 
 RCC_P”hCLKIn™Ty³Def
  
 P”hClkIn™
 ;
 
-393 
+459 
 RCC_OscIn™SŒuù
 .
 OscÏtÜTy³
@@ -264307,7 +264677,7 @@ RCC_OSCILLATORTYPE_LSI
 RCC_OSCILLATORTYPE_HSE
 ;
 
-394 
+460 
 RCC_OscIn™SŒuù
 .
 HSES‹
@@ -264315,7 +264685,7 @@ HSES‹
 RCC_HSE_ON
 ;
 
-395 
+461 
 RCC_OscIn™SŒuù
 .
 HSEP»divV®ue
@@ -264323,7 +264693,7 @@ HSEP»divV®ue
 RCC_HSE_PREDIV_DIV2
 ;
 
-396 
+462 
 RCC_OscIn™SŒuù
 .
 HSIS‹
@@ -264331,7 +264701,7 @@ HSIS‹
 RCC_HSI_ON
 ;
 
-397 
+463 
 RCC_OscIn™SŒuù
 .
 LSIS‹
@@ -264339,7 +264709,7 @@ LSIS‹
 RCC_LSI_ON
 ;
 
-398 
+464 
 RCC_OscIn™SŒuù
 .
 PLL
@@ -264349,7 +264719,7 @@ PLLS‹
 RCC_PLL_ON
 ;
 
-399 
+465 
 RCC_OscIn™SŒuù
 .
 PLL
@@ -264359,7 +264729,7 @@ PLLSourû
 RCC_PLLSOURCE_HSE
 ;
 
-400 
+466 
 RCC_OscIn™SŒuù
 .
 PLL
@@ -264369,7 +264739,7 @@ PLLMUL
 RCC_PLL_MUL2
 ;
 
-401 ià(
+467 ià(
 	`HAL_RCC_OscCÚfig
 (&
 RCC_OscIn™SŒuù
@@ -264377,7 +264747,7 @@ RCC_OscIn™SŒuù
 HAL_OK
 )
 
-403 
+469 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -264385,7 +264755,7 @@ __FILE__
 __LINE__
 );
 
-408 
+474 
 RCC_ClkIn™SŒuù
 .
 ClockTy³
@@ -264395,13 +264765,13 @@ RCC_CLOCKTYPE_HCLK
 RCC_CLOCKTYPE_SYSCLK
 
 
-409 |
+475 |
 RCC_CLOCKTYPE_PCLK1
 |
 RCC_CLOCKTYPE_PCLK2
 ;
 
-410 
+476 
 RCC_ClkIn™SŒuù
 .
 SYSCLKSourû
@@ -264409,7 +264779,7 @@ SYSCLKSourû
 RCC_SYSCLKSOURCE_PLLCLK
 ;
 
-411 
+477 
 RCC_ClkIn™SŒuù
 .
 AHBCLKDivid”
@@ -264417,7 +264787,7 @@ AHBCLKDivid”
 RCC_SYSCLK_DIV4
 ;
 
-412 
+478 
 RCC_ClkIn™SŒuù
 .
 APB1CLKDivid”
@@ -264425,7 +264795,7 @@ APB1CLKDivid”
 RCC_HCLK_DIV1
 ;
 
-413 
+479 
 RCC_ClkIn™SŒuù
 .
 APB2CLKDivid”
@@ -264433,7 +264803,7 @@ APB2CLKDivid”
 RCC_HCLK_DIV1
 ;
 
-415 ià(
+481 ià(
 	`HAL_RCC_ClockCÚfig
 (&
 RCC_ClkIn™SŒuù
@@ -264443,7 +264813,7 @@ FLASH_LATENCY_0
 HAL_OK
 )
 
-417 
+483 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -264451,7 +264821,7 @@ __FILE__
 __LINE__
 );
 
-420 
+486 
 P”hClkIn™
 .
 P”hClockS–eùiÚ
@@ -264461,7 +264831,7 @@ RCC_PERIPHCLK_RTC
 RCC_PERIPHCLK_ADC
 ;
 
-424 
+490 
 P”hClkIn™
 .
 RTCClockS–eùiÚ
@@ -264469,7 +264839,7 @@ RTCClockS–eùiÚ
 RCC_RTCCLKSOURCE_LSI
 ;
 
-425 
+491 
 P”hClkIn™
 .
 AdcClockS–eùiÚ
@@ -264477,7 +264847,7 @@ AdcClockS–eùiÚ
 RCC_ADCPCLK2_DIV2
 ;
 
-426 ià(
+492 ià(
 	`HAL_RCCEx_P”hCLKCÚfig
 (&
 P”hClkIn™
@@ -264485,7 +264855,7 @@ P”hClkIn™
 HAL_OK
 )
 
-428 
+494 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -264493,29 +264863,29 @@ __FILE__
 __LINE__
 );
 
-433 
+499 
 	`HAL_SYSTICK_CÚfig
 (
 	`HAL_RCC_G‘HCLKF»q
 ()/1000);
 
-437 
+503 
 	`HAL_SYSTICK_CLKSourûCÚfig
 (
 SYSTICK_CLKSOURCE_HCLK
 );
 
-440 
+506 
 	`HAL_NVIC_S‘PriÜ™y
 (
 SysTick_IRQn
 , 0, 0);
 
-441 
+507 
 	}
 }
 
-453 
+519 
 	$_E¼Ü_HªdËr
 (*
 fe
@@ -264523,15 +264893,15 @@ fe
 lše
 )
 
-461 
+527 
 	}
 }
 
-463 #ifdeà 
+529 #ifdeà 
 USE_FULL_ASSERT
 
 
-471 
+537 
 	$as£¹_çed
 (
 ušt8_t
@@ -264543,11 +264913,11 @@ ušt32_t
 lše
 )
 
-477 
+543 
 	}
 }
 
-482 
+548 
 ušt8_t
  
 	$gps_mes§ge_cÚŒŞ_summ_ÿlcuÏtiÚ
@@ -264555,7 +264925,7 @@ ušt8_t
 gps_mes§ge
 )
 
-484 
+550 
 Ëngth
  = 
 	`¡¾’
@@ -264563,7 +264933,7 @@ gps_mes§ge
 gps_mes§ge
 );
 
-486 
+552 
 ušt8_t
  
 »tuº_v®ue
@@ -264571,17 +264941,17 @@ ušt8_t
 gps_mes§ge
 [1];
 
-487 
+553 
 i
 ;
 
-488 
+554 
 i
 =2; i<
 Ëngth
 ; i++)
 
-489 
+555 
 »tuº_v®ue
  ^ğ
 gps_mes§ge
@@ -264589,11 +264959,11 @@ gps_mes§ge
 i
 ];
 
-491  
+557  
 »tuº_v®ue
 ;
 
-492 
+558 
 	}
 }
 
@@ -264604,86 +264974,116 @@ i
 "
 
 2 
+	~"Úe_£cÚd_tim”_š‹rçû.h
+"
+
+3 
 	~"maš.h
 "
 
-5 
+6 
 	$Úe_£cÚd_tim”_š™
 ()
 
-8 
+9 
 	`Úe_£cÚd_tim”_»£t_æag
 ();
 
-10 
+11 
 	`MX_TIM2_In™
 ();
 
-12 
+13 
 	}
 }
 
-13 
+14 
 	$Úe_£cÚd_tim”_¡¬t
 ()
 
-15 
+16 
 	`HAL_TIM_Ba£_S¹_IT
 (&
 htim2
 );
 
-16 
+17 
 	}
 }
 
-17 
+18 
 	$Úe_£cÚd_tim”_¡İ
 ()
 
-19 
+20 
 	`HAL_TIM_Ba£_Stİ_IT
 (&
 htim2
 );
 
-20 
+21 
 	}
 }
 
-24 
+25 
 	$Úe_£cÚd_tim”_£t_æag
 ()
 
-26 
+27 
 Úe_£cÚd_tim”_æag
  = 1;
 
-27 
+28 
 	}
 }
 
-28 
+29 
 	$Úe_£cÚd_tim”_»£t_æag
 ()
 
-30 
+31 
 Úe_£cÚd_tim”_æag
  = 0;
 
-31 
+32 
 	}
 }
 
-32 
+33 
 	$Úe_£cÚd_tim”_g‘_æag
 ()
 
-34  
+35  
 Úe_£cÚd_tim”_æag
 ;
 
-35 
+36 
+	}
+}
+
+39 
+	$Úe_£cÚd_tim”_šüem’t_couÁ”
+()
+
+41 
+£cÚds_couÁ”
+++;
+
+42 
+	}
+}
+
+44 
+ušt32_t
+ 
+	$Úe_£cÚd_tim”_g‘_couÁ”
+()
+
+46  
+£cÚds_couÁ”
+;
+
+47 
 	}
 }
 
@@ -265281,7 +265681,7 @@ In™
 AsynchP»div
  = 39650;
 
-58 
+59 
 h¹c
 .
 In™
@@ -265291,7 +265691,7 @@ OutPut
 RTC_OUTPUTSOURCE_NONE
 ;
 
-59 ià(
+60 ià(
 	`HAL_RTC_In™
 (&
 h¹c
@@ -265299,7 +265699,7 @@ h¹c
 HAL_OK
 )
 
-61 
+62 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -265307,11 +265707,11 @@ __FILE__
 __LINE__
 );
 
-106 
+107 
 	}
 }
 
-108 
+109 
 	$HAL_RTC_M¥In™
 (
 RTC_HªdËTy³Def
@@ -265319,7 +265719,7 @@ RTC_HªdËTy³Def
 ¹cHªdË
 )
 
-111 if(
+112 if(
 ¹cHªdË
 ->
 In¡ªû
@@ -265327,23 +265727,23 @@ In¡ªû
 RTC
 )
 
-114 
+115 
 	`HAL_PWR_EÇbËBkUpAcûss
 ();
 
-116 
+117 
 	`__HAL_RCC_BKP_CLK_ENABLE
 ();
 
-118 
+119 
 	`__HAL_RCC_RTC_ENABLE
 ();
 
-121 
+122 
 	}
 }
 
-123 
+124 
 	$HAL_RTC_M¥DeIn™
 (
 RTC_HªdËTy³Def
@@ -265351,7 +265751,7 @@ RTC_HªdËTy³Def
 ¹cHªdË
 )
 
-126 if(
+127 if(
 ¹cHªdË
 ->
 In¡ªû
@@ -265359,11 +265759,179 @@ In¡ªû
 RTC
 )
 
-132 
+133 
 	`__HAL_RCC_RTC_DISABLE
 ();
 
-137 
+138 
+	}
+}
+
+	@Src/rtc_ds3231_object.c
+
+1 
+	~"¹c_ds3231_objeù.h
+"
+
+2 
+	~"¹c_ds3231_š‹rçû.h
+"
+
+6 
+¹c_ds3231_g‘_d©e
+(
+ušt32_t
+ *
+y—r
+, 
+ušt8_t
+ *
+mÚth
+, ušt8_ˆ*
+d©e
+);
+
+7 
+	$¹c_ds3231_g‘_time
+(
+ušt8_t
+ *
+Hours
+, ušt8_ˆ*
+Mšu‹s
+, ušt8_ˆ*
+SecÚds
+)
+
+9 
+Hours
+ = 
+hours
+;
+
+10 
+Mšu‹s
+ = 
+mšu‹s
+;
+
+11 
+SecÚds
+ = 
+£cÚds
+;
+
+12 
+	}
+}
+
+14 
+¹c_ds3231_£t_d©e
+(
+ušt32_t
+ 
+y—r
+, 
+ušt8_t
+ 
+mÚth
+, ušt8_ˆ
+d©e
+);
+
+15 
+	$¹c_ds3231_£t_time
+(
+ušt8_t
+ 
+hours
+, ušt8_ˆ
+mšu‹s
+, ušt8_ˆ
+£cÚds
+)
+
+17 
+ds3231_bufãr
+[0] = 0;
+
+18 
+ds3231_bufãr
+[1] = 0;
+
+19 
+ds3231_bufãr
+[2] = 0;
+
+21 
+	`HAL_I2C_Ma¡”_T¿nsm™
+(
+ds3231_i2c_hªdË
+, 
+ds3231_shiáed_add»ss
+, 
+ds3231_bufãr
+, 
+DS3231_BUFFER_LENGTH
+, 500);
+
+22 
+	}
+}
+
+24 
+	$¹c_ds3231_£t_i2c_hªdË
+(
+I2C_HªdËTy³Def
+ *
+hªdË
+)
+
+26 
+ds3231_i2c_hªdË
+ = 
+hªdË
+;
+
+27 
+	}
+}
+
+30 
+	$¹c_ds3231_aùiÚ
+()
+
+33 
+	`HAL_I2C_Ma¡”_Reûive
+(
+ds3231_i2c_hªdË
+, 
+ds3231_shiáed_add»ss
+, 
+ds3231_bufãr
+, 
+DS3231_BUFFER_LENGTH
+, 500);
+
+35 
+£cÚds
+ = 10*(
+ds3231_bufãr
+[0]>>4) + (ds3231_buffer[0] & 0x0f);
+
+36 
+mšu‹s
+ = 10*(
+ds3231_bufãr
+[1]>>4) + (ds3231_buffer[1] & 0x0f);
+
+37 
+hours
+ = 10*((
+ds3231_bufãr
+[2]>>4) & 0x03) + (ds3231_buffer[2] & 0x0f);
+
+38 
 	}
 }
 
@@ -266621,107 +267189,111 @@ SysTick_IRQn
 	~"Úe_£cÚd_tim”_objeù.h
 "
 
-46 
+40 
+	~"gps_š‹rçû.h
+"
+
+47 
 UART_HªdËTy³Def
  
 hu¬t2
 ;
 
-55 
+56 
 	$NMI_HªdËr
 ()
 
-63 
+64 
 	}
 }
 
-68 
+69 
 	$H¬dFauÉ_HªdËr
 ()
 
-81 
+82 
 	}
 }
 
-86 
+87 
 	$MemMªage_HªdËr
 ()
 
-99 
+100 
 	}
 }
 
-104 
+105 
 	$BusFauÉ_HªdËr
 ()
 
-117 
+118 
 	}
 }
 
-122 
+123 
 	$U§geFauÉ_HªdËr
 ()
 
-135 
+136 
 	}
 }
 
-140 
+141 
 	$SVC_HªdËr
 ()
 
-148 
+149 
 	}
 }
 
-153 
+154 
 	$DebugMÚ_HªdËr
 ()
 
-161 
+162 
 	}
 }
 
-166 
+167 
 	$P’dSV_HªdËr
 ()
 
-174 
+175 
 	}
 }
 
-179 
+180 
 	$SysTick_HªdËr
 ()
 
-184 
+185 
 	`HAL_IncTick
 ();
 
-185 
+186 
 	`HAL_SYSTICK_IRQHªdËr
 ();
 
-189 
+190 
 	}
 }
 
-201 
+202 
 	$TIM2_IRQHªdËr
 ()
 
-203 
+204 
 	`HAL_TIM_IRQHªdËr
 (&
 htim2
 );
 
-206 
+207 
 	}
 }
 
-208 
+209 
 	$HAL_TIM_P”iodEÏp£dC®lback
 (
 TIM_HªdËTy³Def
@@ -266729,7 +267301,7 @@ TIM_HªdËTy³Def
 htim
 )
 
-211 if(
+212 if(
 htim
 ->
 In¡ªû
@@ -266737,7 +267309,7 @@ In¡ªû
 TIM2
 )
 
-213 
+214 
 	`HAL_GPIO_ToggËPš
 (
 GPIOC
@@ -266745,25 +267317,91 @@ GPIOC
 Ëd0_Pš
 );
 
-214 
-	`Úe_£cÚd_tim”_£t_æag
+215 
+	`Úe_£cÚd_tim”_šüem’t_couÁ”
 ();
 
 216 
+	`Úe_£cÚd_tim”_£t_æag
+();
+
+218 
 	}
 }
 
-223 
+225 
 	$USART2_IRQHªdËr
 ()
 
-225 
-	`HAL_UART_IRQHªdËr
+228 
+ušt8_t
+ 
+»ûive_by‹
+;
+
+230 
+	`HAL_UART_Reûive
 (&
 hu¬t2
+, &
+»ûive_by‹
+, 1, 500);
+
+231 
+	`add_šput_ch¬_što_bufãr
+(
+»ûive_by‹
 );
 
-226 
+233 if(
+»ûive_by‹
+ == '\n')
+
+234 
+	`£t_’d_of_¡ršg_»ûived_æag
+();
+
+235 
+	}
+}
+
+238 
+	$HAL_UART_RxC¶tC®lback
+(
+UART_HªdËTy³Def
+ *
+hu¬t
+)
+
+241 
+ušt8_t
+ 
+»ûive_by‹
+;
+
+243 
+	`HAL_UART_Reûive
+(&
+hu¬t2
+, &
+»ûive_by‹
+, 1, 500);
+
+244 
+	`add_šput_ch¬_što_bufãr
+(
+»ûive_by‹
+);
+
+246 if(
+»ûive_by‹
+ == '\n')
+
+247 
+	`£t_’d_of_¡ršg_»ûived_æag
+();
+
+249 
 	}
 }
 
@@ -268877,14 +269515,6 @@ GPIO_NOPULL
 GPIOA
 , &
 GPIO_In™SŒuù
-);
-
-146 
-	`__HAL_UART_ENABLE_IT
-(
-USART2
-, 
-UART_IT_RXNE
 );
 
 148 
@@ -287282,8 +287912,8 @@ __END_DECLS
 .
 1
 /usr/include
-110
-3940
+117
+4102
 Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
@@ -287350,11 +287980,16 @@ Inc/depth_switch_interface.h
 Inc/depth_switch_object.h
 Inc/fonts.h
 Inc/gpio.h
+Inc/gps_interface.h
+Inc/gps_object.h
 Inc/i2c.h
 Inc/main.h
+Inc/one_second_timer_interface.h
 Inc/one_second_timer_object.h
 Inc/pressure_sensor_object.h
 Inc/rtc.h
+Inc/rtc_ds3231_interface.h
+Inc/rtc_ds3231_object.h
 Inc/spi.h
 Inc/ssd1306.h
 Inc/stm32f1xx_hal_conf.h
@@ -287366,11 +288001,13 @@ Src/adc.c
 Src/depth_switch_object.c
 Src/fonts.c
 Src/gpio.c
+Src/gps_object.c
 Src/i2c.c
 Src/main.c
 Src/one_second_timer_object.c
 Src/pressure_sensor_object.c
 Src/rtc.c
+Src/rtc_ds3231_object.c
 Src/spi.c
 Src/ssd1306.c
 Src/stm32f1xx_hal_msp.c
