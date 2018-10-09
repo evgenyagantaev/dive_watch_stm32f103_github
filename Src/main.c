@@ -210,7 +210,7 @@ int main(void)
   	ssd1306_UpdateScreen();
 
 	rtc_ds3231_set_i2c_handle(&hi2c1);
-	rtc_ds3231_set_time(0, 0, 0);
+	rtc_ds3231_set_time(15, 24, 0);
 
 	//-------------set time-date--------------------------
 	/*
