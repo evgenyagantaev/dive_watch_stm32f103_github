@@ -154,6 +154,12 @@ int main(void)
 
 	MX_I2C1_Init();
     MX_I2C2_Init();
+	//---------------------------------
+  	HAL_Delay(100);
+	rtc_ds3231_set_i2c_handle(&hi2c1);
+	//rtc_ds3231_set_time(16, 54, 0);
+	//rtc_ds3231_set_date(9, 10, 18);
+	//---------------------------------
     MX_SPI1_Init();
     // enable spi1
     SPI1->CR1 |= SPI_CR1_SPE;
@@ -177,14 +183,14 @@ int main(void)
 	//--------init display1------------------------------
     ssd1306_set_i2c_port(&hi2c1, 1);
   	ssd1306_Init();
-  	HAL_Delay(1000);
+  	HAL_Delay(100);
   	ssd1306_Fill(White);
   	ssd1306_UpdateScreen();
-  	HAL_Delay(1000);
+  	HAL_Delay(100);
   	ssd1306_Fill(Black);
   	ssd1306_UpdateScreen();
 
-  	HAL_Delay(1000);
+  	HAL_Delay(100);
 
   	ssd1306_SetCursor(0,0);
   	ssd1306_WriteString("DiveCmp", Font_16x26, White);
@@ -194,10 +200,10 @@ int main(void)
 	//--------init display2------------------------------
     ssd1306_set_i2c_port(&hi2c2, 2);
   	ssd1306_Init();
-  	HAL_Delay(1000);
+  	HAL_Delay(100);
   	ssd1306_Fill(White);
   	ssd1306_UpdateScreen();
-  	HAL_Delay(1000);
+  	HAL_Delay(100);
   	ssd1306_Fill(Black);
   	ssd1306_UpdateScreen();
 
@@ -209,8 +215,6 @@ int main(void)
   	ssd1306_WriteString("Start..", Font_16x26, White);
   	ssd1306_UpdateScreen();
 
-	rtc_ds3231_set_i2c_handle(&hi2c1);
-	rtc_ds3231_set_time(15, 24, 0);
 
 	//-------------set time-date--------------------------
 	/*
@@ -274,6 +278,16 @@ int main(void)
 	depth_switch_turn_signal_led(1);
 
 	uint32_t surface_pressure = 101325;
+				
+	/*                                                                   	
+	uint8_t aux_byte;                                                    			
+	while(1)                                                             			
+	{                                                                    			
+		// toggle i2c1 scl                                               			
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                         			
+		//pause pause 5 uSec                                             			
+	}                                                                    			
+	//*/                                                                   			
 
 	//************************   MAIN LOOP   *********************************
   	while (1)
@@ -283,7 +297,27 @@ int main(void)
 		if(one_second_timer_get_flag())
 		{
 			one_second_timer_reset_flag();
-  	
+  
+			// check i2c bus
+			int i2c_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);  // check i2c1 sda level
+
+			if(!i2c_ok) // i2c bus is not ok
+			{
+				// provide 16 i2c1 scl oscillations	
+  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high
+
+				int i;
+				uint8_t aux_byte;
+				for(i=0; i<32; i++)
+				{
+					// toggle i2c1 scl 
+					HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
+					// pause 5 uSec
+				}
+  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high
+			}
+
+
 			rtc_ds3231_action();
 			gps_action();
 			
@@ -298,8 +332,8 @@ int main(void)
 			// time-date calculation ----------------------------------------
 			uint8_t seconds, minutes, hours;
 			rtc_ds3231_get_time(&hours, &minutes, &seconds);
-			uint8_t date = 0;
-			uint8_t month = 0;
+			uint8_t date, month, year;
+			rtc_ds3231_get_date(&date, &month, &year);
 			//--------------------------------------------------------------
 
                                                                                                                                                               
