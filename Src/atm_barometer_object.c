@@ -29,8 +29,8 @@ void atm_barometer_action()
 
 void atm_barometer_get_history(uint32_t *buffer)
 {
-	buffer[0] = atm_pressure_log[11];
-	buffer[1] = atm_pressure_log[23];
-	buffer[2] = atm_pressure_log[35];
+	buffer[0] = atm_pressure_log[5];
+	buffer[1] = atm_pressure_log[11];
+	buffer[2] = atm_pressure_log[23];
 	buffer[3] = atm_pressure_log[47];
 }
