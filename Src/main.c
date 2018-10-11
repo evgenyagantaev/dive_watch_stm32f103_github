@@ -56,6 +56,7 @@
 #include "depth_switch_interface.h"
 #include "gps_interface.h"
 #include "rtc_ds3231_interface.h"
+#include "at24c32_interface.h"
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -157,6 +158,7 @@ int main(void)
 	//---------------------------------
   	HAL_Delay(100);
 	rtc_ds3231_set_i2c_handle(&hi2c1);
+	at24c32_set_i2c_handle(&hi2c1);
 	//rtc_ds3231_set_time(16, 54, 0);
 	//rtc_ds3231_set_date(9, 10, 18);
 	//---------------------------------
@@ -278,6 +280,7 @@ int main(void)
 
 	uint32_t surface_pressure = 101325;
 				
+	atm_barometer_init();
 
 	int odd_even = 0;
 	//************************   MAIN LOOP   *********************************
