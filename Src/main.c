@@ -257,9 +257,8 @@ int main(void)
 
 	// send gps module in standby mode
 	sprintf(gps_message, "$PMTK161,0*28\r\n");
-	//uint8_t control_summ = gps_message_control_summ_calculation(gps_message);
-	//sprintf(message, "*%02X\r\n", control_summ);
-	//strncat(gps_message, message, strlen(message));
+	HAL_UART_Transmit(&huart2, gps_message, strlen((const char *)gps_message), 500);
+	HAL_Delay(500);
 	HAL_UART_Transmit(&huart2, gps_message, strlen((const char *)gps_message), 500);
 	HAL_Delay(500);
 	__HAL_UART_ENABLE_IT(&huart2, UART_IT_RXNE);
@@ -279,16 +278,8 @@ int main(void)
 
 	uint32_t surface_pressure = 101325;
 				
-	/*                                                                   	
-	uint8_t aux_byte;                                                    			
-	while(1)                                                             			
-	{                                                                    			
-		// toggle i2c1 scl                                               			
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                         			
-		//pause pause 5 uSec                                             			
-	}                                                                    			
-	//*/                                                                   			
 
+	int odd_even = 0;
 	//************************   MAIN LOOP   *********************************
   	while (1)
   	{
@@ -297,6 +288,7 @@ int main(void)
 		if(one_second_timer_get_flag())
 		{
 			one_second_timer_reset_flag();
+			odd_even = (odd_even+1)%2;
   
 			// check i2c1 bus
 			int i2c1_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);  // check i2c1 sda level
@@ -352,6 +344,10 @@ int main(void)
 			rtc_ds3231_get_date(&date, &month, &year);
 			//--------------------------------------------------------------
 
+			atm_barometer_action();
+			uint32_t atm_pressure_buffer[4];
+			atm_barometer_get_history(atm_pressure_buffer);
+
                                                                                                                                                               
 		    //sprintf(timestamp, "%02x.%02x.%02x %02x:%02x:%02x   ", sDate.Date, sDate.Month, sDate.Year, sTime.Hours, sTime.Minutes, sTime.Seconds);
 		    //HAL_UART_Transmit(&huart1, timestamp, strlen((const char *)timestamp), 500);
@@ -371,22 +367,44 @@ int main(void)
 
 			if(!we_are_under_water)  // we are not under water
 			{
-				depth_switch_action();		    
 
     	   		ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
 				ssd1306_Fill(Black);
   		    	//ssd1306_UpdateScreen();              
   		        ssd1306_SetCursor(0,0);
-		        //sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
-		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
+				if(odd_even)
+		        	sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
+				else
+		        	sprintf(timestamp, "%02d %02d %02d.%02d", hours, minutes, date, month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(0,22);
-		        sprintf(message, "AVAR GL %02dm", (int)depth_switch_get_current_depth());
+		        sprintf(message, "%05d %05d", (int)(atm_pressure_buffer[0]/10), (int)(atm_pressure_buffer[1]/10));
   		        ssd1306_WriteString(message, Font_11x18, White);
   		        ssd1306_SetCursor(0,44);
-		        sprintf(message, "akkum %02d%%", (int)accu_percentage);
+		        sprintf(message, "%05d %05d", (int)(atm_pressure_buffer[2]/10), (int)(atm_pressure_buffer[3]/10));
   		        ssd1306_WriteString(message, Font_11x18, White);
   		        ssd1306_UpdateScreen();                                                                               
+				
+				//*                                                                           	
+    	        ssd1306_set_i2c_port(&hi2c2, 2);
+			    ssd1306_Fill(Black);
+  		        //ssd1306_UpdateScreen();              
+  		        ssd1306_SetCursor(0,0);
+		        //sprintf(timestamp, "%02d:%02d:%02d %02d", hours, minutes, seconds, date);
+  		        //ssd1306_WriteString(timestamp, Font_11x18, White);
+				if(odd_even)
+		        	sprintf(message, "P%05d:T%03d" , (int)(P/10), (int)(actual_temperature/10));
+				else
+		        	sprintf(message, "P%05d T%03d" , (int)(P/10), (int)(actual_temperature/10));
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(0,22);
+		        sprintf(message, "V%03d", (int)accu_voltage);
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(0,44);
+		        //sprintf(message, "%03d%%", (int)accu_percentage);
+  		        //ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_UpdateScreen();              
+			    //*/
 			}
 			else // we are under water
 			{
@@ -453,7 +471,7 @@ int main(void)
 
 
 
-			//*
+			/*
     	    ssd1306_set_i2c_port(&hi2c2, 2);
 			ssd1306_Fill(Black);
   		    //ssd1306_UpdateScreen();              

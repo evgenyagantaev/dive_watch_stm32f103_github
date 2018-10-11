@@ -1,4 +1,4 @@
-cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001902345
+cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001903756
 	@Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 
 55 #i‚de‡
@@ -259925,6 +259925,46 @@ MX_ADC2_Inô
 __˝lu•lus
 
 
+	@Inc/atm_barometer_interface.h
+
+1 #i‚de‡
+ATM_BAROMETER_INTERFACE_H
+
+
+2 
+	#ATM_BAROMETER_INTERFACE_H
+
+
+	)
+
+5 
+©m_b¨omëî_a˘i⁄
+();
+
+	@Inc/atm_barometer_object.h
+
+1 #i‚de‡
+ATM_BAROMETER_OBJECT_H
+
+
+2 
+	#ATM_BAROMETER_OBJECT_H
+
+
+	)
+
+4 
+uöt32_t
+ 
+	g©m_¥essuª_log
+[36];
+
+6 
+uöt8_t
+ 
+	ghour_ﬁd
+;
+
 	@Inc/depth_switch_interface.h
 
 1 #i‚de‡
@@ -260680,14 +260720,10 @@ DS3231_ADDRESS
  << 1;
 
 15 
-uöt32_t
- 
-	gyór
-;
-
-16 
 uöt8_t
  
+	gyór
+, 
 	gm⁄th
 , 
 	gd©e
@@ -262403,6 +262439,52 @@ GPIO_PIN_1
 	}
 }
 
+	@Src/atm_barometer_object.c
+
+1 
+	~"maö.h
+"
+
+2 
+	~"©m_b¨omëî_obje˘.h
+"
+
+3 
+	~"©m_b¨omëî_öãrÁ˚.h
+"
+
+4 
+	~"πc_ds3231_öãrÁ˚.h
+"
+
+9 
+	$©m_b¨omëî_a˘i⁄
+()
+
+12 
+uöt8_t
+ 
+hours
+, 
+möuãs
+, 
+£c⁄ds
+;
+
+13 
+	`πc_ds3231_gë_time
+(&
+hours
+, &
+möuãs
+, &
+£c⁄ds
+);
+
+16 
+	}
+}
+
 	@Src/depth_switch_object.c
 
 1 
@@ -262961,8 +263043,6 @@ Pö
 GPIO_PIN_3
  | 
 GPIO_PIN_4
- | 
-GPIO_PIN_5
 ;
 
 101 
@@ -262997,23 +263077,25 @@ GPIOB
 GPIO_InôSåu˘
 );
 
-105 
+106 
 GPIO_InôSåu˘
 .
 Pö
  = 
-GPIO_PIN_15
+GPIO_PIN_5
+ | 
+GPIO_PIN_1
 ;
 
-106 
+107 
 GPIO_InôSåu˘
 .
 Mode
  = 
-GPIO_MODE_OUTPUT_PP
+GPIO_MODE_OUTPUT_OD
 ;
 
-107 
+108 
 GPIO_InôSåu˘
 .
 PuŒ
@@ -263021,7 +263103,47 @@ PuŒ
 GPIO_NOPULL
 ;
 
-108 
+109 
+GPIO_InôSåu˘
+.
+S≥ed
+ = 
+GPIO_SPEED_FREQ_HIGH
+;
+
+110 
+	`HAL_GPIO_Inô
+(
+GPIOB
+, &
+GPIO_InôSåu˘
+);
+
+112 
+GPIO_InôSåu˘
+.
+Pö
+ = 
+GPIO_PIN_15
+;
+
+113 
+GPIO_InôSåu˘
+.
+Mode
+ = 
+GPIO_MODE_OUTPUT_PP
+;
+
+114 
+GPIO_InôSåu˘
+.
+PuŒ
+ = 
+GPIO_NOPULL
+;
+
+115 
 GPIO_InôSåu˘
 .
 S≥ed
@@ -263029,7 +263151,7 @@ S≥ed
 GPIO_SPEED_FREQ_LOW
 ;
 
-109 
+116 
 	`HAL_GPIO_Inô
 (
 GPIOA
@@ -263037,11 +263159,13 @@ GPIOA
 GPIO_InôSåu˘
 );
 
-111 
+118 
 	`HAL_GPIO_WrôePö
 (
 GPIOB
 , 
+GPIO_PIN_1
+ | 
 GPIO_PIN_3
  | 
 GPIO_PIN_4
@@ -263051,7 +263175,7 @@ GPIO_PIN_5
 GPIO_PIN_SET
 );
 
-112 
+119 
 	`HAL_GPIO_WrôePö
 (
 GPIOA
@@ -263061,7 +263185,7 @@ GPIO_PIN_15
 GPIO_PIN_SET
 );
 
-134 
+141 
 	}
 }
 
@@ -263765,11 +263889,21 @@ CNTL
 	`MX_I2C2_Inô
 ();
 
-157 
+158 
+	`HAL_Dñay
+(100);
+
+159 
+	`πc_ds3231_£t_i2c_h™dÀ
+(&
+hi2c1
+);
+
+163 
 	`MX_SPI1_Inô
 ();
 
-159 
+165 
 SPI1
 ->
 CR1
@@ -263777,11 +263911,11 @@ CR1
 SPI_CR1_SPE
 ;
 
-160 
+166 
 	`MX_SPI2_Inô
 ();
 
-162 
+168 
 SPI2
 ->
 CR1
@@ -263789,47 +263923,47 @@ CR1
 SPI_CR1_SPE
 ;
 
-163 
+169 
 	`MX_USART1_UART_Inô
 ();
 
-164 
+170 
 	`MX_ADC1_Inô
 ();
 
-165 
+171 
 	`MX_ADC2_Inô
 ();
 
-166 
+172 
 	`MX_TIM1_Inô
 ();
 
-168 
+174 
 	`⁄e_£c⁄d_timî_öô
 ();
 
-169 
+175 
 	`⁄e_£c⁄d_timî_°¨t
 ();
 
-170 
+176 
 	`MX_TIM3_Inô
 ();
 
-171 
+177 
 	`MX_TIM4_Inô
 ();
 
-172 
+178 
 	`gps_obje˘_öô
 ();
 
-173 
+179 
 	`MX_USART2_UART_Inô
 ();
 
-175 
+181 
 	`HAL_GPIO_WrôePö
 (
 GPIOC
@@ -263839,53 +263973,53 @@ GPIOC
 GPIO_PIN_RESET
 );
 
-178 
+184 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c1
 , 1);
 
-179 
+185 
 	`ssd1306_Inô
 ();
 
-180 
+186 
 	`HAL_Dñay
-(1000);
+(100);
 
-181 
+187 
 	`ssd1306_Fûl
 (
 Whôe
 );
 
-182 
+188 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-183 
+189 
 	`HAL_Dñay
-(1000);
+(100);
 
-184 
+190 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-185 
+191 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-187 
+193 
 	`HAL_Dñay
-(1000);
+(100);
 
-189 
+195 
 	`ssd1306_SëCurs‹
 (0,0);
 
-190 
+196 
 	`ssd1306_WrôeSåög
 ("DiveCmp", 
 F⁄t_16x26
@@ -263893,39 +264027,15 @@ F⁄t_16x26
 Whôe
 );
 
-191 
+197 
 	`ssd1306_SëCurs‹
 (0,30);
 
-192 
+198 
 	`ssd1306_WrôeSåög
 ("Sèπ..", 
 F⁄t_16x26
 , 
-Whôe
-);
-
-193 
-	`ssd1306_Upd©eS¸ìn
-();
-
-195 
-	`ssd1306_£t_i2c_p‹t
-(&
-hi2c2
-, 2);
-
-196 
-	`ssd1306_Inô
-();
-
-197 
-	`HAL_Dñay
-(1000);
-
-198 
-	`ssd1306_Fûl
-(
 Whôe
 );
 
@@ -263933,29 +264043,53 @@ Whôe
 	`ssd1306_Upd©eS¸ìn
 ();
 
-200 
-	`HAL_Dñay
-(1000);
-
 201 
+	`ssd1306_£t_i2c_p‹t
+(&
+hi2c2
+, 2);
+
+202 
+	`ssd1306_Inô
+();
+
+203 
+	`HAL_Dñay
+(100);
+
+204 
+	`ssd1306_Fûl
+(
+Whôe
+);
+
+205 
+	`ssd1306_Upd©eS¸ìn
+();
+
+206 
+	`HAL_Dñay
+(100);
+
+207 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-202 
+208 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-204 
+210 
 	`HAL_Dñay
 (1000);
 
-206 
+212 
 	`ssd1306_SëCurs‹
 (0,0);
 
-207 
+213 
 	`ssd1306_WrôeSåög
 ("DiveCmp", 
 F⁄t_16x26
@@ -263963,11 +264097,11 @@ F⁄t_16x26
 Whôe
 );
 
-208 
+214 
 	`ssd1306_SëCurs‹
 (0,30);
 
-209 
+215 
 	`ssd1306_WrôeSåög
 ("Sèπ..", 
 F⁄t_16x26
@@ -263975,27 +264109,17 @@ F⁄t_16x26
 Whôe
 );
 
-210 
+216 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-212 
-	`πc_ds3231_£t_i2c_h™dÀ
-(&
-hi2c1
-);
-
-213 
-	`πc_ds3231_£t_time
-(0, 0, 0);
-
-255 
+259 
 	`•rötf
 (
 gps_mesßge
 , "$PMTK161,0*28\r\n");
 
-259 
+263 
 	`HAL_UART_Tønsmô
 (&
 hu¨t2
@@ -264005,11 +264129,11 @@ gps_mesßge
 	`°æí
 ((const *)gps_message), 500);
 
-260 
+264 
 	`HAL_Dñay
 (500);
 
-261 
+265 
 	`__HAL_UART_ENABLE_IT
 (&
 hu¨t2
@@ -264017,105 +264141,205 @@ hu¨t2
 UART_IT_RXNE
 );
 
-263 
+267 
 	`¥essuª_£ns‹_obje˘_öô
 ();
 
-264 
+268 
 	`HAL_Dñay
 (1000);
 
-266 
+270 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c1
 , 1);
 
-267 
+271 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-268 
+272 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-269 
+273 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c2
 , 2);
 
-270 
+274 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-271 
+275 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-274 
+278 
 	`dïth_swôch_tu∫_sig«l_Àd
 (1);
 
-276 
+280 
 uöt32_t
  
 surÁ˚_¥essuª
  = 101325;
 
-283 if(
+297 if(
 	`⁄e_£c⁄d_timî_gë_Êag
 ())
 
-285 
+299 
 	`⁄e_£c⁄d_timî_ª£t_Êag
 ();
 
-287 
+302 
+i2c1_ok
+ = ()
+	`HAL_GPIO_RódPö
+(
+GPIOB
+, 
+GPIO_PIN_9
+);
+
+304 if(!
+i2c1_ok
+)
+
+307 
+	`HAL_GPIO_WrôePö
+(
+GPIOB
+, 
+GPIO_PIN_5
+, 
+GPIO_PIN_SET
+);
+
+309 
+i
+;
+
+310 
+i
+=0; i<32; i++)
+
+313 
+	`HAL_GPIO_ToggÀPö
+(
+GPIOB
+, 
+GPIO_PIN_5
+);
+
+316 
+	`HAL_GPIO_WrôePö
+(
+GPIOB
+, 
+GPIO_PIN_5
+, 
+GPIO_PIN_SET
+);
+
+319 
+i2c2_ok
+ = ()
+	`HAL_GPIO_RódPö
+(
+GPIOB
+, 
+GPIO_PIN_11
+);
+
+321 if(!
+i2c2_ok
+)
+
+324 
+	`HAL_GPIO_WrôePö
+(
+GPIOB
+, 
+GPIO_PIN_1
+, 
+GPIO_PIN_SET
+);
+
+326 
+i
+;
+
+327 
+i
+=0; i<32; i++)
+
+330 
+	`HAL_GPIO_ToggÀPö
+(
+GPIOB
+, 
+GPIO_PIN_1
+);
+
+333 
+	`HAL_GPIO_WrôePö
+(
+GPIOB
+, 
+GPIO_PIN_1
+, 
+GPIO_PIN_SET
+);
+
+337 
 	`πc_ds3231_a˘i⁄
 ();
 
-288 
+338 
 	`gps_a˘i⁄
 ();
 
-290 
+340 
 	`¥essuª_£ns‹_mósuª_¥essuª_ãm≥øtuª
 ();
 
-291 
+341 
 P
  = 
 	`¥essuª_£ns‹_gë_¥essuª
 ();
 
-292 
+342 
 a˘uÆ_ãm≥øtuª
  = 
 	`¥essuª_£ns‹_gë_ãm≥øtuª
 ();
 
-294 
+344 
 	`vﬁtmëî_mósuª_vﬁège
 ();
 
-295 
+345 
 accu_vﬁège
  = 
 	`vﬁtmëî_gë_vﬁège
 ();
 
-296 
+346 
 accu_≥r˚¡age
  = 
 	`vﬁtmëî_gë_≥r˚¡age
 ();
 
-299 
+349 
 uöt8_t
  
 £c⁄ds
@@ -264125,7 +264349,7 @@ möuãs
 hours
 ;
 
-300 
+350 
 	`πc_ds3231_gë_time
 (&
 hours
@@ -264135,69 +264359,77 @@ möuãs
 £c⁄ds
 );
 
-301 
+351 
 uöt8_t
  
 d©e
- = 0;
-
-302 
-uöt8_t
- 
+, 
 m⁄th
- = 0;
+, 
+yór
+;
 
-314 if(
+352 
+	`πc_ds3231_gë_d©e
+(&
+d©e
+, &
+m⁄th
+, &
+yór
+);
+
+364 if(
 P
  <
 surÁ˚_¥essuª
 )
 
-315 
+365 
 surÁ˚_¥essuª
  = 
 P
 ;
 
-317 
+367 
 we_¨e_undî_w©î
  = 0;
 
-319 if(
+369 if(
 P
  > (
 surÁ˚_¥essuª
  + 9800))
 
-320 
+370 
 we_¨e_undî_w©î
  = 1;
 
-322 if(!
+372 if(!
 we_¨e_undî_w©î
 )
 
-324 
+374 
 	`dïth_swôch_a˘i⁄
 ();
 
-326 
+376 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c1
 , 1);
 
-327 
+377 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-329 
+379 
 	`ssd1306_SëCurs‹
 (0,0);
 
-331 
+381 
 	`•rötf
 (
 time°amp
@@ -264211,7 +264443,7 @@ d©e
 m⁄th
 );
 
-332 
+382 
 	`ssd1306_WrôeSåög
 (
 time°amp
@@ -264221,11 +264453,11 @@ F⁄t_11x18
 Whôe
 );
 
-333 
+383 
 	`ssd1306_SëCurs‹
 (0,22);
 
-334 
+384 
 	`•rötf
 (
 mesßge
@@ -264233,7 +264465,7 @@ mesßge
 	`dïth_swôch_gë_cuºít_dïth
 ());
 
-335 
+385 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264243,11 +264475,11 @@ F⁄t_11x18
 Whôe
 );
 
-336 
+386 
 	`ssd1306_SëCurs‹
 (0,44);
 
-337 
+387 
 	`•rötf
 (
 mesßge
@@ -264255,7 +264487,7 @@ mesßge
 accu_≥r˚¡age
 );
 
-338 
+388 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264265,11 +264497,11 @@ F⁄t_11x18
 Whôe
 );
 
-339 
+389 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-344 
+394 
 dïth
  = (()(
 P
@@ -264277,23 +264509,23 @@ P
 surÁ˚_¥essuª
 ))/9800.0;
 
-347 
+397 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c1
 , 1);
 
-348 
+398 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-350 
+400 
 	`ssd1306_SëCurs‹
 (0,0);
 
-351 
+401 
 	`•rötf
 (
 time°amp
@@ -264307,7 +264539,7 @@ d©e
 m⁄th
 );
 
-352 
+402 
 	`ssd1306_WrôeSåög
 (
 time°amp
@@ -264317,11 +264549,11 @@ F⁄t_11x18
 Whôe
 );
 
-353 
+403 
 	`ssd1306_SëCurs‹
 (0,22);
 
-354 
+404 
 	`•rötf
 (
 mesßge
@@ -264329,7 +264561,7 @@ mesßge
 dïth
 );
 
-355 
+405 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264339,11 +264571,11 @@ F⁄t_11x18
 Whôe
 );
 
-356 
+406 
 	`ssd1306_SëCurs‹
 (0,44);
 
-357 
+407 
 	`•rötf
 (
 mesßge
@@ -264351,7 +264583,7 @@ mesßge
 accu_≥r˚¡age
 );
 
-358 
+408 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264361,17 +264593,17 @@ F⁄t_11x18
 Whôe
 );
 
-359 
+409 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-364 if(
+414 if(
 dïth
  > 
 	`dïth_swôch_gë_cuºít_dïth
 ())
 
-367 
+417 
 	`HAL_GPIO_WrôePö
 (
 GPIOB
@@ -264383,7 +264615,7 @@ GPIO_PIN_1
 GPIO_PIN_SET
 );
 
-370 
+420 
 	`HAL_GPIO_WrôePö
 (
 GPIOB
@@ -264397,7 +264629,7 @@ GPIO_PIN_5
 GPIO_PIN_SET
 );
 
-371 
+421 
 	`HAL_GPIO_WrôePö
 (
 GPIOA
@@ -264407,23 +264639,23 @@ GPIO_PIN_15
 GPIO_PIN_SET
 );
 
-375 
+425 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c1
 , 1);
 
-376 
+426 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-377 
+427 
 	`ssd1306_SëCurs‹
 (0,0);
 
-379 
+429 
 	`•rötf
 (
 time°amp
@@ -264437,7 +264669,7 @@ d©e
 m⁄th
 );
 
-380 
+430 
 	`ssd1306_WrôeSåög
 (
 time°amp
@@ -264447,11 +264679,11 @@ F⁄t_11x18
 Whôe
 );
 
-381 
+431 
 	`ssd1306_SëCurs‹
 (0,22);
 
-382 
+432 
 	`•rötf
 (
 mesßge
@@ -264459,7 +264691,7 @@ mesßge
 dïth
 );
 
-383 
+433 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264469,17 +264701,17 @@ F⁄t_11x18
 Whôe
 );
 
-384 
+434 
 	`ssd1306_SëCurs‹
 (0,44);
 
-385 
+435 
 	`•rötf
 (
 mesßge
 , "activated!!!");
 
-386 
+436 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264489,15 +264721,15 @@ F⁄t_11x18
 Whôe
 );
 
-387 
+437 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-391 
+441 
 	`HAL_Dñay
 (21000);
 
-395 
+445 
 	`HAL_GPIO_WrôePö
 (
 GPIOB
@@ -264509,23 +264741,23 @@ GPIO_PIN_1
 GPIO_PIN_RESET
 );
 
-407 
+457 
 	`ssd1306_£t_i2c_p‹t
 (&
 hi2c2
 , 2);
 
-408 
+458 
 	`ssd1306_Fûl
 (
 Bœck
 );
 
-410 
+460 
 	`ssd1306_SëCurs‹
 (0,0);
 
-411 
+461 
 	`•rötf
 (
 time°amp
@@ -264539,7 +264771,7 @@ möuãs
 d©e
 );
 
-412 
+462 
 	`ssd1306_WrôeSåög
 (
 time°amp
@@ -264549,11 +264781,11 @@ F⁄t_11x18
 Whôe
 );
 
-413 
+463 
 	`ssd1306_SëCurs‹
 (0,22);
 
-414 
+464 
 	`•rötf
 (
 mesßge
@@ -264561,7 +264793,7 @@ mesßge
 P
 );
 
-415 
+465 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264571,11 +264803,11 @@ F⁄t_11x18
 Whôe
 );
 
-416 
+466 
 	`ssd1306_SëCurs‹
 (81,22);
 
-417 
+467 
 	`•rötf
 (
 mesßge
@@ -264583,7 +264815,7 @@ mesßge
 accu_vﬁège
 );
 
-418 
+468 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264593,11 +264825,11 @@ F⁄t_11x18
 Whôe
 );
 
-419 
+469 
 	`ssd1306_SëCurs‹
 (0,44);
 
-420 
+470 
 	`•rötf
 (
 mesßge
@@ -264605,7 +264837,7 @@ mesßge
 a˘uÆ_ãm≥øtuª
 );
 
-421 
+471 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264615,11 +264847,11 @@ F⁄t_11x18
 Whôe
 );
 
-422 
+472 
 	`ssd1306_SëCurs‹
 (81,44);
 
-423 
+473 
 	`•rötf
 (
 mesßge
@@ -264627,7 +264859,7 @@ mesßge
 accu_≥r˚¡age
 );
 
-424 
+474 
 	`ssd1306_WrôeSåög
 (
 mesßge
@@ -264637,37 +264869,37 @@ F⁄t_11x18
 Whôe
 );
 
-425 
+475 
 	`ssd1306_Upd©eS¸ìn
 ();
 
-435 
+485 
 	}
 }
 
-450 
+500 
 	$Sy°emClock_C⁄fig
 ()
 
-453 
+503 
 RCC_OscInôTy≥Def
  
 RCC_OscInôSåu˘
 ;
 
-454 
+504 
 RCC_ClkInôTy≥Def
  
 RCC_ClkInôSåu˘
 ;
 
-455 
+505 
 RCC_PîùhCLKInôTy≥Def
  
 PîùhClkInô
 ;
 
-459 
+509 
 RCC_OscInôSåu˘
 .
 Oscûœt‹Ty≥
@@ -264677,7 +264909,7 @@ RCC_OSCILLATORTYPE_LSI
 RCC_OSCILLATORTYPE_HSE
 ;
 
-460 
+510 
 RCC_OscInôSåu˘
 .
 HSESèã
@@ -264685,7 +264917,7 @@ HSESèã
 RCC_HSE_ON
 ;
 
-461 
+511 
 RCC_OscInôSåu˘
 .
 HSEPªdivVÆue
@@ -264693,7 +264925,7 @@ HSEPªdivVÆue
 RCC_HSE_PREDIV_DIV2
 ;
 
-462 
+512 
 RCC_OscInôSåu˘
 .
 HSISèã
@@ -264701,7 +264933,7 @@ HSISèã
 RCC_HSI_ON
 ;
 
-463 
+513 
 RCC_OscInôSåu˘
 .
 LSISèã
@@ -264709,7 +264941,7 @@ LSISèã
 RCC_LSI_ON
 ;
 
-464 
+514 
 RCC_OscInôSåu˘
 .
 PLL
@@ -264719,7 +264951,7 @@ PLLSèã
 RCC_PLL_ON
 ;
 
-465 
+515 
 RCC_OscInôSåu˘
 .
 PLL
@@ -264729,7 +264961,7 @@ PLLSour˚
 RCC_PLLSOURCE_HSE
 ;
 
-466 
+516 
 RCC_OscInôSåu˘
 .
 PLL
@@ -264739,7 +264971,7 @@ PLLMUL
 RCC_PLL_MUL2
 ;
 
-467 i‡(
+517 i‡(
 	`HAL_RCC_OscC⁄fig
 (&
 RCC_OscInôSåu˘
@@ -264747,7 +264979,7 @@ RCC_OscInôSåu˘
 HAL_OK
 )
 
-469 
+519 
 	`_Eº‹_H™dÀr
 (
 __FILE__
@@ -264755,7 +264987,7 @@ __FILE__
 __LINE__
 );
 
-474 
+524 
 RCC_ClkInôSåu˘
 .
 ClockTy≥
@@ -264765,13 +264997,13 @@ RCC_CLOCKTYPE_HCLK
 RCC_CLOCKTYPE_SYSCLK
 
 
-475 |
+525 |
 RCC_CLOCKTYPE_PCLK1
 |
 RCC_CLOCKTYPE_PCLK2
 ;
 
-476 
+526 
 RCC_ClkInôSåu˘
 .
 SYSCLKSour˚
@@ -264779,7 +265011,7 @@ SYSCLKSour˚
 RCC_SYSCLKSOURCE_PLLCLK
 ;
 
-477 
+527 
 RCC_ClkInôSåu˘
 .
 AHBCLKDividî
@@ -264787,7 +265019,7 @@ AHBCLKDividî
 RCC_SYSCLK_DIV4
 ;
 
-478 
+528 
 RCC_ClkInôSåu˘
 .
 APB1CLKDividî
@@ -264795,7 +265027,7 @@ APB1CLKDividî
 RCC_HCLK_DIV1
 ;
 
-479 
+529 
 RCC_ClkInôSåu˘
 .
 APB2CLKDividî
@@ -264803,7 +265035,7 @@ APB2CLKDividî
 RCC_HCLK_DIV1
 ;
 
-481 i‡(
+531 i‡(
 	`HAL_RCC_ClockC⁄fig
 (&
 RCC_ClkInôSåu˘
@@ -264813,7 +265045,7 @@ FLASH_LATENCY_0
 HAL_OK
 )
 
-483 
+533 
 	`_Eº‹_H™dÀr
 (
 __FILE__
@@ -264821,7 +265053,7 @@ __FILE__
 __LINE__
 );
 
-486 
+536 
 PîùhClkInô
 .
 PîùhClockSñe˘i⁄
@@ -264831,7 +265063,7 @@ RCC_PERIPHCLK_RTC
 RCC_PERIPHCLK_ADC
 ;
 
-490 
+540 
 PîùhClkInô
 .
 RTCClockSñe˘i⁄
@@ -264839,7 +265071,7 @@ RTCClockSñe˘i⁄
 RCC_RTCCLKSOURCE_LSI
 ;
 
-491 
+541 
 PîùhClkInô
 .
 AdcClockSñe˘i⁄
@@ -264847,7 +265079,7 @@ AdcClockSñe˘i⁄
 RCC_ADCPCLK2_DIV2
 ;
 
-492 i‡(
+542 i‡(
 	`HAL_RCCEx_PîùhCLKC⁄fig
 (&
 PîùhClkInô
@@ -264855,7 +265087,7 @@ PîùhClkInô
 HAL_OK
 )
 
-494 
+544 
 	`_Eº‹_H™dÀr
 (
 __FILE__
@@ -264863,29 +265095,29 @@ __FILE__
 __LINE__
 );
 
-499 
+549 
 	`HAL_SYSTICK_C⁄fig
 (
 	`HAL_RCC_GëHCLKFªq
 ()/1000);
 
-503 
+553 
 	`HAL_SYSTICK_CLKSour˚C⁄fig
 (
 SYSTICK_CLKSOURCE_HCLK
 );
 
-506 
+556 
 	`HAL_NVIC_SëPri‹ôy
 (
 SysTick_IRQn
 , 0, 0);
 
-507 
+557 
 	}
 }
 
-519 
+569 
 	$_Eº‹_H™dÀr
 (*
 fûe
@@ -264893,15 +265125,15 @@ fûe
 löe
 )
 
-527 
+577 
 	}
 }
 
-529 #ifde‡ 
+579 #ifde‡ 
 USE_FULL_ASSERT
 
 
-537 
+587 
 	$as£π_Áûed
 (
 uöt8_t
@@ -264913,11 +265145,11 @@ uöt32_t
 löe
 )
 
-543 
+593 
 	}
 }
 
-548 
+598 
 uöt8_t
  
 	$gps_mesßge_c⁄åﬁ_summ_ˇlcuœti⁄
@@ -264925,7 +265157,7 @@ uöt8_t
 gps_mesßge
 )
 
-550 
+600 
 Àngth
  = 
 	`°æí
@@ -264933,7 +265165,7 @@ gps_mesßge
 gps_mesßge
 );
 
-552 
+602 
 uöt8_t
  
 ªtu∫_vÆue
@@ -264941,17 +265173,17 @@ uöt8_t
 gps_mesßge
 [1];
 
-553 
+603 
 i
 ;
 
-554 
+604 
 i
 =2; i<
 Àngth
 ; i++)
 
-555 
+605 
 ªtu∫_vÆue
  ^
 gps_mesßge
@@ -264959,11 +265191,11 @@ gps_mesßge
 i
 ];
 
-557  
+607  
 ªtu∫_vÆue
 ;
 
-558 
+608 
 	}
 }
 
@@ -287912,8 +288144,8 @@ __END_DECLS
 .
 1
 /usr/include
-117
-4102
+120
+4186
 Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
 Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
@@ -287976,6 +288208,8 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
 Inc/adc.h
+Inc/atm_barometer_interface.h
+Inc/atm_barometer_object.h
 Inc/depth_switch_interface.h
 Inc/depth_switch_object.h
 Inc/fonts.h
@@ -287998,6 +288232,7 @@ Inc/tim.h
 Inc/usart.h
 Inc/voltmeter_object.h
 Src/adc.c
+Src/atm_barometer_object.c
 Src/depth_switch_object.c
 Src/fonts.c
 Src/gpio.c

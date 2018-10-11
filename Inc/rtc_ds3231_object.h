@@ -12,6 +12,5 @@ static I2C_HandleTypeDef *ds3231_i2c_handle;
 
 static uint16_t ds3231_shifted_address = DS3231_ADDRESS << 1;
 
-static uint32_t year;
-static uint8_t month, date, hours, minutes, seconds;
+static uint8_t year, month, date, hours, minutes, seconds;
 #endif
