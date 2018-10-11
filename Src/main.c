@@ -298,16 +298,15 @@ int main(void)
 		{
 			one_second_timer_reset_flag();
   
-			// check i2c bus
-			int i2c_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);  // check i2c1 sda level
+			// check i2c1 bus
+			int i2c1_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);  // check i2c1 sda level
 
-			if(!i2c_ok) // i2c bus is not ok
+			if(!i2c1_ok) // i2c1 bus is not ok
 			{
 				// provide 16 i2c1 scl oscillations	
   				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high
 
 				int i;
-				uint8_t aux_byte;
 				for(i=0; i<32; i++)
 				{
 					// toggle i2c1 scl 
@@ -315,6 +314,23 @@ int main(void)
 					// pause 5 uSec
 				}
   				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high
+			}
+			// check i2c2 bus
+			int i2c2_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_11);  // check i2c2 sda level
+
+			if(!i2c2_ok) // i2c2 bus is not ok
+			{
+				// provide 16 i2c2 scl oscillations	
+  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high
+
+				int i;
+				for(i=0; i<32; i++)
+				{
+					// toggle i2c2 scl 
+					HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
+					// pause 5 uSec
+				}
+  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high
 			}
 
 
