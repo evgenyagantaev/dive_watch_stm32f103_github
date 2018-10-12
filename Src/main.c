@@ -259,7 +259,7 @@ int main(void)
 
 	// send gps module in standby mode
 	sprintf(gps_message, "$PMTK161,0*28\r\n");
-	HAL_UART_Transmit(&huart2, gps_message, strlen((const char *)gps_message), 500);
+	HAL_UART_Transmit(&huart2, "W\r\n", 1, 500);
 	HAL_Delay(500);
 	HAL_UART_Transmit(&huart2, gps_message, strlen((const char *)gps_message), 500);
 	HAL_Delay(500);
@@ -280,6 +280,7 @@ int main(void)
 
 	uint32_t surface_pressure = 101325;
 				
+	rtc_ds3231_action();
 	atm_barometer_init();
 
 	int odd_even = 0;
@@ -293,41 +294,23 @@ int main(void)
 			one_second_timer_reset_flag();
 			odd_even = (odd_even+1)%2;
   
-			// check i2c1 bus
-			int i2c1_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9);  // check i2c1 sda level
 
-			if(!i2c1_ok) // i2c1 bus is not ok
-			{
-				// provide 16 i2c1 scl oscillations	
-  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high
-
-				int i;
-				for(i=0; i<32; i++)
-				{
-					// toggle i2c1 scl 
-					HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
-					// pause 5 uSec
-				}
-  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high
-			}
-			// check i2c2 bus
-			int i2c2_ok = (int)HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_11);  // check i2c2 sda level
-
-			if(!i2c2_ok) // i2c2 bus is not ok
-			{
-				// provide 16 i2c2 scl oscillations	
-  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high
-
-				int i;
-				for(i=0; i<32; i++)
-				{
-					// toggle i2c2 scl 
-					HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);
-					// pause 5 uSec
-				}
-  				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high
-			}
-
+			/*
+			// provide 16 i2c1 scl oscillations	                                       	
+  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high   	
+  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high   	
+                                                                                       
+			int i;                                                                     	
+			for(i=0; i<32; i++)                                                        	
+			{                                                                          	
+				// toggle i2c1 scl                                                     	
+				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                                 	
+				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);                                 	
+				// pause 5 uSec                                                        	
+			}                                                                          	
+  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high   	
+  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high   	
+			*/
 
 			rtc_ds3231_action();
 			gps_action();
@@ -352,14 +335,6 @@ int main(void)
 			atm_barometer_get_history(atm_pressure_buffer);
 
                                                                                                                                                               
-		    //sprintf(timestamp, "%02x.%02x.%02x %02x:%02x:%02x   ", sDate.Date, sDate.Month, sDate.Year, sTime.Hours, sTime.Minutes, sTime.Seconds);
-		    //HAL_UART_Transmit(&huart1, timestamp, strlen((const char *)timestamp), 500);
-		    
-                                                                                                                                                              
-		    //sprintf(message, "press %06d   temp %04d\r\n", (int32_t)P, (int32_t)actual_temperature);
-		    //sprintf(message, "press = %u;   temp = %u;\r\n", pressure, temperature);
-		    //HAL_UART_Transmit(&huart1, message, strlen((const char *)message), 500);
-            
 			if(P <= surface_pressure)
 				surface_pressure = P;
 

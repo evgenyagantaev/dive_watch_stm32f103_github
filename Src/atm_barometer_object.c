@@ -8,11 +8,17 @@
 
 void atm_barometer_init()
 {
+	uint8_t hours, minutes, seconds;
+	rtc_ds3231_get_time(&hours, &minutes, &seconds);
+	hours_old = hours;
 	// read pressure log from eeprom
 	int i;
 
 	for(i=0; i<LOG_LENGTH; i++)
-		at24c32_write_32((uint16_t)(i*4), (uint32_t)3);
+	{
+		//at24c32_write_32((uint16_t)(i*4), i*10);
+		atm_pressure_log[i] = 0;
+	}
 	for(i=0; i<LOG_LENGTH; i++)
 		at24c32_read_32((uint16_t)(i*4), &(atm_pressure_log[i]));
 }
@@ -24,6 +30,9 @@ void atm_barometer_action()
 	// check if hour_old != hour
 	uint8_t hours, minutes, seconds;
 	rtc_ds3231_get_time(&hours, &minutes, &seconds);
+	//<debug
+	//hours = minutes;
+	//debug>
 	if(hours_old != hours)
 	{
 		hours_old = hours;

@@ -17,10 +17,16 @@ void at24c32_write_32(uint16_t address, uint32_t data)
 	b2 = (uint8_t)((data>>16) & 0x000000ff);
 	b3 = (uint8_t)(data>>24);
 
-	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address, 2, &b0, 1, 100);
-	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address+1, 2, &b1, 1, 100);
-	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address+2, 2, &b2, 1, 100);
-	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address+3, 2, &b3, 1, 100);
+	int write_delay = 1;
+
+	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address, I2C_MEMADD_SIZE_16BIT, &b0, 1, 100);
+	HAL_Delay(write_delay);
+	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address+1, I2C_MEMADD_SIZE_16BIT, &b1, 1, 100);
+	HAL_Delay(write_delay);
+	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address+2, I2C_MEMADD_SIZE_16BIT, &b2, 1, 100);
+	HAL_Delay(write_delay);
+	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address+3, I2C_MEMADD_SIZE_16BIT, &b3, 1, 100);
+	HAL_Delay(write_delay);
 	
 
 }
@@ -30,10 +36,10 @@ void at24c32_read_32(uint16_t address, uint32_t *data)
 {
 	uint8_t b0, b1, b2, b3;
 
-	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address, 2, &b0, 1, 100);
-	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address+1, 2, &b1, 1, 100);
-	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address+2, 2, &b2, 1, 100);
-	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address+3, 2, &b3, 1, 100);
+	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address, I2C_MEMADD_SIZE_16BIT, &b0, 1, 100);
+	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address+1, I2C_MEMADD_SIZE_16BIT, &b1, 1, 100);
+	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address+2, I2C_MEMADD_SIZE_16BIT, &b2, 1, 100);
+	HAL_I2C_Mem_Read(at24c32_i2c_handle, at24c32_shifted_address, address+3, I2C_MEMADD_SIZE_16BIT, &b3, 1, 100);
 
 	uint32_t return_value = b0 + (((uint32_t)b1)<<8) + (((uint32_t)b2)<<16) + (((uint32_t)b3)<<24);
 
