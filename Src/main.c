@@ -105,54 +105,6 @@ int main(void)
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
 
-
-
-	uint32_t *rcc_bdcr = &(RCC->BDCR);
-	uint16_t *rtc_prlh = &(RTC->PRLH);
-	uint16_t *rtc_prll = &(RTC->PRLL);
-	uint16_t *rtc_cnth = &(RTC->CNTH);
-	uint16_t *rtc_cntl = &(RTC->CNTL);
-
-    //MX_RTC_Init();
-
-	/*
-	//-------------------------------------------------------
-	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
-	RCC->BDCR |= RCC_BDCR_BDRST;  // reset backup domain
-  	HAL_Delay(10);
-	RCC->BDCR &= ~RCC_BDCR_BDRST;  // stop reset backup domain
-  	HAL_Delay(100);
-	RCC->BDCR |= RCC_BDCR_LSEON;
-	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
-	while((RCC->BDCR & RCC_BDCR_LSERDY) == 0)
-	{
-  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
-
-  		HAL_Delay(100);
-	}
-	PWR->CR |= PWR_CR_DBP; // disable back domain write protection;
-	RCC->BDCR |= RCC_BDCR_RTCSEL_LSE;
-	RCC->BDCR |= RCC_BDCR_RTCEN;
-	PWR->CR &= ~PWR_CR_DBP; // enable back domain write protection;
-	//-------------------------------------------------------
-	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
-	{
-  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
-  		HAL_Delay(100);
-	}
-	RTC->CRL |= RTC_CRL_CNF;   // enter configuration mode
-	RTC->PRLH = 0;
-	RTC->PRLL = 0x7fff;
-	RTC->CRL &= ~RTC_CRL_RSF;
-	RTC->CRL &= ~RTC_CRL_CNF;   // exit configuration mode
-	//while((RTC->CRL & RTC_CRL_RTOFF) == 0)
-	//{
-  		//HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
-  		//HAL_Delay(100);
-	//}
-	//-------------------------------------------------------
-	//*/
-
 	MX_I2C1_Init();
     MX_I2C2_Init();
 	//---------------------------------
@@ -218,45 +170,6 @@ int main(void)
   	ssd1306_UpdateScreen();
 
 
-	//-------------set time-date--------------------------
-	/*
-	int days = 15;
-	int hours = 16;
-	int minutes = 53;
-
-	rtc_time_counter = days*seconds_in_day + hours*seconds_in_hour + minutes*seconds_in_minute;
-	//RTC_WriteTimeCounter(&hrtc, rtc_time_counter);
-	//-------------------------------------------------------
-	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
-	{
-  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
-  		HAL_Delay(100);
-	}
-	RTC->CRL |= RTC_CRL_CNF;   // enter configuration mode
-	RTC->CNTH = (uint16_t)(rtc_time_counter >> 16);
-	RTC->CNTL = (uint16_t)rtc_time_counter;
-	RTC->CRL &= ~RTC_CRL_CNF;   // exit configuration mode
-	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
-	{
-  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
-  		HAL_Delay(100);
-	}
-	//-------------------------------------------------------
-
-	//-------------------------------------------------------
-	while((RTC->CRL & RTC_CRL_RTOFF) == 0)
-	{
-  		HAL_GPIO_TogglePin(GPIOC, led0_Pin);// toggle led
-
-  		HAL_Delay(100);
-	}
-	RTC->CRL |= RTC_CRL_CNF;
-	
-
-	//*/
-	//-----------------------------------------------------
-
-
 	// send gps module in standby mode
 	sprintf(gps_message, "$PMTK161,0*28\r\n");
 	HAL_UART_Transmit(&huart2, "W\r\n", 1, 500);
@@ -282,6 +195,7 @@ int main(void)
 				
 	rtc_ds3231_action();
 	atm_barometer_init();
+	double depth = 7.0;
 
 	int odd_even = 0;
 	//************************   MAIN LOOP   *********************************
@@ -330,25 +244,25 @@ int main(void)
 			rtc_ds3231_get_date(&date, &month, &year);
 			//--------------------------------------------------------------
 
-			atm_barometer_action();
-			uint32_t atm_pressure_buffer[4];
-			atm_barometer_get_history(atm_pressure_buffer);
-
+			// calculate mean atmospheric pressure
+			surface_pressure = (uint32_t)atm_barometer_get_mean_pressure();
                                                                                                                                                               
-			if(P <= surface_pressure)
-				surface_pressure = P;
-
 			int we_are_under_water = 0;
 
 			if(P > (surface_pressure + 9800)) // underwater
 				we_are_under_water = 1;
+			//debug	
+			we_are_under_water = 0;
+			//debug
 
 			if(!we_are_under_water)  // we are not under water
 			{
+				atm_barometer_action();
+				uint32_t atm_pressure_buffer[4];
+				atm_barometer_get_history(atm_pressure_buffer);
 
     	   		ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
 				ssd1306_Fill(Black);
-  		    	//ssd1306_UpdateScreen();              
   		        ssd1306_SetCursor(0,0);
 				if(odd_even)
 		        	sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
@@ -366,112 +280,66 @@ int main(void)
 				//*                                                                           	
     	        ssd1306_set_i2c_port(&hi2c2, 2);
 			    ssd1306_Fill(Black);
-  		        //ssd1306_UpdateScreen();              
-  		        ssd1306_SetCursor(0,0);
-		        //sprintf(timestamp, "%02d:%02d:%02d %02d", hours, minutes, seconds, date);
-  		        //ssd1306_WriteString(timestamp, Font_11x18, White);
+  		        ssd1306_SetCursor(3,0);
 				if(odd_even)
 		        	sprintf(message, "P%05d:T%03d" , (int)(P/10), (int)(actual_temperature/10));
 				else
 		        	sprintf(message, "P%05d T%03d" , (int)(P/10), (int)(actual_temperature/10));
   		        ssd1306_WriteString(message, Font_11x18, White);
-  		        ssd1306_SetCursor(0,22);
+  		        ssd1306_SetCursor(3,22);
 		        sprintf(message, "V%03d", (int)accu_voltage);
   		        ssd1306_WriteString(message, Font_11x18, White);
-  		        ssd1306_SetCursor(0,44);
-		        //sprintf(message, "%03d%%", (int)accu_percentage);
-  		        //ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(3,44);
   		        ssd1306_UpdateScreen();              
 			    //*/
 			}
 			else // we are under water
 			{
 				// calculate depth
-				double depth = ((double)(P - surface_pressure))/9800.0;
+				//double depth = ((double)(P - surface_pressure))/9800.0;
 
+				//debug
+				depth += 1;
+				if(depth > 11)
+					depth = 7.0;
+				//debug
 
     	   		ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
 				ssd1306_Fill(Black);
-  		    	//ssd1306_UpdateScreen();              
-  		        ssd1306_SetCursor(0,0);
-		        sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
-  		        ssd1306_WriteString(timestamp, Font_11x18, White);
-  		        ssd1306_SetCursor(0,22);
-		        sprintf(message, "glubina %02dm", (int)depth);
-  		        ssd1306_WriteString(message, Font_11x18, White);
-  		        ssd1306_SetCursor(0,44);
-		        sprintf(message, "akkum %02d%%", (int)accu_percentage);
-  		        ssd1306_WriteString(message, Font_11x18, White);
-  		        ssd1306_UpdateScreen();                                                                               
-
-
-
-
-				if(depth > depth_switch_get_current_depth())
-				{
-					// switch on actuators
-  					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_SET);// turn actuators on
-
-					// switch on signal leds
-  					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_SET);// turn leds off
-  					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET);// turn leds off
-
-
-					// save info about activation conditions (time, depth, etc)
-    	   			ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
-					ssd1306_Fill(Black);
-  		        	ssd1306_SetCursor(0,0);
-		        	//sprintf(timestamp, "%02x:%02x %02x.%02x", sTime.Hours, sTime.Minutes, sDate.Date, sDate.Month);
+  		        ssd1306_SetCursor(3,0);
+				if(odd_even)
 		        	sprintf(timestamp, "%02d:%02d %02d.%02d", hours, minutes, date, month);
-  		        	ssd1306_WriteString(timestamp, Font_11x18, White);
-  		        	ssd1306_SetCursor(0,22);
-		        	sprintf(message, ">>>>> %02dm", (int)depth);
-  		        	ssd1306_WriteString(message, Font_11x18, White);
-  		        	ssd1306_SetCursor(0,44);
-		        	sprintf(message, "activated!!!");
-  		        	ssd1306_WriteString(message, Font_11x18, White);
-  		        	ssd1306_UpdateScreen();                                                                               
+				else
+		        	sprintf(timestamp, "%02d %02d %02d.%02d", hours, minutes, date, month);
+  		        ssd1306_WriteString(timestamp, Font_11x18, White);
+  		        ssd1306_SetCursor(9,33);
+		        sprintf(message, "%02d %02d.%01d", (int)depth, (int)actual_temperature/100, (int)(actual_temperature/10) - ((int)(actual_temperature/100))*10);
+  		        ssd1306_WriteString(message, Font_16x26, White);
+  		        ssd1306_UpdateScreen();                                                                               
+				
+				//*                                                                           	
+    	        ssd1306_set_i2c_port(&hi2c2, 2);
+			    ssd1306_Fill(Black);
+  		        ssd1306_SetCursor(3,0);
+				if(odd_even)
+		        	sprintf(message, "P%05d:T%03d" , (int)(P/10), (int)(actual_temperature/10));
+				else
+		        	sprintf(message, "P%05d T%03d" , (int)(P/10), (int)(actual_temperature/10));
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(3,22);
+		        sprintf(message, "V%03d", (int)accu_voltage);
+  		        ssd1306_WriteString(message, Font_11x18, White);
+  		        ssd1306_SetCursor(3,44);
+  		        ssd1306_UpdateScreen();              
+			    //*/
 
 
-					// pause 21 sec
-					HAL_Delay(21000);
 
 
-					// switch off actuators
-  					HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_RESET);// turn actuators off
 
-					// stop
-					while(1);
-				}
 
 			}
             
-
-
-
-			/*
-    	    ssd1306_set_i2c_port(&hi2c2, 2);
-			ssd1306_Fill(Black);
-  		    //ssd1306_UpdateScreen();              
-  		    ssd1306_SetCursor(0,0);
-		    sprintf(timestamp, "%02d:%02d:%02d %02d", hours, minutes, seconds, date);
-  		    ssd1306_WriteString(timestamp, Font_11x18, White);
-  		    ssd1306_SetCursor(0,22);
-		    sprintf(message, "%06d", (int)P);
-  		    ssd1306_WriteString(message, Font_11x18, White);
-  		    ssd1306_SetCursor(81,22);
-		    sprintf(message, "V%03d", (int)accu_voltage);
-  		    ssd1306_WriteString(message, Font_11x18, White);
-  		    ssd1306_SetCursor(0,44);
-		    sprintf(message, "T%04d", (int)actual_temperature);
-  		    ssd1306_WriteString(message, Font_11x18, White);
-  		    ssd1306_SetCursor(81,44);
-		    sprintf(message, "%03d%%", (int)accu_percentage);
-  		    ssd1306_WriteString(message, Font_11x18, White);
-  		    ssd1306_UpdateScreen();              
-			//*/
-
-		
 			//HAL_Delay(1000);
 
 		}

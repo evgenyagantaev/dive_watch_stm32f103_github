@@ -60,3 +60,16 @@ void atm_barometer_get_history(uint32_t *buffer)
 	buffer[2] = atm_pressure_log[23];
 	buffer[3] = atm_pressure_log[47];
 }
+
+
+double atm_barometer_get_mean_pressure()
+{
+	double mean_presssure;
+	mean_presssure = atm_pressure_log[0]*0.5 + atm_pressure_log[1]*0.3 + atm_pressure_log[2]*0.2;
+
+	return mean_presssure;
+}
+
+
+
+
