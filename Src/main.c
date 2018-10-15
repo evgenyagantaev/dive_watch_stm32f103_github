@@ -57,6 +57,7 @@
 #include "gps_interface.h"
 #include "rtc_ds3231_interface.h"
 #include "at24c32_interface.h"
+#include "dive_meter_interface.h"
 
 
 /* Private variables ---------------------------------------------------------*/
@@ -252,11 +253,14 @@ int main(void)
 			if(P > (surface_pressure + 9800)) // underwater
 				we_are_under_water = 1;
 			//debug	
-			we_are_under_water = 0;
+			//we_are_under_water = 1;
 			//debug
 
 			if(!we_are_under_water)  // we are not under water
 			{
+				
+				dive_meter_drop_dive();
+
 				atm_barometer_action();
 				uint32_t atm_pressure_buffer[4];
 				atm_barometer_get_history(atm_pressure_buffer);
@@ -298,11 +302,8 @@ int main(void)
 				// calculate depth
 				//double depth = ((double)(P - surface_pressure))/9800.0;
 
-				//debug
-				depth += 1;
-				if(depth > 11)
-					depth = 7.0;
-				//debug
+				dive_meter_action();
+
 
     	   		ssd1306_set_i2c_port(&hi2c1, 1);                                                                          
 				ssd1306_Fill(Black);
@@ -313,7 +314,7 @@ int main(void)
 		        	sprintf(timestamp, "%02d %02d %02d.%02d", hours, minutes, date, month);
   		        ssd1306_WriteString(timestamp, Font_11x18, White);
   		        ssd1306_SetCursor(9,33);
-		        sprintf(message, "%02d %02d.%01d", (int)depth, (int)actual_temperature/100, (int)(actual_temperature/10) - ((int)(actual_temperature/100))*10);
+		        sprintf(message, "%02d %02d.%01d", (int)dive_meter_get_current_depth(), (int)actual_temperature/100, (int)(actual_temperature/10) - ((int)(actual_temperature/100))*10);
   		        ssd1306_WriteString(message, Font_16x26, White);
   		        ssd1306_UpdateScreen();                                                                               
 				
@@ -322,14 +323,13 @@ int main(void)
 			    ssd1306_Fill(Black);
   		        ssd1306_SetCursor(3,0);
 				if(odd_even)
-		        	sprintf(message, "P%05d:T%03d" , (int)(P/10), (int)(actual_temperature/10));
+		        	sprintf(message, "v%03d", (int)accu_voltage);
 				else
-		        	sprintf(message, "P%05d T%03d" , (int)(P/10), (int)(actual_temperature/10));
+		        	sprintf(message, ".%03d", (int)accu_voltage);
   		        ssd1306_WriteString(message, Font_11x18, White);
-  		        ssd1306_SetCursor(3,22);
-		        sprintf(message, "V%03d", (int)accu_voltage);
-  		        ssd1306_WriteString(message, Font_11x18, White);
-  		        ssd1306_SetCursor(3,44);
+  		        ssd1306_SetCursor(9,33);
+		        sprintf(message, "%02d %03d", (int)dive_meter_get_max_depth(), (int)dive_meter_get_current_dive_time());
+  		        ssd1306_WriteString(message, Font_16x26, White);
   		        ssd1306_UpdateScreen();              
 			    //*/
 

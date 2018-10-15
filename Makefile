@@ -52,6 +52,7 @@ Src/gps_object.c \
 Src/rtc_ds3231_object.c \
 Src/atm_barometer_object.c \
 Src/at24c32_object.c \
+Src/dive_meter_object.c \
 Src/stm32f1xx_it.c \
 Src/stm32f1xx_hal_msp.c \
 Src/fonts.c \
