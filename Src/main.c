@@ -50,13 +50,14 @@
 
 #include "ssd1306.h"
 
-#include "one_second_timer_object.h"
+#include "one_second_timer_interface.h"
 #include "pressure_sensor_object.h"
 #include "voltmeter_object.h"
 #include "depth_switch_interface.h"
 #include "gps_interface.h"
 #include "rtc_ds3231_interface.h"
 #include "at24c32_interface.h"
+#include "atm_barometer_interface.h"
 #include "dive_meter_interface.h"
 
 
@@ -245,15 +246,14 @@ int main(void)
 			rtc_ds3231_get_date(&date, &month, &year);
 			//--------------------------------------------------------------
 
-			// calculate mean atmospheric pressure
-			surface_pressure = (uint32_t)atm_barometer_get_mean_pressure();
                                                                                                                                                               
 			int we_are_under_water = 0;
 
-			if(P > (surface_pressure + 9800)) // underwater
+			// calculate mean atmospheric pressure
+			if(P > (atm_barometer_get_mean_pressure() + 9800)) // underwater
 				we_are_under_water = 1;
 			//debug	
-			//we_are_under_water = 1;
+			//we_are_under_water = 0;
 			//debug
 
 			if(!we_are_under_water)  // we are not under water

@@ -36,7 +36,7 @@
 #include "stm32f1xx_it.h"
 #include "tim.h"
 
-#include "one_second_timer_object.h"
+#include "one_second_timer_interface.h"
 #include "gps_interface.h"
 
 /* USER CODE BEGIN 0 */
