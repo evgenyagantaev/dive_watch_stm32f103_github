@@ -211,23 +211,6 @@ int main(void)
 			odd_even = (odd_even+1)%2;
   
 
-			/*
-			// provide 16 i2c1 scl oscillations	                                       	
-  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high   	
-  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high   	
-                                                                                       
-			int i;                                                                     	
-			for(i=0; i<32; i++)                                                        	
-			{                                                                          	
-				// toggle i2c1 scl                                                     	
-				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);                                 	
-				HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_1);                                 	
-				// pause 5 uSec                                                        	
-			}                                                                          	
-  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);// turn i2c1 scl high   	
-  			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);// turn i2c2 scl high   	
-			*/
-
 			rtc_ds3231_action();
 			gps_action();
 			

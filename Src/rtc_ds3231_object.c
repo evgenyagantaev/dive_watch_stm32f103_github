@@ -54,9 +54,10 @@ void rtc_ds3231_action()
 
 	uint16_t data_array_length = 7;
 
-	//HAL_I2C_Master_Receive(ds3231_i2c_handle, ds3231_shifted_address, ds3231_buffer, DS3231_BUFFER_LENGTH, 500);
-	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x0, 1, ds3231_buffer, data_array_length, 500);
+	uint8_t i2c_status;
 
+	i2c_status = HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x0, 1, ds3231_buffer, data_array_length, 500);
+	
 	seconds = 10*(ds3231_buffer[0]>>4) + (ds3231_buffer[0] & 0x0f);
 	minutes = 10*(ds3231_buffer[1]>>4) + (ds3231_buffer[1] & 0x0f);
 	hours = 10*((ds3231_buffer[2]>>4) & 0x03) + (ds3231_buffer[2] & 0x0f);
