@@ -1,4 +1,4 @@
-cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001909455
+cscope 15 $HOME/workspace/dive_watch_stm32f103_github               0001909493
 	@Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
 
 55 #iâdeà
@@ -265053,47 +265053,47 @@ odd_ev’
 odd_ev’
  = (odd_even+1)%2;
 
-231 
+214 
 	`¹c_ds3231_aùiÚ
 ();
 
-232 
+215 
 	`gps_aùiÚ
 ();
 
-234 
+217 
 	`´essu»_£nsÜ_m—su»_´essu»_‹m³¿tu»
 ();
 
-235 
+218 
 P
  = 
 	`´essu»_£nsÜ_g‘_´essu»
 ();
 
-236 
+219 
 aùu®_‹m³¿tu»
  = 
 	`´essu»_£nsÜ_g‘_‹m³¿tu»
 ();
 
-238 
+221 
 	`vŞtm‘”_m—su»_vŞge
 ();
 
-239 
+222 
 accu_vŞge
  = 
 	`vŞtm‘”_g‘_vŞge
 ();
 
-240 
+223 
 accu_³rûÁage
  = 
 	`vŞtm‘”_g‘_³rûÁage
 ();
 
-243 
+226 
 ušt8_t
  
 £cÚds
@@ -265103,7 +265103,7 @@ mšu‹s
 hours
 ;
 
-244 
+227 
 	`¹c_ds3231_g‘_time
 (&
 hours
@@ -265113,7 +265113,7 @@ mšu‹s
 £cÚds
 );
 
-245 
+228 
 ušt8_t
  
 d©e
@@ -265123,7 +265123,7 @@ mÚth
 y—r
 ;
 
-246 
+229 
 	`¹c_ds3231_g‘_d©e
 (&
 d©e
@@ -265133,65 +265133,65 @@ mÚth
 y—r
 );
 
-250 
+233 
 we_¬e_und”_w©”
  = 0;
 
-253 if(
+236 if(
 P
  > (
 	`©m_b¬om‘”_g‘_m—n_´essu»
 () + 9800))
 
-254 
+237 
 we_¬e_und”_w©”
  = 1;
 
-259 if(!
+242 if(!
 we_¬e_und”_w©”
 )
 
-262 
+245 
 	`dive_m‘”_drİ_dive
 ();
 
-264 
+247 
 	`©m_b¬om‘”_aùiÚ
 ();
 
-265 
+248 
 ušt32_t
  
 ©m_´essu»_bufãr
 [4];
 
-266 
+249 
 	`©m_b¬om‘”_g‘_hi¡Üy
 (
 ©m_´essu»_bufãr
 );
 
-268 
+251 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c1
 , 1);
 
-269 
+252 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-270 
+253 
 	`ssd1306_S‘CursÜ
 (0,0);
 
-271 if(
+254 if(
 odd_ev’
 )
 
-272 
+255 
 	`¥rštf
 (
 time¡amp
@@ -265205,7 +265205,7 @@ d©e
 mÚth
 );
 
-274 
+257 
 	`¥rštf
 (
 time¡amp
@@ -265219,7 +265219,7 @@ d©e
 mÚth
 );
 
-275 
+258 
 	`ssd1306_Wr™eSŒšg
 (
 time¡amp
@@ -265229,17 +265229,115 @@ FÚt_11x18
 Wh™e
 );
 
-276 
+259 
 	`ssd1306_S‘CursÜ
 (0,22);
 
-277 
+260 
 	`¥rštf
 (
 mes§ge
 , "%05d %05d", ()(
 ©m_´essu»_bufãr
 [0]/10), ()(atm_pressure_buffer[1]/10));
+
+261 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+262 
+	`ssd1306_S‘CursÜ
+(0,44);
+
+263 
+	`¥rštf
+(
+mes§ge
+, "%05d %05d", ()(
+©m_´essu»_bufãr
+[2]/10), ()(atm_pressure_buffer[3]/10));
+
+264 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+265 
+	`ssd1306_Upd©eSü“n
+();
+
+268 
+	`ssd1306_£t_i2c_pÜt
+(&
+hi2c2
+, 2);
+
+269 
+	`ssd1306_Fl
+(
+BÏck
+);
+
+270 
+	`ssd1306_S‘CursÜ
+(3,0);
+
+271 if(
+odd_ev’
+)
+
+272 
+	`¥rštf
+(
+mes§ge
+, "P%05d:T%03d" , ()(
+P
+/10), ()(
+aùu®_‹m³¿tu»
+/10));
+
+274 
+	`¥rštf
+(
+mes§ge
+, "P%05d T%03d" , ()(
+P
+/10), ()(
+aùu®_‹m³¿tu»
+/10));
+
+275 
+	`ssd1306_Wr™eSŒšg
+(
+mes§ge
+, 
+FÚt_11x18
+, 
+Wh™e
+);
+
+276 
+	`ssd1306_S‘CursÜ
+(3,22);
+
+277 
+	`¥rštf
+(
+mes§ge
+, "V%03d", ()
+accu_vŞge
+);
 
 278 
 	`ssd1306_Wr™eSŒšg
@@ -265253,135 +265351,37 @@ Wh™e
 
 279 
 	`ssd1306_S‘CursÜ
-(0,44);
-
-280 
-	`¥rštf
-(
-mes§ge
-, "%05d %05d", ()(
-©m_´essu»_bufãr
-[2]/10), ()(atm_pressure_buffer[3]/10));
-
-281 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-282 
-	`ssd1306_Upd©eSü“n
-();
-
-285 
-	`ssd1306_£t_i2c_pÜt
-(&
-hi2c2
-, 2);
-
-286 
-	`ssd1306_Fl
-(
-BÏck
-);
-
-287 
-	`ssd1306_S‘CursÜ
-(3,0);
-
-288 if(
-odd_ev’
-)
-
-289 
-	`¥rštf
-(
-mes§ge
-, "P%05d:T%03d" , ()(
-P
-/10), ()(
-aùu®_‹m³¿tu»
-/10));
-
-291 
-	`¥rštf
-(
-mes§ge
-, "P%05d T%03d" , ()(
-P
-/10), ()(
-aùu®_‹m³¿tu»
-/10));
-
-292 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-293 
-	`ssd1306_S‘CursÜ
-(3,22);
-
-294 
-	`¥rštf
-(
-mes§ge
-, "V%03d", ()
-accu_vŞge
-);
-
-295 
-	`ssd1306_Wr™eSŒšg
-(
-mes§ge
-, 
-FÚt_11x18
-, 
-Wh™e
-);
-
-296 
-	`ssd1306_S‘CursÜ
 (3,44);
 
-297 
+280 
 	`ssd1306_Upd©eSü“n
 ();
 
-305 
+288 
 	`dive_m‘”_aùiÚ
 ();
 
-308 
+291 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c1
 , 1);
 
-309 
+292 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-310 
+293 
 	`ssd1306_S‘CursÜ
 (3,0);
 
-311 if(
+294 if(
 odd_ev’
 )
 
-312 
+295 
 	`¥rštf
 (
 time¡amp
@@ -265395,7 +265395,7 @@ d©e
 mÚth
 );
 
-314 
+297 
 	`¥rštf
 (
 time¡amp
@@ -265409,7 +265409,7 @@ d©e
 mÚth
 );
 
-315 
+298 
 	`ssd1306_Wr™eSŒšg
 (
 time¡amp
@@ -265419,11 +265419,11 @@ FÚt_11x18
 Wh™e
 );
 
-316 
+299 
 	`ssd1306_S‘CursÜ
 (9,33);
 
-317 
+300 
 	`¥rštf
 (
 mes§ge
@@ -265433,7 +265433,7 @@ mes§ge
 aùu®_‹m³¿tu»
 /100, ()(actual_temperature/10) - (()(actual_temperature/100))*10);
 
-318 
+301 
 	`ssd1306_Wr™eSŒšg
 (
 mes§ge
@@ -265443,31 +265443,31 @@ FÚt_16x26
 Wh™e
 );
 
-319 
+302 
 	`ssd1306_Upd©eSü“n
 ();
 
-322 
+305 
 	`ssd1306_£t_i2c_pÜt
 (&
 hi2c2
 , 2);
 
-323 
+306 
 	`ssd1306_Fl
 (
 BÏck
 );
 
-324 
+307 
 	`ssd1306_S‘CursÜ
 (3,0);
 
-325 if(
+308 if(
 odd_ev’
 )
 
-326 
+309 
 	`¥rštf
 (
 mes§ge
@@ -265475,7 +265475,7 @@ mes§ge
 accu_vŞge
 );
 
-328 
+311 
 	`¥rštf
 (
 mes§ge
@@ -265483,7 +265483,7 @@ mes§ge
 accu_vŞge
 );
 
-329 
+312 
 	`ssd1306_Wr™eSŒšg
 (
 mes§ge
@@ -265493,11 +265493,11 @@ FÚt_11x18
 Wh™e
 );
 
-330 
+313 
 	`ssd1306_S‘CursÜ
 (9,33);
 
-331 
+314 
 	`¥rštf
 (
 mes§ge
@@ -265507,7 +265507,7 @@ mes§ge
 	`dive_m‘”_g‘_cu¼’t_dive_time
 ());
 
-332 
+315 
 	`ssd1306_Wr™eSŒšg
 (
 mes§ge
@@ -265517,37 +265517,37 @@ FÚt_16x26
 Wh™e
 );
 
-333 
+316 
 	`ssd1306_Upd©eSü“n
 ();
 
-349 
+332 
 	}
 }
 
-364 
+347 
 	$Sy¡emClock_CÚfig
 ()
 
-367 
+350 
 RCC_OscIn™Ty³Def
  
 RCC_OscIn™SŒuù
 ;
 
-368 
+351 
 RCC_ClkIn™Ty³Def
  
 RCC_ClkIn™SŒuù
 ;
 
-369 
+352 
 RCC_P”hCLKIn™Ty³Def
  
 P”hClkIn™
 ;
 
-373 
+356 
 RCC_OscIn™SŒuù
 .
 OscÏtÜTy³
@@ -265557,7 +265557,7 @@ RCC_OSCILLATORTYPE_LSI
 RCC_OSCILLATORTYPE_HSE
 ;
 
-374 
+357 
 RCC_OscIn™SŒuù
 .
 HSES‹
@@ -265565,7 +265565,7 @@ HSES‹
 RCC_HSE_ON
 ;
 
-375 
+358 
 RCC_OscIn™SŒuù
 .
 HSEP»divV®ue
@@ -265573,7 +265573,7 @@ HSEP»divV®ue
 RCC_HSE_PREDIV_DIV2
 ;
 
-376 
+359 
 RCC_OscIn™SŒuù
 .
 HSIS‹
@@ -265581,7 +265581,7 @@ HSIS‹
 RCC_HSI_ON
 ;
 
-377 
+360 
 RCC_OscIn™SŒuù
 .
 LSIS‹
@@ -265589,7 +265589,7 @@ LSIS‹
 RCC_LSI_ON
 ;
 
-378 
+361 
 RCC_OscIn™SŒuù
 .
 PLL
@@ -265599,7 +265599,7 @@ PLLS‹
 RCC_PLL_ON
 ;
 
-379 
+362 
 RCC_OscIn™SŒuù
 .
 PLL
@@ -265609,7 +265609,7 @@ PLLSourû
 RCC_PLLSOURCE_HSE
 ;
 
-380 
+363 
 RCC_OscIn™SŒuù
 .
 PLL
@@ -265619,7 +265619,7 @@ PLLMUL
 RCC_PLL_MUL2
 ;
 
-381 ià(
+364 ià(
 	`HAL_RCC_OscCÚfig
 (&
 RCC_OscIn™SŒuù
@@ -265627,7 +265627,7 @@ RCC_OscIn™SŒuù
 HAL_OK
 )
 
-383 
+366 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -265635,7 +265635,7 @@ __FILE__
 __LINE__
 );
 
-388 
+371 
 RCC_ClkIn™SŒuù
 .
 ClockTy³
@@ -265645,13 +265645,13 @@ RCC_CLOCKTYPE_HCLK
 RCC_CLOCKTYPE_SYSCLK
 
 
-389 |
+372 |
 RCC_CLOCKTYPE_PCLK1
 |
 RCC_CLOCKTYPE_PCLK2
 ;
 
-390 
+373 
 RCC_ClkIn™SŒuù
 .
 SYSCLKSourû
@@ -265659,7 +265659,7 @@ SYSCLKSourû
 RCC_SYSCLKSOURCE_PLLCLK
 ;
 
-391 
+374 
 RCC_ClkIn™SŒuù
 .
 AHBCLKDivid”
@@ -265667,7 +265667,7 @@ AHBCLKDivid”
 RCC_SYSCLK_DIV4
 ;
 
-392 
+375 
 RCC_ClkIn™SŒuù
 .
 APB1CLKDivid”
@@ -265675,7 +265675,7 @@ APB1CLKDivid”
 RCC_HCLK_DIV1
 ;
 
-393 
+376 
 RCC_ClkIn™SŒuù
 .
 APB2CLKDivid”
@@ -265683,7 +265683,7 @@ APB2CLKDivid”
 RCC_HCLK_DIV1
 ;
 
-395 ià(
+378 ià(
 	`HAL_RCC_ClockCÚfig
 (&
 RCC_ClkIn™SŒuù
@@ -265693,7 +265693,7 @@ FLASH_LATENCY_0
 HAL_OK
 )
 
-397 
+380 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -265701,7 +265701,7 @@ __FILE__
 __LINE__
 );
 
-400 
+383 
 P”hClkIn™
 .
 P”hClockS–eùiÚ
@@ -265711,7 +265711,7 @@ RCC_PERIPHCLK_RTC
 RCC_PERIPHCLK_ADC
 ;
 
-404 
+387 
 P”hClkIn™
 .
 RTCClockS–eùiÚ
@@ -265719,7 +265719,7 @@ RTCClockS–eùiÚ
 RCC_RTCCLKSOURCE_LSI
 ;
 
-405 
+388 
 P”hClkIn™
 .
 AdcClockS–eùiÚ
@@ -265727,7 +265727,7 @@ AdcClockS–eùiÚ
 RCC_ADCPCLK2_DIV2
 ;
 
-406 ià(
+389 ià(
 	`HAL_RCCEx_P”hCLKCÚfig
 (&
 P”hClkIn™
@@ -265735,7 +265735,7 @@ P”hClkIn™
 HAL_OK
 )
 
-408 
+391 
 	`_E¼Ü_HªdËr
 (
 __FILE__
@@ -265743,29 +265743,29 @@ __FILE__
 __LINE__
 );
 
-413 
+396 
 	`HAL_SYSTICK_CÚfig
 (
 	`HAL_RCC_G‘HCLKF»q
 ()/1000);
 
-417 
+400 
 	`HAL_SYSTICK_CLKSourûCÚfig
 (
 SYSTICK_CLKSOURCE_HCLK
 );
 
-420 
+403 
 	`HAL_NVIC_S‘PriÜ™y
 (
 SysTick_IRQn
 , 0, 0);
 
-421 
+404 
 	}
 }
 
-433 
+416 
 	$_E¼Ü_HªdËr
 (*
 fe
@@ -265773,15 +265773,15 @@ fe
 lše
 )
 
-441 
+424 
 	}
 }
 
-443 #ifdeà 
+426 #ifdeà 
 USE_FULL_ASSERT
 
 
-451 
+434 
 	$as£¹_çed
 (
 ušt8_t
@@ -265793,11 +265793,11 @@ ušt32_t
 lše
 )
 
-457 
+440 
 	}
 }
 
-462 
+445 
 ušt8_t
  
 	$gps_mes§ge_cÚŒŞ_summ_ÿlcuÏtiÚ
@@ -265805,7 +265805,7 @@ ušt8_t
 gps_mes§ge
 )
 
-464 
+447 
 Ëngth
  = 
 	`¡¾’
@@ -265813,7 +265813,7 @@ gps_mes§ge
 gps_mes§ge
 );
 
-466 
+449 
 ušt8_t
  
 »tuº_v®ue
@@ -265821,17 +265821,17 @@ ušt8_t
 gps_mes§ge
 [1];
 
-467 
+450 
 i
 ;
 
-468 
+451 
 i
 =2; i<
 Ëngth
 ; i++)
 
-469 
+452 
 »tuº_v®ue
  ^ğ
 gps_mes§ge
@@ -265839,11 +265839,11 @@ gps_mes§ge
 i
 ];
 
-471  
+454  
 »tuº_v®ue
 ;
 
-472 
+455 
 	}
 }
 
@@ -266917,7 +266917,15 @@ ušt16_t
 d©a_¬¿y_Ëngth
  = 7;
 
-58 
+57 
+ušt8_t
+ 
+i2c_¡©us
+;
+
+59 
+i2c_¡©us
+ = 
 	`HAL_I2C_Mem_R—d
 (
 ds3231_i2c_hªdË
@@ -266929,43 +266937,43 @@ ds3231_bufãr
 d©a_¬¿y_Ëngth
 , 500);
 
-60 
+61 
 £cÚds
  = 10*(
 ds3231_bufãr
 [0]>>4) + (ds3231_buffer[0] & 0x0f);
 
-61 
+62 
 mšu‹s
  = 10*(
 ds3231_bufãr
 [1]>>4) + (ds3231_buffer[1] & 0x0f);
 
-62 
+63 
 hours
  = 10*((
 ds3231_bufãr
 [2]>>4) & 0x03) + (ds3231_buffer[2] & 0x0f);
 
-63 
+64 
 d©e
  = 10*(
 ds3231_bufãr
 [4]>>4) + (ds3231_buffer[4] & 0x0f);
 
-64 
+65 
 mÚth
  = 10*((
 ds3231_bufãr
 [5]>>4) & 0x03) + (ds3231_buffer[5] & 0x0f);
 
-65 
+66 
 y—r
  = 10*(
 ds3231_bufãr
 [6]>>4) + (ds3231_buffer[6] & 0x0f);
 
-66 
+67 
 	}
 }
 

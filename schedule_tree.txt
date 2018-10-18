@@ -1,0 +1,96 @@
+RABOTA
+---------------------------------------------------------------------------------
+dive_watch
+	sdelat' korpus
+		sdelat' moduli displeev
+			kupit' normal'nyi maketnyi nozh
+			sdelat' tonkie i gibkie podvody
+		sdelat' modul' osnovnoj platy
+	obespechit' besperebojnost' i2c
+		sdelat' vitye pary sda+gnd i scl+gnd
+			razderbanit' kabel'
+			posmotret', est' li mnogozhil'nye patchkordy
+		posmotret'? chto mozhno sdelat' s zemlej
+			zemlya dolzhna byt' v odnom meste bol'shaya
+	schityvat' dannye s gps
+		opredelayat' tekushie koordinaty
+		zapominat' koordinaty poslednego daiva
+		vychislyat' rasstoyanie i azimut na tochku poslednego daiva
+	podklyuchit' gsm modul'
+	podklyuchit' wifi
+	podklyuchit' bluetooth
+rzhdv
+	vsponmit' peredachu dannyh v poyas
+kinematics
+	kalibrovat'datchiki
+	sostykovat' s Voronovym
+		razobrat'sya s programmoj Voronova
+perspective
+	nfc
+	radiomodul'
+		pitanie priemnika
+			sdelat' 5v bp c mamami na koncah
+vihr_mehanika
+	vzyat' ballon
+	rassmotret' klapan
+	avtomaticheskoe upravlenie skorost'yu vsplytiya
+tors
+	vspomnit' v kakom sostoyanii proekt
+
+
+
+
+
+BYTOVUHA
+--------------------------------------------------------------------------------
+toyota
+	kolodki zadnie i perednie
+		kupit' i pomenyat'
+	posmotret' ot chego mozhet byt' bienie
+	pomenyat' kolesa na zimu
+		reshit' kakie
+		prismotret' v magazine
+		kupit'
+		pomenyat'
+gruzovik
+	pochinit' dvorniki
+	proverit' sostoyanie perednih stupichnyh podshipnikov
+	poprobovat' ponyat' ot chego bieniya
+	podtyanut' kardan
+		sdelat' platformu dlya lezhaniya pod mashinoi
+kawasaki
+	pochinit' karbyuratory
+stels
+	poprobovat' zavesti
+dom
+	razbirat' saraj
+		pochinit' benzopilu
+		sobrat' instrument (kuvalda, lom, gvozdoder)
+	sdelat' civil'nyj dush
+	deportirovat' myshej (ili priruchit')
+	uteplit' truby pered zimoj
+		kupit' uteplitelya (porolon i t/p)
+	sdelat' vorota Tan'ke
+		popraktikovat'sya so svarochnym apparatom
+	zaryadit' akkumulyator sabel'noj pily
+osmino
+
+
+RAZNOE
+---------------------------------------------------------------------------------
+paraplanerizm
+	pochinit' zazhiganie motora
+	sdelat' vorota k chempionatu
+	sdelat' sistemu podduva pilonov
+beg
+	probezhat' dorogu zhizni 2019
+		zaregistrirovat'sya na dzh
+diving
+	organizovat' kursy plavuchesti
+roboty
+extremum
+	sdelat' dudku
+		vkleit' shtucer
+	sdelat' otchet po 3660 Batovo
+hotelki
+	vstretit'sya s Nastej
