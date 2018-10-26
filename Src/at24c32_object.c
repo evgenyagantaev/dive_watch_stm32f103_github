@@ -17,7 +17,7 @@ void at24c32_write_32(uint16_t address, uint32_t data)
 	b2 = (uint8_t)((data>>16) & 0x000000ff);
 	b3 = (uint8_t)(data>>24);
 
-	int write_delay = 1;
+	int write_delay = 2;
 
 	HAL_I2C_Mem_Write(at24c32_i2c_handle, at24c32_shifted_address, address, I2C_MEMADD_SIZE_16BIT, &b0, 1, 100);
 	HAL_Delay(write_delay);

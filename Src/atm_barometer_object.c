@@ -16,7 +16,7 @@ void atm_barometer_init()
 
 	for(i=0; i<LOG_LENGTH; i++)
 	{
-		//at24c32_write_32((uint16_t)(i*4), i*10);
+		at24c32_write_32((uint16_t)(i*4), i*10);
 		atm_pressure_log[i] = 0;
 	}
 	for(i=0; i<LOG_LENGTH; i++)
