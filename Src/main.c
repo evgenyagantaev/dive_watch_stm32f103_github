@@ -111,10 +111,10 @@ int main(void)
     MX_I2C2_Init();
 	//---------------------------------
   	HAL_Delay(100);
-	rtc_ds3231_set_i2c_handle(&hi2c1);
+	rtc_ds3231_set_i2c_handle(&hi2c2);
 	at24c32_set_i2c_handle(&hi2c1);
-	//rtc_ds3231_set_time(16, 54, 0);
-	//rtc_ds3231_set_date(9, 10, 18);
+	//rtc_ds3231_set_time(14, 50, 0);
+	//rtc_ds3231_set_date(24, 10, 18);
 	//---------------------------------
     MX_SPI1_Init();
     // enable spi1
@@ -134,7 +134,7 @@ int main(void)
 	gps_object_init();
     MX_USART2_UART_Init();
 
-  	HAL_GPIO_WritePin(GPIOC, led0_Pin, GPIO_PIN_RESET);// turn led on
+  	HAL_GPIO_WritePin(GPIOC, led0_Pin, GPIO_PIN_SET);// turn led off
 
 	//--------init display1------------------------------
     ssd1306_set_i2c_port(&hi2c1, 1);

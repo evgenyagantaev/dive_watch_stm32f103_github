@@ -211,7 +211,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	
 	if(htim->Instance==TIM2)
 	{
-		HAL_GPIO_TogglePin(GPIOC, led0_Pin);
+		//HAL_GPIO_TogglePin(GPIOC, led0_Pin);
 		one_second_timer_increment_counter();
 		one_second_timer_set_flag();
 	}

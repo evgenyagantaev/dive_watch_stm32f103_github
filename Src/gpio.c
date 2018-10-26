@@ -79,6 +79,7 @@ void MX_GPIO_Init(void)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  	HAL_GPIO_WritePin(GPIOC, led0_Pin, GPIO_PIN_SET);// turn led off
 
     // configure depth switch pin
 	GPIO_InitStruct.Pin = GPIO_PIN_12;

@@ -52,11 +52,18 @@ void rtc_ds3231_set_i2c_handle(I2C_HandleTypeDef *handle)
 void rtc_ds3231_action()
 {
 
-	uint16_t data_array_length = 7;
+	uint16_t data_array_length = 1;
 
 	uint8_t i2c_status;
 
-	i2c_status = HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x0, 1, ds3231_buffer, data_array_length, 500);
+	//i2c_status = HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x0, 1, ds3231_buffer, data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x0, 1, &(ds3231_buffer[0]), data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x1, 1, &(ds3231_buffer[1]), data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x2, 1, &(ds3231_buffer[2]), data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x3, 1, &(ds3231_buffer[3]), data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x4, 1, &(ds3231_buffer[4]), data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x5, 1, &(ds3231_buffer[5]), data_array_length, 500);
+	HAL_I2C_Mem_Read(ds3231_i2c_handle, ds3231_shifted_address, 0x6, 1, &(ds3231_buffer[6]), data_array_length, 500);
 	
 	seconds = 10*(ds3231_buffer[0]>>4) + (ds3231_buffer[0] & 0x0f);
 	minutes = 10*(ds3231_buffer[1]>>4) + (ds3231_buffer[1] & 0x0f);
