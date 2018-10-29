@@ -49,7 +49,11 @@ void atm_barometer_action()
 	// save log to eeprom
 	for(i=0; i<LOG_LENGTH; i++)
 		at24c32_write_32((uint16_t)(i*4), atm_pressure_log[i]);
-	
+	// debug
+	// control read from eeprom
+	for(i=0; i<LOG_LENGTH; i++)
+		at24c32_read_32((uint16_t)(i*4), &(atm_pressure_log[i]));
+	// debug
 }
 
 

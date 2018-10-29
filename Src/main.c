@@ -236,7 +236,7 @@ int main(void)
 			if(P > (atm_barometer_get_mean_pressure() + 9800)) // underwater
 				we_are_under_water = 1;
 			//debug	
-			//we_are_under_water = 0;
+			we_are_under_water = 0;
 			//debug
 
 			if(!we_are_under_water)  // we are not under water
